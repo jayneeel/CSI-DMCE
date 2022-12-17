@@ -1,7 +1,11 @@
 package com.example.csi_dmce
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,23 +19,37 @@ class Profile: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        val profile_button = findViewById<Button>(R.id.botton_profile)
+
+        profile_button.setOnClickListener(View.OnClickListener {  val i = Intent(this,edit_profile::class.java)
+            startActivity(i) })
+
+        val name = findViewById<TextView>(R.id.name_view)
+        val branch = findViewById<TextView>(R.id.branch_view)
+        val roll = findViewById<TextView>(R.id.rollno_view)
+        val email = findViewById<TextView>(R.id.email_view)
+        val password = findViewById<TextView>(R.id.password_view)
+
+        val name_view = intent.getStringExtra("name 1801")
+        val branch_view = intent.getStringExtra("branch 1801")
+        val roll_view = intent.getStringExtra("roll 1801")
+        val email_view = intent.getStringExtra("email 1801")
+        val password_view = intent.getStringExtra("passsword 1801")
+
+
+        name.setText(name_view)
+        branch.setText(branch_view)
+        roll.setText(roll_view)
+        email.setText(email_view)
+        password.setText(password_view)
+
+
         title_Heading = arrayListOf(
-
-
-
-
-
 
 
         )
 
         Description = arrayListOf(
-
-
-
-
-
-
 
 
         )
@@ -57,4 +75,9 @@ class Profile: AppCompatActivity() {
         newRecyclerView.adapter = ProfileEventsAdapter(newArrayList)
 
     }
+
+
+
+
+
 }
