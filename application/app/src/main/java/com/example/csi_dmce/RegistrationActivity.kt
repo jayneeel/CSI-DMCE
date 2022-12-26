@@ -1,5 +1,6 @@
 package com.example.csi_dmce
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -18,6 +19,7 @@ class RegistrationActivity: AppCompatActivity() {
     private lateinit var user_re_password_box: EditText
 
     private lateinit var register_button: Button
+    private lateinit var account_exists:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +27,11 @@ class RegistrationActivity: AppCompatActivity() {
 
         // Set components
         user_name_box = findViewById(R.id.user_name)
-        user_email_box = findViewById(R.id.user_name)
-        user_password_box = findViewById(R.id.user_name)
-        user_re_password_box = findViewById(R.id.user_name)
+        user_email_box = findViewById(R.id.user_email)
+        user_password_box = findViewById(R.id.user_password)
+        user_re_password_box = findViewById(R.id.confirm_password)
         register_button = findViewById(R.id.register_button)
+        account_exists=findViewById(R.id.account_exists_text)
 
         // TODO: Move this in a better place so that we can maintain a singleton pattern.
         // Get DB Instance
@@ -58,5 +61,13 @@ class RegistrationActivity: AppCompatActivity() {
                 Toast.makeText(applicationContext, "Registered sucessfully!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        account_exists.setOnClickListener{
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            Toast.makeText(applicationContext, "Login to continue.", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 }

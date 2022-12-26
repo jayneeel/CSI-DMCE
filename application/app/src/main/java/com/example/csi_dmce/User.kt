@@ -21,4 +21,5 @@ data class User(
 
     @Ignore
     val otp: Int = 0,
+
 )
