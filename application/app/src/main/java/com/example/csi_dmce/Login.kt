@@ -29,29 +29,39 @@ class Login: AppCompatActivity() {
             var log_email: String = login_email.text.toString()
             var utils = Utilities()
             var log_password: String = login_password.text.toString()
-            var log_password_hash: String = utils.get_md5_hash(log_password)
             if(log_email.isEmpty() || log_password.isEmpty()){
-                Toast.makeText(applicationContext, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
-            }
-            //Performing Query
-            val db=Room.databaseBuilder(applicationContext,AppDatabase::class.java,"csi-dmce").build()
-            var user_dao = db.userDao()
-            var UserEntity= user_dao.logindb(log_email,log_password_hash)
-            if(!UserEntity) {
-                Toast.makeText(applicationContext, "Invalid credentials.", Toast.LENGTH_SHORT).show()
+                println("Please fill all the fields.")
             }
             else {
-                val intent = Intent(this, Profile::class.java)
-                startActivity(intent)
-                Toast.makeText(applicationContext, "Welcome!", Toast.LENGTH_SHORT).show()
+                var log_password_hash: String = utils.get_md5_hash(log_password)
+
+                //Performing Query
+                val db = AppDatabase.getInstance(this)
+                var user_dao = db.userDao()
+                var UserEntity = user_dao.login_function(log_email, log_password_hash)
+                if (!UserEntity) {
+                    Toast.makeText(applicationContext, "Invalid credentials.", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    val intent = Intent(this, Profile::class.java)
+                    startActivity(intent)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    Toast.makeText(applicationContext, "Welcome!", Toast.LENGTH_SHORT).show()
+
+                }
             }
 
 
         }
         without_account.setOnClickListener{
             val intent = Intent(this, event_page::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
     }
+
 
 }
