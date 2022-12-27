@@ -27,12 +27,13 @@ class Login: AppCompatActivity() {
 
         login_button.setOnClickListener {
             var log_email: String = login_email.text.toString()
-            var utils = Utilities()
             var log_password: String = login_password.text.toString()
             if(log_email.isEmpty() || log_password.isEmpty()){
-                println("Please fill all the fields.")
+                Toast.makeText(applicationContext, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
             else {
+                var utils = Utilities()
                 var log_password_hash: String = utils.get_md5_hash(log_password)
 
                 //Performing Query
