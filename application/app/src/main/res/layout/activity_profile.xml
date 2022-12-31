@@ -70,7 +70,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/botton_profile"
+        android:id="@+id/button_profile"
         android:layout_width="214dp"
         android:layout_height="51dp"
         android:layout_marginTop="4dp"
@@ -174,7 +174,7 @@
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botton_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/button_profile" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
