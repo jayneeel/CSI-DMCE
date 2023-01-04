@@ -22,4 +22,11 @@
     <style name="Theme.CSIDMCE.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CSIDMCE.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="RoundCorner" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+        <item name="color">@color/black</item>
+
+    </style>
 </resources>
