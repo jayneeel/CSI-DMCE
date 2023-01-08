@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".event_page"
+    tools:context=".events.event_page"
     android:background="@color/lgrey"
     android:id="@+id/event_page_1">
 

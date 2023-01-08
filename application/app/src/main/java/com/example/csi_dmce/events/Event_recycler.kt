@@ -1,10 +1,10 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.events
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.security.identity.AccessControlProfileId
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.csi_dmce.R
 
 class event_recycler : AppCompatActivity() {
 

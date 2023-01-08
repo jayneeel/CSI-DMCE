@@ -1,4 +1,4 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.csi_dmce.ui.Dashboard
+import com.example.csi_dmce.profile.Profile
+import com.example.csi_dmce.R
+import com.example.csi_dmce.database.AppDatabase
+import com.example.csi_dmce.utils.Helpers
 
 class Login: AppCompatActivity() {
     private lateinit var login_email: EditText
@@ -39,7 +44,7 @@ class Login: AppCompatActivity() {
                 return@setOnClickListener
             }
             else {
-                var utils = Utilities()
+                var utils = Helpers()
                 var log_password_hash: String = utils.get_md5_hash(log_password)
 
                 //Performing Query

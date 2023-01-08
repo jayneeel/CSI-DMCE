@@ -1,9 +1,15 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.csi_dmce.R
+import com.example.csi_dmce.auth.Login
+import com.example.csi_dmce.auth.RegistrationActivity
+import com.example.csi_dmce.calendar.CSICalendar
+import com.example.csi_dmce.events.event_page
+import com.example.csi_dmce.profile.Profile
 
 class Dashboard: AppCompatActivity() {
     private lateinit var btn_registration: Button

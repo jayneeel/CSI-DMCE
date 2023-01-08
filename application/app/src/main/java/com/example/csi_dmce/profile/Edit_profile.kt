@@ -1,4 +1,4 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.profile
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import com.example.csi_dmce.R
 
 
 class edit_profile : AppCompatActivity() {

@@ -1,9 +1,9 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.utils
 
 import java.math.BigInteger
 import java.security.MessageDigest
 
-class Utilities {
+class Helpers {
     // Prepare MD5 hash of a string
     fun get_md5_hash(plaintext: String): String {
         val md = MessageDigest.getInstance("MD5")

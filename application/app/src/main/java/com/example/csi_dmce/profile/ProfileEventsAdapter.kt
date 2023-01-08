@@ -1,13 +1,11 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.profile
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.contracts.Returns
+import com.example.csi_dmce.R
 
 class ProfileEventsAdapter (private val eventList : ArrayList<ProfileEvents>) : RecyclerView.Adapter<ProfileEventsAdapter.MyViewHolder>() {
 

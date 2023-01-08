@@ -1,6 +1,7 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.database
 
 import androidx.room.TypeConverter
+import com.example.csi_dmce.auth.OTP
 
 class Converters {
     @TypeConverter

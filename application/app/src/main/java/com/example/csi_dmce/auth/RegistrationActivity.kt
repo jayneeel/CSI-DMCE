@@ -1,16 +1,18 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import com.example.csi_dmce.R
 
-import com.example.csi_dmce.Utilities
+import com.example.csi_dmce.database.AppDatabase
+import com.example.csi_dmce.database.User
+import com.example.csi_dmce.utils.Helpers
 
 class RegistrationActivity: AppCompatActivity() {
     private lateinit var user_name_box: EditText
@@ -48,7 +50,7 @@ class RegistrationActivity: AppCompatActivity() {
             var re_user_password: String = user_re_password_box.text.toString()
 
             // We'll use MD5 for now.
-            var utils = Utilities()
+            var utils = Helpers()
             var passwd_hash: String = utils.get_md5_hash(user_password)
 
             // If the confirmed password and the password match, then we can finally put the
