@@ -36,7 +36,7 @@ class Dashboard: AppCompatActivity() {
 
         btn_events = findViewById(R.id.btn_dashboard_events)
         btn_events.setOnClickListener {
-            val eventIntent = Intent(this, event_page::class.java)
+            val eventIntent = Intent(this, event_recycler::class.java)
             startActivity(eventIntent)
         }
 

@@ -10,7 +10,6 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="venue">VENUE:- SEMINAR HALL(804)</string>
-    <string name="desc">GitHub, Inc. is an Internet hosting service for software development and versioncontrol using Git. It provides the distributed version control of Git plus access control,bug tracking,software feature requests, task management, continuous integration, and wikis for every project.The main purpose of GitHub.com is to facilitate the version control and issue tracking aspects of software development. Labels, milestones, responsibility assignment, and a search engine are available for issue tracking. </string>
     <string name="login">LOGIN</string>
     <string name="create_new_account">Create new account?</string>
     <string name="register">Register</string>
@@ -28,4 +27,29 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password length must be greater than 5 letters.</string>
     <string name="login_failed">"Login failed"</string>
+
+
+
+
+
+
+
+
+
+    <string name="desc_a">GitHub, Inc. is an Internet hosting service for software development and versioncontrol using Git. It provides the distributed version control of Git plus access control,bug tracking,software feature requests, task management, continuous integration, and wikis for every project.The main purpose of GitHub.com is to facilitate the version control and issue tracking aspects of software development. Labels, milestones, responsibility assignment, and a search engine are available for issue tracking. </string>
+    <string name="desc_b">HACKTOBERFEST IS DIGITALOCEAN’S ANNUAL EVENT THAT ENCOURAGES PEOPLE TO CONTRIBUTE TO OPEN SOURCE THROUGHOUT OCTOBER. MUCH OF MODERN TECH INFRASTRUCTURE—INCLUDING SOME OF DIGITALOCEAN’S OWN PRODUCTS—RELIES ON OPEN-SOURCE PROJECTS BUILT AND MAINTAINED BY PASSIONATE PEOPLE WHO OFTEN DON’T HAVE THE STAFF OR BUDGETS TO DO MUCH MORE THAN KEEP THE PROJECT ALIVE. HACKTOBERFEST IS ALL ABOUT GIVING BACK TO THOSE PROJECTS, SHARPENING SKILLS, AND CELEBRATING ALL THINGS OPEN SOURCE, ESPECIALLY THE PEOPLE THAT MAKE OPEN SOURCE SO SPECIAL.</string>
+    <string name="desc_c">Web development refers to the creating, building, and maintaining of websites. It includes aspects such as web design, web publishing, web programming, and database management. It is the creation of an application that works over the internet i.e. websites.Backend is the server side of a website. It is the part of the website that users cannot see and interact. </string>
+    <string name="desc_d">Mobile app development is the act or process by which a mobile app is developed for mobile devices, such as personal digital assistants, enterprise digital assistants or mobile phones. These software applications are designed to run on mobile devices, such as a smartphone or tablet computer. These applications can be pre-installed on phones during manufacturing platforms, or delivered as web applications using server-side or client-side processing (e.g., JavaScript) to provide an "application-like" experience within a web browser</string>
+    <string name="desc_e">The blocks record and track all the data shared within or in between the business entities. It stores the source, destination, and timestamp of the files. Information such as intellectual, copyright, or any physical asset has its digital records that are secured using blockchain technology.</string>
+    <string name="desc_f">Flutter is also a portable user interface toolkit with many widgets and features. It offers a platform for programmers to easily create and distribute natively built, aesthetically pleasing applications for various platforms. What’s more, Flutter is in great demand in the software industry. Dart is a client-side programming language that offers several tools for creating apps, including design features, dynamic typing, interface, classes, and optional typing. Dart is made to function on both the browser and the server.</string>
+    <string name="desc_g">Beginning with the Industrial Revolution era, a workshop may be a room, rooms or building which provides both the area and tools (or machinery) that may be required for the manufacture or repair of manufactured goods. Workshops were the only places of production until the advent of industrialization and the development of larger factories.</string>
+
+
+
+
+
+
+
+
 </resources>
+

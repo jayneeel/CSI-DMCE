@@ -32,6 +32,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/image_Event"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:scaleType="centerCrop"
@@ -48,6 +49,7 @@
                     android:paddingBottom="25dp">
 
                     <TextView
+                        android:id="@+id/text_Event"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -58,6 +60,7 @@
                         android:textStyle="bold"></TextView>
 
                     <TextView
+                        android:id="@+id/text_Venue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -102,6 +105,7 @@
                                 </ImageView>
 
                                 <TextView
+                                    android:id="@+id/text_date"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
@@ -148,6 +152,7 @@
                                 </ImageView>
 
                                 <TextView
+                                    android:id="@+id/text_time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
@@ -178,10 +183,11 @@
                     </TextView>
 
                     <TextView
+                        android:id="@+id/text_des"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@string/desc"
+                        android:text="@string/desc_a"
                         android:textColor="@color/black"
                         android:textSize="15sp">
 
@@ -225,6 +231,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/text_speakers"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
@@ -282,6 +289,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/text_pre"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
