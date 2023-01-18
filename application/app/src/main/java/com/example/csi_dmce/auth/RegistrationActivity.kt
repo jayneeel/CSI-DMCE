@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.example.csi_dmce.R
 
-import com.example.csi_dmce.database.AppDatabase
-import com.example.csi_dmce.database.User
 import com.example.csi_dmce.utils.Helpers
 
 class RegistrationActivity: AppCompatActivity() {

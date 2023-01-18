@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.example.csi_dmce.ui.Dashboard
 import com.example.csi_dmce.profile.Profile
 import com.example.csi_dmce.R
-import com.example.csi_dmce.database.AppDatabase
 import com.example.csi_dmce.utils.Helpers
 
 class Login: AppCompatActivity() {
