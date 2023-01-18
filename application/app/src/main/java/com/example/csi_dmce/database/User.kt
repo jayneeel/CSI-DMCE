@@ -1,4 +1,4 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

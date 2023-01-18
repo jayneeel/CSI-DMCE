@@ -1,4 +1,4 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.auth
 
 data class OTP(
     val value: Int,

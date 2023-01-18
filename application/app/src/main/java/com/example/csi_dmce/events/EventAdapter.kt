@@ -1,11 +1,11 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.events
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.csi_dmce.R
 import com.google.android.material.imageview.ShapeableImageView
 
 class EventAdapter(private val eventlist : ArrayList<events>) :
@@ -15,7 +15,8 @@ class EventAdapter(private val eventlist : ArrayList<events>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_event_items,
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.activity_event_items,
         parent, false)
         return MyViewHolder(itemView)
     }

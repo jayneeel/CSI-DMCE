@@ -1,6 +1,7 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.database
 
 import androidx.room.*
+import com.example.csi_dmce.database.User
 
 @Dao
 interface UserDAO {

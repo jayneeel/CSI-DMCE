@@ -13,49 +13,49 @@
         android:theme="@style/Theme.CSIDMCE"
         tools:targetApi="31">
         <activity
-            android:name=".edit_profile"
+            android:name=".profile.edit_profile"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".event_recycler"
+            android:name=".events.event_recycler"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Dashboard"
+            android:name=".ui.Dashboard"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CSICalendar"
+            android:name=".calendar.CSICalendar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".event_page"
+            android:name=".events.event_page"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login"
+            android:name=".auth.Login"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ForgotPassword"
+            android:name=".auth.ForgotPassword"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -79,7 +79,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".auth.RegistrationActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

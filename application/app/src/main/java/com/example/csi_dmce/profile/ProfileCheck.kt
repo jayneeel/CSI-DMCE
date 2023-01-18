@@ -1,4 +1,4 @@
-package com.example.csi_dmce
+package com.example.csi_dmce.profile
 
 
 class profileCheck(nameParameter:String,branchParameter:String,rollnoParameter:Int,emailParameter:String,passwordParameter:String){
