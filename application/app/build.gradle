@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-
 }
 
 android {
@@ -54,9 +53,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "androidx.cardview:cardview:1.0.0"
 
+
     // Firebase dependencies:
-    implementation 'com.google.firebase:firebase-database:20.1.0'
-    implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
+    implementation "com.google.firebase:firebase-firestore:24.4.2"
+    implementation "com.google.firebase:firebase-firestore-ktx:24.4.2"
 
     implementation 'com.google.firebase:firebase-auth:21.1.0'
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
@@ -64,3 +64,4 @@ dependencies {
     // For serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
 }
+apply plugin: 'com.google.gms.google-services'

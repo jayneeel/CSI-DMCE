@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.csi_dmce.R
 import com.example.csi_dmce.profile.ProfileEvents
 import com.example.csi_dmce.profile.ProfileEventsAdapter
 

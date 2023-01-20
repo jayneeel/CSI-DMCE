@@ -1,15 +1,11 @@
 package com.example.csi_dmce.database
 
-import com.example.csi_dmce.R
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import android.util.Log
 
 object FirebaseDBWrapper {
-    fun getDBReference(): FirebaseDatabase {
-        return FirebaseDatabase.getInstance()
-    }
-
-    fun getDBRootReference(): DatabaseReference {
-        return FirebaseDatabase.getInstance().reference
+    suspend fun commitDBAction() {
+        var wrapper = StudentWrapper()
+        Log.d("DB_USER RETURNED", wrapper.getStudentByID("2019FHCO106").toString())
+        Log.d("DB_USER_DONE", "NO RESULT? :(")
     }
 }
