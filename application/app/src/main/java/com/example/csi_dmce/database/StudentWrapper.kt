@@ -1,11 +1,10 @@
 package com.example.csi_dmce.database
 
-import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
-data class Event(
+data class RSVPEvent(
     var id          : String? = null,
     val attending   : Boolean? = null,
 )
@@ -19,47 +18,33 @@ data class Student(
     val name            : String?       = null,
     val phone_number    : Long?         = null,
     val roll_number     : Int?          = null,
-    var events          : List<Event?>?  = null,
+    var events          : List<RSVPEvent?>?  = null,
 )
 
 class StudentWrapper {
-    suspend fun getStudentByID(student_id: String?): Student? {
-        val userRef = FirebaseFirestore
-            .getInstance()
-            .collection("users")
-            .document(student_id!!)
+    val userCollectionRef = FirebaseFirestore.getInstance().collection("users")
 
-        var student: Student? = null
+    private suspend fun getStudentEvents(doc: DocumentSnapshot): List<RSVPEvent> {
+        val events: MutableList<RSVPEvent> = mutableListOf()
+        val what = doc.reference.collection("events")
+            .document("title-timestamp")
+        val event = what.get().await().toObject(RSVPEvent::class.java)
+        events.add(event!!)
+        return events
+    }
 
-        userRef.get().addOnSuccessListener { document ->
-            if (document != null) {
-                student = document.toObject(Student::class.java).apply {
-                    this!!.student_id = document.id
-                }
-
-                val eventsRef = document
-                    .reference
-                    .collection("events")
-
-                runBlocking {
-                    eventsRef.get()
-                        .addOnSuccessListener { eventsSnapshot ->
-                            val events = eventsSnapshot.map { eventSnapshot ->
-                                eventSnapshot.toObject(Event::class.java).apply { id = eventSnapshot.id }
-                            }
-                            student?.events = events
-
-                            Log.d("DB_USER_FINAL", student.toString())
-                        }.await()
-                }
-
-            } else {
-                Log.d("DB_USER", "No such document")
-            }
-        }.await()
-
-        Log.d("DB_USER RETURNING", student.toString())
+    suspend fun getStudent(userId: String): Student? {
+        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId)
+        val doc = userRef.get().await()
+        val student = doc.toObject(Student::class.java)!!
+        student.student_id = doc.id
+        student.events = getStudentEvents(doc)
 
         return student
+    }
+
+    suspend fun addStudent(student: Student): Void? {
+        val eventRef = userCollectionRef.document(student.student_id!!)
+        return eventRef.set(student).await()
     }
 }

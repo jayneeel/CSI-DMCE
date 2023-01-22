@@ -30,7 +30,7 @@ class Dashboard: AppCompatActivity() {
         db_button.setOnClickListener {
             runBlocking {
                 commitDBAction()
-            };
+            }
         }
 
         btn_registration = findViewById(R.id.btn_dashboard_register)
