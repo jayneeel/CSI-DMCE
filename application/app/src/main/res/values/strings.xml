@@ -28,5 +28,5 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password length must be greater than 5 letters.</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="FIREBASE_DB_URL">https://csi-dmce-c6f11-default-rtdb.asia-southeast1.firebasedatabase.app/</string>
+    <string name="APPDATEFORMAT">dd-MM-yyyy</string>
 </resources>

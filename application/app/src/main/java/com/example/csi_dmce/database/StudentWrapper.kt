@@ -1,50 +1,52 @@
 package com.example.csi_dmce.database
 
-import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
-data class RSVPEvent(
-    var id          : String? = null,
-    val attending   : Boolean? = null,
-)
-
 data class Student(
-    var student_id      : String?       = null,
-    val academic_year   : String?       = null,
-    val department      : String?       = null,
-    val division        : String?       = null,
-    val email           : String?       = null,
-    val name            : String?       = null,
-    val phone_number    : Long?         = null,
-    val roll_number     : Int?          = null,
-    var events          : List<RSVPEvent?>?  = null,
+    @DocumentId
+    var student_id      : String?         = null,
+    val academic_year   : String?         = null,
+    val department      : String?         = null,
+    val division        : String?         = null,
+    val email           : String?         = null,
+    val name            : String?         = null,
+    val phone_number    : Long?           = null,
+    val roll_number     : Int?            = null,
+    var events          : List<String?>?  = null,
 )
 
 class StudentWrapper {
-    val userCollectionRef = FirebaseFirestore.getInstance().collection("users")
+    val studentCollectionRef = FirebaseFirestore.getInstance().collection("users")
 
-    private suspend fun getStudentEvents(doc: DocumentSnapshot): List<RSVPEvent> {
-        val events: MutableList<RSVPEvent> = mutableListOf()
-        val what = doc.reference.collection("events")
-            .document("title-timestamp")
-        val event = what.get().await().toObject(RSVPEvent::class.java)
-        events.add(event!!)
-        return events
+    private fun getStudentDocument(studentCollectionRef: CollectionReference, studentId: String): DocumentReference {
+        return studentCollectionRef.document(studentId)
     }
 
-    suspend fun getStudent(userId: String): Student? {
-        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId)
-        val doc = userRef.get().await()
-        val student = doc.toObject(Student::class.java)!!
-        student.student_id = doc.id
-        student.events = getStudentEvents(doc)
-
-        return student
+    private suspend fun addStudent(student: Student): Void? {
+        val studentDocumentRef = studentCollectionRef.document(student.student_id!!)
+        return studentDocumentRef.set(student).await()
     }
 
-    suspend fun addStudent(student: Student): Void? {
-        val eventRef = userCollectionRef.document(student.student_id!!)
-        return eventRef.set(student).await()
+    suspend fun getStudent(studentId: String): Student? {
+        val studentDocument = getStudentDocument(studentCollectionRef, studentId).get().await()
+        return studentDocument.toObject(Student::class.java)!!
+    }
+
+    suspend fun updateStudent(oldStudent: Student, newStudent: Student) {
+        // If the student IDs are different, then we have to delete the old document,
+        if (oldStudent.student_id != newStudent.student_id) {
+            getStudentDocument(studentCollectionRef, oldStudent.student_id!!).delete()
+        }
+
+        // And a add a new one
+        addStudent(newStudent)
+    }
+
+    fun deleteStudent(student: Student) {
+        getStudentDocument(studentCollectionRef, student.student_id!!).delete()
     }
 }
