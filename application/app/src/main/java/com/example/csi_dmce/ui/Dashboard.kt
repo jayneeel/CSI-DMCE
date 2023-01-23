@@ -8,10 +8,8 @@ import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.Login
 import com.example.csi_dmce.auth.RegistrationActivity
 import com.example.csi_dmce.calendar.CSICalendar
-import com.example.csi_dmce.database.FirebaseDBWrapper.commitDBAction
 import com.example.csi_dmce.events.event_page
 import com.example.csi_dmce.profile.Profile
-import kotlinx.coroutines.runBlocking
 
 class Dashboard: AppCompatActivity() {
     private lateinit var btn_registration: Button
@@ -25,13 +23,6 @@ class Dashboard: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
-        db_button = findViewById(R.id.db_btn)
-        db_button.setOnClickListener {
-            runBlocking {
-                commitDBAction()
-            }
-        }
 
         btn_registration = findViewById(R.id.btn_dashboard_register)
         btn_registration.setOnClickListener {
