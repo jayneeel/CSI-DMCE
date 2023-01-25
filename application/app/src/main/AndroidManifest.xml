@@ -48,7 +48,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".auth.Login"
+            android:name=".auth.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

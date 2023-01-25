@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.csi_dmce.MainActivity
 import com.example.csi_dmce.R
-import com.example.csi_dmce.auth.Login
+import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.auth.LoginActivity
 import com.example.csi_dmce.auth.RegistrationActivity
 import com.example.csi_dmce.calendar.CSICalendar
 import com.example.csi_dmce.events.event_page
 import com.example.csi_dmce.profile.Profile
+
 
 class Dashboard: AppCompatActivity() {
     private lateinit var btn_registration: Button
@@ -17,8 +20,7 @@ class Dashboard: AppCompatActivity() {
     private lateinit var btn_profile: Button
     private lateinit var btn_events: Button
     private lateinit var btn_calendar: Button
-
-    private lateinit var db_button: Button
+    private lateinit var btn_logout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +34,7 @@ class Dashboard: AppCompatActivity() {
 
         btn_login = findViewById(R.id.btn_dashboard_login)
         btn_login.setOnClickListener {
-            val eventIntent = Intent(this, Login::class.java)
+            val eventIntent = Intent(this, LoginActivity::class.java)
             startActivity(eventIntent)
         }
 
@@ -52,6 +54,14 @@ class Dashboard: AppCompatActivity() {
         btn_calendar.setOnClickListener {
             val eventIntent = Intent(this, CSICalendar::class.java)
             startActivity(eventIntent)
+        }
+
+        btn_logout = findViewById(R.id.btn_dashboard_logout)
+        btn_logout.setOnClickListener {
+            CsiAuthWrapper.deleteAuthToken(applicationContext)
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            finishAffinity()
+            startActivity(intent)
         }
     }
 }

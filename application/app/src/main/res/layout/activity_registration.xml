@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/create_account_text"
+        android:id="@+id/text_view_create_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -22,7 +21,7 @@
 
 
     <EditText
-        android:id="@+id/user_name"
+        android:id="@+id/edit_text_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -30,10 +29,10 @@
         android:layout_marginRight="40dp"
         android:fontFamily="@font/lato"
         android:hint="Name"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_text" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_create_account" />
 
     <EditText
-        android:id="@+id/user_email"
+        android:id="@+id/edit_text_email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -41,10 +40,10 @@
         android:layout_marginRight="40dp"
         android:fontFamily="@font/lato"
         android:hint="Email"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_name" />
 
     <EditText
-        android:id="@+id/user_password"
+        android:id="@+id/edit_text_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -53,10 +52,10 @@
         android:fontFamily="@font/lato"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@+id/user_email" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_email" />
 
     <EditText
-        android:id="@+id/confirm_password"
+        android:id="@+id/edit_text_confirm_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -65,10 +64,10 @@
         android:fontFamily="@font/lato"
         android:hint="Confirm Password"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@+id/user_password" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
     <Button
-        android:id="@+id/register_button"
+        android:id="@+id/button_register"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginLeft="50dp"
@@ -83,11 +82,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_password"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_confirm_password"
         app:layout_constraintVertical_bias="0.391" />
 
     <TextView
-        android:id="@+id/account_exists_text"
+        android:id="@+id/text_view_account_exists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/lato"
@@ -98,6 +97,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_button" />
+        app:layout_constraintTop_toBottomOf="@+id/button_register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

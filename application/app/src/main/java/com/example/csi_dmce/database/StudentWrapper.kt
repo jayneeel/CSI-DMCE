@@ -1,5 +1,6 @@
 package com.example.csi_dmce.database
 
+import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
@@ -72,6 +73,19 @@ class StudentWrapper {
          */
         fun deleteStudent(student: Student) {
             getStudentDocument(studentCollectionRef, student.student_id!!).delete()
+        }
+
+        suspend fun getStudentByEmail(email: String): Student? {
+            val studentDocuments = studentCollectionRef
+                .get()
+                .await()
+
+            for (studentDocument in studentDocuments) {
+                if (studentDocument.get("email") == email) {
+                    return studentDocument.toObject(Student::class.java)
+                }
+            }
+            return null
         }
     }
 }
