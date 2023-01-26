@@ -38,16 +38,10 @@ class Dashboard: AppCompatActivity() {
             startActivity(eventIntent)
         }
 
-        btn_calendar = findViewById(R.id.btn_dashboard_calendar)
-        btn_calendar.setOnClickListener {
-            val eventIntent = Intent(this, CSICalendar::class.java)
-            startActivity(eventIntent)
-        }
-
         btn_logout = findViewById(R.id.btn_dashboard_logout)
         btn_logout.setOnClickListener {
             CsiAuthWrapper.deleteAuthToken(applicationContext)
-            val intent = Intent(applicationContext, RegistrationActivity::class.java)
+            val intent = Intent(applicationContext, WelcomeActivity::class.java)
             finishAffinity()
             startActivity(intent)
         }

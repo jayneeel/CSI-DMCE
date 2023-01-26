@@ -8,6 +8,7 @@ import com.example.csi_dmce.ui.Dashboard
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.auth.LoginActivity
 import com.example.csi_dmce.auth.RegistrationActivity
+import com.example.csi_dmce.ui.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,16 +17,7 @@ class MainActivity : AppCompatActivity() {
         val intent = if (CsiAuthWrapper.isAuthenticated(applicationContext)) {
             Intent(this, Dashboard::class.java)
         } else {
-            // If the app is running for the first time, then show registration, otherwise show the
-            // login screen.
-            val sharedPrefs = getSharedPreferences("csi_shared_prefs", Context.MODE_PRIVATE)
-            sharedPrefs.getBoolean("firstTime", true).let {
-                if (it) {
-                    Intent(this, RegistrationActivity::class.java)
-                } else {
-                    Intent(this, LoginActivity::class.java)
-                }
-            }
+            Intent(this, WelcomeActivity::class.java)
         }
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

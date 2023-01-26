@@ -41,7 +41,7 @@ class RegistrationActivity: AppCompatActivity() {
         btnRegister = findViewById(R.id.button_register)
         btnRegister.setOnClickListener {
             if (passwordsMatch) {
-                val newStudentAuth: StudentAuth =  StudentAuth(
+                val newStudentAuth =  StudentAuth(
                     email = etEmail.text.toString(),
                     password_hash = Helpers.getSha256Hash(etPassword.text.toString())
                 )
@@ -69,6 +69,7 @@ class RegistrationActivity: AppCompatActivity() {
         tvAccountExists = findViewById(R.id.text_view_account_exists)
         tvAccountExists.setOnClickListener{
             val intent = Intent(applicationContext, LoginActivity::class.java)
+            finish()
             startActivity(intent)
         }
     }

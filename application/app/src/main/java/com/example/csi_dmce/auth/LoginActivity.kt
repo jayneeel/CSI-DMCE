@@ -20,7 +20,7 @@ class LoginActivity: AppCompatActivity() {
     private lateinit var etLoginPassword  : EditText
     private lateinit var tvForgotPassword : TextView
     private lateinit var btnLogin          : Button
-    private lateinit var btnRegister: Button
+    private lateinit var tvNoAccount: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +65,11 @@ class LoginActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnRegister = findViewById(R.id.button_login_register)
-        btnRegister.setOnClickListener {
+        tvNoAccount = findViewById(R.id.text_view_new_account)
+        tvNoAccount.setOnClickListener{
+            val intent = Intent(applicationContext, RegistrationActivity::class.java)
             finish()
+            startActivity(intent)
         }
     }
 }
