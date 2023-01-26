@@ -1,72 +1,76 @@
 package com.example.csi_dmce.auth
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.csi_dmce.R
 
+import com.example.csi_dmce.R
+import com.example.csi_dmce.database.Student
+import com.example.csi_dmce.database.StudentAuth
+import com.example.csi_dmce.database.StudentAuthWrapper
+import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
+import kotlinx.coroutines.runBlocking
 
 class RegistrationActivity: AppCompatActivity() {
-    private lateinit var user_name_box: EditText
-    private lateinit var user_email_box: EditText
-    private lateinit var user_password_box: EditText
-    private lateinit var user_re_password_box: EditText
-
-    private lateinit var register_button: Button
-    private lateinit var account_exists:TextView
+    private lateinit var etName: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var etConfirmPassword: EditText
+    private lateinit var btnRegister: Button
+    private lateinit var tvAccountExists: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.registration_activity)
+        setContentView(R.layout.activity_registration)
 
-//        // Set components
-//        user_name_box = findViewById(R.id.user_name)
-//        user_email_box = findViewById(R.id.user_email)
-//        user_password_box = findViewById(R.id.user_password)
-//        user_re_password_box = findViewById(R.id.confirm_password)
-//        register_button = findViewById(R.id.register_button)
-//        account_exists=findViewById(R.id.account_exists_text)
-//
-//        // TODO: Move this in a better place so that we can maintain a singleton pattern.
-//        // Get DB Instance
-//        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "csi-dmce")
-//            .fallbackToDestructiveMigration()
-//            .allowMainThreadQueries()
-//            .build()
-//        var user_dao = db.userDao()
-//
-//        register_button.setOnClickListener {
-//            var user_name: String = user_name_box.text.toString()
-//            var user_email: String = user_email_box.text.toString()
-//            var user_password: String = user_password_box.text.toString()
-//            var re_user_password: String = user_re_password_box.text.toString()
-//
-//            // We'll use MD5 for now.
-//            var utils = Helpers()
-//            var passwd_hash: String = utils.get_md5_hash(user_password)
-//
-//            // If the confirmed password and the password match, then we can finally put the
-//            // user entry in the database.
-//            if (user_password == re_user_password) {
-//                var user: User = User(0, user_email, passwd_hash)
-//
-//                // TODO: Add some assertion to make sure we don't get a null reply.
-//                user_dao.insert(user)
-//                Toast.makeText(applicationContext, "Registered sucessfully!", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//        account_exists.setOnClickListener{
-//            val intent = Intent(this, Login::class.java)
-//            startActivity(intent)
-//            Toast.makeText(applicationContext, "Login to continue.", Toast.LENGTH_SHORT).show()
-//        }
+        etName = findViewById(R.id.edit_text_register_name)
+        etEmail = findViewById(R.id.edit_text_register_email)
+        etPassword = findViewById(R.id.edit_text_register_password)
+        etConfirmPassword = findViewById(R.id.edit_text_register_confirm_password)
 
+        val passwordsMatch: Boolean = etPassword.text
+            .toString() == etConfirmPassword.text.toString()
 
+        btnRegister = findViewById(R.id.button_register)
+        btnRegister.setOnClickListener {
+            if (passwordsMatch) {
+                val newStudentAuth =  StudentAuth(
+                    email = etEmail.text.toString(),
+                    password_hash = Helpers.getSha256Hash(etPassword.text.toString())
+                )
+                runBlocking {
+                    StudentAuthWrapper.addStudentAuth(newStudentAuth)
+                }
+
+                val sharedPref: SharedPreferences = getSharedPreferences(
+                    "csi_shared_prefs", Context.MODE_PRIVATE)
+
+                if (sharedPref.getBoolean("firstTime", true)) {
+                    sharedPref.edit().putBoolean("firstTime", false).apply()
+                }
+
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                finishAffinity()
+                startActivity(intent)
+
+            } else {
+                Toast.makeText(applicationContext, "Passwords don't match.", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        tvAccountExists = findViewById(R.id.text_view_account_exists)
+        tvAccountExists.setOnClickListener{
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
     }
 }

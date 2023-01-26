@@ -7,72 +7,42 @@
 
     <Button
         android:id="@+id/btn_dashboard_events"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="84dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="204dp"
         android:backgroundTint="@color/black"
         android:fontFamily="@font/lato"
         android:text="Events"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_dashboard_calendar"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_dashboard_calendar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="84dp"
-        android:backgroundTint="@color/black"
-        android:fontFamily="@font/lato"
-        android:text="Calendar"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/btn_dashboard_events"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/btn_dashboard_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_dashboard_profile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="204dp"
         android:backgroundTint="@color/black"
         android:fontFamily="@font/lato"
         android:text="Profile"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_dashboard_events" />
+        app:layout_constraintStart_toEndOf="@+id/btn_dashboard_events"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_dashboard_register"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="212dp"
+        android:id="@+id/btn_dashboard_logout"
+        android:layout_width="227dp"
+        android:layout_height="87dp"
+        android:layout_marginBottom="56dp"
         android:backgroundTint="@color/black"
         android:fontFamily="@font/lato"
-        android:text="Register"
+        android:text="Logout"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_dashboard_login" />
-
-    <Button
-        android:id="@+id/btn_dashboard_login"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="212dp"
-        android:backgroundTint="@color/black"
-        android:fontFamily="@font/lato"
-        android:text="Login"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_dashboard_register"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

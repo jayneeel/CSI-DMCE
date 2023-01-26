@@ -63,5 +63,8 @@ dependencies {
 
     // For serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
+
+    // For JWT authorization
+    implementation 'com.auth0:java-jwt:4.2.2'
 }
 apply plugin: 'com.google.gms.google-services'
