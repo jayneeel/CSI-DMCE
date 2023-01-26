@@ -26,18 +26,6 @@ class Dashboard: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        btn_registration = findViewById(R.id.btn_dashboard_register)
-        btn_registration.setOnClickListener {
-            val eventIntent = Intent(this, RegistrationActivity::class.java)
-            startActivity(eventIntent)
-        }
-
-        btn_login = findViewById(R.id.btn_dashboard_login)
-        btn_login.setOnClickListener {
-            val eventIntent = Intent(this, LoginActivity::class.java)
-            startActivity(eventIntent)
-        }
-
         btn_profile = findViewById(R.id.btn_dashboard_profile)
         btn_profile.setOnClickListener {
             val eventIntent = Intent(this, Profile::class.java)
@@ -59,7 +47,7 @@ class Dashboard: AppCompatActivity() {
         btn_logout = findViewById(R.id.btn_dashboard_logout)
         btn_logout.setOnClickListener {
             CsiAuthWrapper.deleteAuthToken(applicationContext)
-            val intent = Intent(applicationContext, LoginActivity::class.java)
+            val intent = Intent(applicationContext, RegistrationActivity::class.java)
             finishAffinity()
             startActivity(intent)
         }

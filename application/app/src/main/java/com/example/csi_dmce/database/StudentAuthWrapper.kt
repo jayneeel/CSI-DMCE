@@ -23,6 +23,13 @@ class StudentAuthWrapper {
             return studentDocument.toObject(StudentAuth::class.java)
         }
 
+        suspend fun addStudentAuth(studentAuth: StudentAuth) {
+            authCollectionRef
+                .document(studentAuth.email!!)
+                .set(studentAuth)
+                .await()
+        }
+
         /**
          * Given an email and a SHA-256 password hash, check if the credentials match with the
          * ones in the database.
