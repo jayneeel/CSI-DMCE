@@ -1,46 +1,43 @@
 package com.example.csi_dmce.database
 
-import com.google.firebase.firestore.CollectionReference
+import kotlinx.coroutines.tasks.await
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
-
 
 data class Attendance(
     @DocumentId
     var student_id: String?     = null,
     var event_id: String?       = null,
-    var first: Boolean?         = null,
-    var second: Boolean?         = null,
+    var first: Boolean?         = false,
+    var second: Boolean?        = false,
 )
 
 class AttendanceWrapper {
     companion object{
-        private val attendanceCollectionRef = FirebaseFirestore.getInstance().collection("/attendance/event_id/students/student_id")
+        private val attendanceCollectionRef = FirebaseFirestore.getInstance().collection("attendance")
 
-        suspend fun setSecond(attendance: Attendance):Void? {
-            val attendanceDocumentRef = attendanceCollectionRef.document(attendance.student_id!!)
-            return attendanceDocumentRef.set(attendance).await()
+        fun getStudentDocumentRef(eventID: String?, studentId: String?): DocumentReference {
+            return attendanceCollectionRef
+                .document(eventID!!)
+                .collection("students")
+                .document(studentId!!)
         }
 
-        private fun getAttendanceDocument(attendanceCollectionRef: CollectionReference, studentId: String): DocumentReference {
-            return attendanceCollectionRef.document(studentId)
-        }
-
-        suspend fun getattendance(studentId: String, eventID: String?) : Attendance? {
-            val attendanceDocuments = AttendanceWrapper.attendanceCollectionRef
+        suspend fun setSecond(eventID: String?, studentId: String?) :Boolean {
+            val attendanceDocumentRef = getStudentDocumentRef(eventID, studentId)
+            val attendanceObject: Attendance? = attendanceDocumentRef
                 .get()
                 .await()
+                .toObject(Attendance::class.java)
 
-            for (attendanceDocument in attendanceDocuments) {
-                if (attendanceDocument.get("student_id") == studentId) {
-                    return attendanceDocument.toObject(Attendance::class.java)
-                }
-            }
-            return null
+            attendanceObject!!.second = true
+            return true
         }
 
-
+        suspend fun getAttendance(studentId: String, eventID: String?) : Attendance? {
+            val studentDocumentRef: DocumentReference = getStudentDocumentRef(studentId, eventID)
+            return studentDocumentRef.get().await().toObject(Attendance::class.java)
         }
     }
+}
