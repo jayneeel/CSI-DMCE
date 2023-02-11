@@ -20,6 +20,8 @@ import kotlinx.coroutines.runBlocking
 
 
 class scan_qr : AppCompatActivity() {
+    private lateinit var qrContent: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scan_qr)
@@ -58,11 +60,10 @@ class scan_qr : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG)
                 .show()
+            qrContent = result.contents
         }
     }
-    }
-
-
+}
 
 class CaptureAct : CaptureActivity() {
 }
