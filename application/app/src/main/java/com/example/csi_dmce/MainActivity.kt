@@ -13,12 +13,13 @@ import com.example.csi_dmce.ui.WelcomeActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val intent = Intent(this, Dashboard::class.java)
 
-        val intent = if (CsiAuthWrapper.isAuthenticated(applicationContext)) {
-            Intent(this, Dashboard::class.java)
-        } else {
-            Intent(this, WelcomeActivity::class.java)
-        }
+//        val intent = if (CsiAuthWrapper.isAuthenticated(applicationContext)) {
+//            Intent(this, Dashboard::class.java)
+//        } else {
+//            Intent(this, WelcomeActivity::class.java)
+//        }
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

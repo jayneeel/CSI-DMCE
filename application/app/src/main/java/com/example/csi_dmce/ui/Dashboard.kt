@@ -6,17 +6,18 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.auth.EmailService
 import com.example.csi_dmce.events.EventPageActivity
 import com.example.csi_dmce.profile.Profile
 
 
 class Dashboard: AppCompatActivity() {
-    private lateinit var btn_registration: Button
-    private lateinit var btn_login: Button
+    private lateinit var btnEmail: Button
     private lateinit var btn_profile: Button
     private lateinit var btn_events: Button
     private lateinit var btn_calendar: Button
     private lateinit var btn_logout: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,11 @@ class Dashboard: AppCompatActivity() {
         btn_profile.setOnClickListener {
             val eventIntent = Intent(this, Profile::class.java)
             startActivity(eventIntent)
+        }
+
+        btnEmail = findViewById(R.id.btn_dashboard_email)
+        btnEmail.setOnClickListener {
+            EmailService.sendEmail("amitkulkarni7839@gmail.com")
         }
 
         btn_events = findViewById(R.id.btn_dashboard_events)

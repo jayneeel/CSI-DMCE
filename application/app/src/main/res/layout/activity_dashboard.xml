@@ -32,6 +32,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/btn_dashboard_email"
+        android:layout_width="280dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/lato"
+        android:text="Email Verification"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_dashboard_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/btn_dashboard_logout"
         android:layout_width="227dp"
         android:layout_height="87dp"

@@ -14,6 +14,7 @@ data class Student(
     val department      : String?         = null,
     val division        : String?         = null,
     val email           : String?         = null,
+    var email_id_verified: Boolean?       = null,
     val name            : String?         = null,
     val phone_number    : Long?           = null,
     val roll_number     : Int?            = null,
@@ -86,6 +87,14 @@ class StudentWrapper {
                 }
             }
             return null
+        }
+
+        suspend fun setStudentEmailIdVerificationStatus(studentId: String, email_id_verified: Boolean) {
+            val studentDocument = getStudentDocument(studentCollectionRef, studentId).get().await()
+            val oldStudentObject: Student = studentDocument.toObject(Student::class.java)!!
+            val newStudentObject: Student = studentDocument.toObject(Student::class.java)!!
+            newStudentObject.email_id_verified = email_id_verified
+            updateStudent(oldStudentObject, newStudentObject)
         }
     }
 }
