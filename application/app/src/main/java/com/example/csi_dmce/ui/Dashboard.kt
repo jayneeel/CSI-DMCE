@@ -9,6 +9,7 @@ import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.auth.EmailService
 import com.example.csi_dmce.events.EventPageActivity
 import com.example.csi_dmce.profile.Profile
+import kotlinx.coroutines.runBlocking
 
 
 class Dashboard: AppCompatActivity() {
@@ -31,7 +32,9 @@ class Dashboard: AppCompatActivity() {
 
         btnEmail = findViewById(R.id.btn_dashboard_email)
         btnEmail.setOnClickListener {
-            EmailService.sendEmail("amitkulkarni7839@gmail.com")
+            runBlocking {
+                EmailService.sendEmail("amitkulkarni7839@gmail.com")
+            }
         }
 
         btn_events = findViewById(R.id.btn_dashboard_events)

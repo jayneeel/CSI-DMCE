@@ -1,13 +1,26 @@
 package com.example.csi_dmce.auth
 
-import java.util.*
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
+import java.util.Properties
 import javax.mail.*
+import javax.mail.Message.RecipientType
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
 class EmailService {
     companion object {
-        fun sendEmail(emailRecipient: String) {
+        suspend fun sendEmail(emailRecipient: String) {
+            val smtpCredsRef = FirebaseFirestore
+                .getInstance()
+                .collection("credentials")
+                .document("smtp")
+                .get().await()
+
+            val SMTP_EMAIL = smtpCredsRef.get("email").toString()
+            val SMTP_PASSWORD = smtpCredsRef.get("password").toString()
+
             val props = Properties().apply {
                 put("mail.smtp.host", "smtp.gmail.com")
                 put("mail.smtp.socketFactory.port", "465")
@@ -18,7 +31,7 @@ class EmailService {
 
             val session = Session.getDefaultInstance(props, object : Authenticator() {
                 override fun getPasswordAuthentication(): PasswordAuthentication {
-                    return PasswordAuthentication("YOUR_EMAIL", "YOUR_PASSWORD")
+                    return PasswordAuthentication(SMTP_EMAIL, SMTP_PASSWORD)
                 }
             })
 
