@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage
 
 class EmailService {
     companion object {
-        suspend fun sendEmail(emailRecipient: String) {
+        suspend fun sendEmail(emailRecipient: String): Boolean {
             val smtpCredsRef = FirebaseFirestore
                 .getInstance()
                 .collection("credentials")
