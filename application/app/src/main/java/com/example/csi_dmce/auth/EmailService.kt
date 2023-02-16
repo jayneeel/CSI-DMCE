@@ -1,8 +1,13 @@
 package com.example.csi_dmce.auth
 
+import android.content.Context
+import com.example.csi_dmce.R
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 import java.util.Properties
 import javax.mail.*
 import javax.mail.Message.RecipientType
@@ -11,7 +16,27 @@ import javax.mail.internet.MimeMessage
 
 class EmailService {
     companion object {
-        suspend fun sendEmail(emailRecipient: String): Boolean {
+        private fun getHtmlTemplate(emailKind: String, ctx: Context): String {
+            val emailTemplateId: Int = when(emailKind) {
+                "verification" -> R.raw.email_verification_template
+                "password_reset" -> R.raw.reset_password_template
+                else -> throw NotImplementedError("Template doesn't exist")
+            }
+
+            val htmlTemplate: String? = try {
+                val inputStream = ctx.resources.openRawResource(emailTemplateId)
+                val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+                bufferedReader.use {
+                    it.readText()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                null
+            }
+            return htmlTemplate!!
+        }
+
+        suspend fun sendEmail(emailKind: String, emailRecipient: String, ctx: Context): Boolean {
             val smtpCredsRef = FirebaseFirestore
                 .getInstance()
                 .collection("credentials")
@@ -39,14 +64,19 @@ class EmailService {
                 val mimeMessage = MimeMessage(session).apply {
                     setFrom(InternetAddress("amitkulkarni2028@gmail.com"))
                     addRecipient(Message.RecipientType.TO, InternetAddress(emailRecipient))
-                    subject = subject
-                    setText("HEY THERE")
+                    subject = when(emailKind) {
+                        "verification" -> "Verify Email address for CSI-DMCE"
+                        "password_reset" -> "Reset your password for CSI-DMCE"
+                        else -> throw NotImplementedError("Email kind not supported")
+                    }
+                    setContent(getHtmlTemplate("verification", ctx), "text/html; charset=utf-8")
                 }
-
                 Transport.send(mimeMessage)
             } catch (e: MessagingException) {
                 e.printStackTrace()
             }
+
+            return true
         }
     }
 }

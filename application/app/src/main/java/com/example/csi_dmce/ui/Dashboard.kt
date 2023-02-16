@@ -39,7 +39,7 @@ class Dashboard: AppCompatActivity() {
             runBlocking {
                 launch {
                     withContext(Dispatchers.IO) {
-                        EmailService.sendEmail("amitkulkarni7839@gmail.com")
+                        EmailService.sendEmail("verification", "ruchabhidem@gmail.com", applicationContext)
                 }
             }
         }
