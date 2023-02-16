@@ -2,6 +2,7 @@ package com.example.csi_dmce.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
@@ -39,7 +40,7 @@ class Dashboard: AppCompatActivity() {
             runBlocking {
                 launch {
                     withContext(Dispatchers.IO) {
-                        EmailService.sendEmail("verification", "ruchabhidem@gmail.com", applicationContext)
+                        EmailService.sendEmail("1234", "password_reset", "amitkulkarni7839@gmail.com", applicationContext)
                 }
             }
         }

@@ -58,7 +58,7 @@ class StudentAuthWrapper {
             return studentAuthObject.email_verification!!
         }
 
-        suspend fun SetEmailVerificationStatus(emailId: String, verificationStatus: String): Boolean {
+        suspend fun SetEmailVerificationStatus(emailId: String, verificationStatus: String) {
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()
