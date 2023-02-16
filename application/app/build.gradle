@@ -38,6 +38,11 @@ android {
     }
     namespace 'com.example.csi_dmce'
 }
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
 
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
