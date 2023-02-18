@@ -35,6 +35,13 @@ class LoginActivity: AppCompatActivity() {
         btnLogin = findViewById(R.id.button_login)
         btnLogin.setOnClickListener {
             val email: String = etLoginEmail.text.toString()
+
+            val eIntnet=Intent(this, EmailVerification::class.java)
+            eIntnet.putExtra("login_email", email)
+
+            val fIntnet=Intent(this, setNewPassword::class.java)
+            fIntnet.putExtra("login_email", email)
+
             val passwordHash: String = Helpers.getSha256Hash(etLoginPassword.text.toString())
             runBlocking {
                 StudentAuthWrapper.checkStudentCredentials(email, passwordHash) {

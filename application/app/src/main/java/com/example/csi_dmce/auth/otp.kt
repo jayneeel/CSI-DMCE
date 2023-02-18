@@ -1,5 +1,6 @@
 package com.example.csi_dmce.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -15,7 +16,8 @@ class otp: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.email_otp)
 
-        val Button = findViewById<Button>(R.id.otpSubmit)
+        val otpButton = findViewById<Button>(R.id.otpSubmit)
+        otpButton.isEnabled = false
         otpTextView = findViewById(R.id.otp_view) as OTPTextView
         otpTextView.requestFocusOTP()
         otpTextView.otpListener = object : OTPListener {
@@ -24,14 +26,16 @@ class otp: AppCompatActivity() {
             }
 
             override fun onOTPComplete(otp: String) {
-                Toast.makeText(this@otp, "The OTP is $otp", Toast.LENGTH_SHORT).show()
-                //make unclickable button clickable
+                otpButton.isEnabled = true
+                val intent = Intent(applicationContext, EmailVerification::class.java)
+                intent.putExtra("entered_otp", otp)
+
+                val fintent= Intent(applicationContext, ForgotPasswordActivity::class.java)
+                fintent.putExtra("entered_otp", otp )
 
             }
         }
 
-        Button.setOnClickListener { otpTextView.showSuccess() }
-        //if all fields are filled and match
 
     }
 
