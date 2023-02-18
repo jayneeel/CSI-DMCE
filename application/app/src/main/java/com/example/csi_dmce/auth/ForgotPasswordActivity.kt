@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import kotlinx.coroutines.runBlocking
@@ -33,10 +34,13 @@ class ForgotPasswordActivity: AppCompatActivity() {
         otpSubmit.setOnClickListener {
             runBlocking {
                 if(entered_otp==fop_otp){
-                    val myIntnet= Intent(this@ForgotPasswordActivity, setNewPassword::class.java)
-                    startActivity(myIntnet)
-
+                    val myIntent= Intent(this@ForgotPasswordActivity, setNewPassword::class.java)
+                    startActivity(myIntent)
                 }
+                else  {
+                    Toast.makeText(applicationContext, "Incorrect OTP!", Toast.LENGTH_SHORT).show()
+                }
+
 
             }
         }
