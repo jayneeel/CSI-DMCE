@@ -39,7 +39,10 @@ class LoginActivity: AppCompatActivity() {
             val eIntnet=Intent(this, EmailVerification::class.java)
             eIntnet.putExtra("login_email", email)
 
-            val fIntnet=Intent(this, setNewPassword::class.java)
+            val fIntnet=Intent(this, ForgotPasswordActivity::class.java)
+            fIntnet.putExtra("login_email", email)
+
+            val sIntnet=Intent(this, setNewPassword::class.java)
             fIntnet.putExtra("login_email", email)
 
             val passwordHash: String = Helpers.getSha256Hash(etLoginPassword.text.toString())

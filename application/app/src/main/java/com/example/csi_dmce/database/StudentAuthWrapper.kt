@@ -1,9 +1,7 @@
 package com.example.csi_dmce.database
 
 import android.util.Log
-import com.google.firebase.firestore.DocumentId
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
 
 data class StudentAuth(
