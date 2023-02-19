@@ -18,14 +18,14 @@ class CsiAuthWrapper {
 
         private val jwtDocumentRef = FirebaseFirestore
             .getInstance()
-            .collection("JWT_SECRET")
+            .collection("credentials")
             .document("JWT_SECRET")
 
         private suspend fun generateAuthToken(student: Student, role: CSIRole): String {
             val secret: String = jwtDocumentRef
                 .get()
                 .await()
-                .get("SECRET")
+                .get("secret")
                 .toString()
 
             val algorithm: Algorithm = Algorithm.HMAC256(secret)

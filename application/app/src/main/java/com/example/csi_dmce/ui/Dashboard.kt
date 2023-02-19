@@ -2,21 +2,28 @@ package com.example.csi_dmce.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.auth.EmailService
 import com.example.csi_dmce.events.EventPageActivity
 import com.example.csi_dmce.profile.Profile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlin.concurrent.thread
 
 
 class Dashboard: AppCompatActivity() {
-    private lateinit var btn_registration: Button
-    private lateinit var btn_login: Button
+    private lateinit var btnEmail: Button
     private lateinit var btn_profile: Button
     private lateinit var btn_events: Button
     private lateinit var btn_calendar: Button
     private lateinit var btn_logout: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +33,16 @@ class Dashboard: AppCompatActivity() {
         btn_profile.setOnClickListener {
             val eventIntent = Intent(this, Profile::class.java)
             startActivity(eventIntent)
+        }
+
+        btnEmail = findViewById(R.id.btn_dashboard_email)
+        btnEmail.setOnClickListener {
+            runBlocking {
+                launch {
+                    withContext(Dispatchers.IO) {
+                        EmailService.sendEmail("1234", "password_reset", "amitkulkarni7839@gmail.com", applicationContext)
+                }
+            }
         }
 
         btn_events = findViewById(R.id.btn_dashboard_events)
@@ -42,4 +59,4 @@ class Dashboard: AppCompatActivity() {
             startActivity(intent)
         }
     }
-}
+}}
