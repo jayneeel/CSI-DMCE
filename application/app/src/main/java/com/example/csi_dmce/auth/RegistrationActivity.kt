@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.auth0.jwt.HeaderParams
 
 import com.example.csi_dmce.R
+import com.example.csi_dmce.attendance.GenerateQR
+import com.example.csi_dmce.attendance.scan_qr
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentAuth
 import com.example.csi_dmce.database.StudentAuthWrapper
@@ -34,6 +36,10 @@ class RegistrationActivity: AppCompatActivity() {
         etEmail = findViewById(R.id.edit_text_register_email)
         etPassword = findViewById(R.id.edit_text_register_password)
         etStudentId = findViewById(R.id.edit_text_register_student_id)
+
+        var student_id = etStudentId.text.toString()
+        val intent = Intent(applicationContext, scan_qr::class.java)
+        intent.putExtra("student_ID", student_id )
 
         btnRegister = findViewById(R.id.button_register)
         btnRegister.setOnClickListener {
@@ -77,5 +83,6 @@ class RegistrationActivity: AppCompatActivity() {
             finish()
             startActivity(intent)
         }
+
     }
 }

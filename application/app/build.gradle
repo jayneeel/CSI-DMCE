@@ -38,10 +38,14 @@ android {
     }
     namespace 'com.example.csi_dmce'
 }
+
 allprojects {
     repositories {
         maven { url 'https://jitpack.io' }
     }
+}
+repositories {
+    mavenCentral()
 }
 
 apply plugin: 'kotlin-kapt'
@@ -64,6 +68,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
 
+
     // Firebase dependencies:
     implementation "com.google.firebase:firebase-firestore:24.4.2"
     implementation "com.google.firebase:firebase-firestore-ktx:24.4.2"
@@ -83,5 +88,8 @@ dependencies {
 
     //for OTP
     implementation 'com.github.appsfeature:otp-view:1.0'
+    
+    //For QR code ZXing library
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 }
 apply plugin: 'com.google.gms.google-services'
