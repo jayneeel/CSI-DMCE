@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/otpSubmit"
+        android:id="@+id/button_submit_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"

@@ -41,7 +41,9 @@ class RegistrationActivity: AppCompatActivity() {
                 StudentWrapper.getStudentByEmail(etEmail.text.toString()) ?: run {
                     val newStudentAuth =  StudentAuth(
                         email = etEmail.text.toString(),
-                        password_hash = Helpers.getSha256Hash(etPassword.text.toString())
+                        password_hash = Helpers.getSha256Hash(etPassword.text.toString()),
+                        email_verification = null,
+                        forgot_password = null,
                     )
 
                     val newStudent = Student(
@@ -50,9 +52,12 @@ class RegistrationActivity: AppCompatActivity() {
                         department = etStudentId.text.toString().slice(6..7),
                         email = etEmail.text.toString()
                     )
+
+                    val otp: String = Helpers.generateOTP()
                     runBlocking {
-                        StudentAuthWrapper.addStudentAuth(newStudentAuth)
+                        StudentAuthWrapper.addStudentAuth(newStudentAuth, otp)
                         StudentWrapper.addStudent(newStudent)
+                        EmailService.sendEmail(otp, "verification", newStudent.email!!, applicationContext)
                     }
 
                     val sharedPref: SharedPreferences = getSharedPreferences(

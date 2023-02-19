@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage
 
 class EmailService {
     companion object {
-        fun getHtmlTemplate(emailKind: String, ctx: Context): String {
+        private fun getHtmlTemplate(emailKind: String, ctx: Context): String {
             val emailTemplateId: Int = when(emailKind) {
                 "verification" -> R.raw.email_verification_template
                 "password_reset" -> R.raw.reset_password_template

@@ -36,14 +36,14 @@ class LoginActivity: AppCompatActivity() {
         btnLogin.setOnClickListener {
             val email: String = etLoginEmail.text.toString()
 
-            val eIntnet=Intent(this, EmailVerification::class.java)
-            eIntnet.putExtra("login_email", email)
+            val eIntent=Intent(this, EmailVerificationActivity::class.java)
+            eIntent.putExtra("login_email", email)
 
-            val fIntnet=Intent(this, ForgotPasswordActivity::class.java)
-            fIntnet.putExtra("login_email", email)
+            val fIntent=Intent(this, ForgotPasswordActivity::class.java)
+            fIntent.putExtra("login_email", email)
 
-            val sIntnet=Intent(this, setNewPassword::class.java)
-            fIntnet.putExtra("login_email", email)
+            val sIntnet=Intent(this, SetPasswordActivity::class.java)
+            sIntnet.putExtra("login_email", email)
 
             val passwordHash: String = Helpers.getSha256Hash(etLoginPassword.text.toString())
             runBlocking {

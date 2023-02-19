@@ -8,7 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.database.StudentAuthWrapper
+import com.example.csi_dmce.utils.Helpers
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 
 // TODO: Implement this.
@@ -16,39 +18,33 @@ class ForgotPasswordActivity: AppCompatActivity() {
     private lateinit var etOldPassword: EditText
     private lateinit var etNewPassword: EditText
     private lateinit var etConfirmNewPassword: EditText
-    private lateinit var otpSubmit: Button
+    private lateinit var submitOtp: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.email_otp)
-        lateinit var otpSubmit: Button
-        otpSubmit=findViewById(R.id.otpSubmit)
+        setContentView(R.layout.email_otp_activity)
 
-        fun generateOTP(): String {
-            val genotp = (Math.random() * 9000).toInt() + 1000
-            return genotp.toString()
-        }
+        submitOtp = findViewById(R.id.button_submit_otp)
 
-        val fop_otp= generateOTP()
-        var entered_otp:String = intent.getStringExtra("entered_otp").toString() //check if entered before expiry time
-        val login_email:String = intent.getStringExtra("login_email").toString()
+        //check if entered before expiry time
+        var enteredOtp:String = intent.getStringExtra("entered_otp").toString()
+        val loginEmail:String = intent.getStringExtra("login_email").toString()
 
-        otpSubmit.setOnClickListener {
+        submitOtp.setOnClickListener {
             runBlocking {
-                val ev_map= StudentAuthWrapper.ForgotPasswordWrapper(login_email)
-                val c_timestamp=ev_map.get("creation_timestamp").toString().toInt()
-                val e_timestamp=ev_map.get("expiry_timestamp").toString().toInt()
-                if(entered_otp==fop_otp && c_timestamp < e_timestamp){
-                    val myIntent= Intent(this@ForgotPasswordActivity, setNewPassword::class.java)
+                val emailVerificationMap = StudentAuthWrapper.forgotPasswordWrapper(loginEmail)
+                val correctOtp = emailVerificationMap["otp"]
+                val expiryTimestamp = emailVerificationMap["expiry_timestamp"].toString().toInt()
+
+                val currentTimestamp = Helpers.generateUnixTimestampFromDate(Date())
+                if(enteredOtp == correctOtp && expiryTimestamp < currentTimestamp){
+                    val myIntent= Intent(applicationContext, SetPasswordActivity::class.java)
                     startActivity(myIntent)
                 }
                 else  {
                     Toast.makeText(applicationContext, "Incorrect OTP!", Toast.LENGTH_SHORT).show()
                 }
-
-
             }
         }
-
     }
 }
