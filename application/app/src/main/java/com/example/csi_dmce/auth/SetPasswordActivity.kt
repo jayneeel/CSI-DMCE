@@ -18,7 +18,7 @@ class SetPasswordActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_forgot_password)
+        setContentView(R.layout.activity_set_password)
 
         etNewPassword = findViewById(R.id.edit_text_fop_new_password)
         etConfirmNewPassword = findViewById(R.id.edit_text_fop_confirm_new_password)
@@ -27,7 +27,7 @@ class SetPasswordActivity: AppCompatActivity() {
         val loginEmailId: String = intent.getStringExtra("login_email").toString()
 
         otpSubmit.setOnClickListener {
-            if(etNewPassword==etConfirmNewPassword){
+            if (etNewPassword == etConfirmNewPassword) {
                 val newPassword = Helpers.getSha256Hash(etNewPassword.text.toString())
                 runBlocking {
                     StudentAuthWrapper.setPasswordWrapper(loginEmailId, newPassword)

@@ -26,7 +26,7 @@ class OTPVerificationActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.otp_verification_activity)
+        setContentView(R.layout.activity_otp_verification)
 
         emailId = intent.getStringExtra("email_id").toString()
         val verificationKind: String = intent.getStringExtra("verification_kind").toString()

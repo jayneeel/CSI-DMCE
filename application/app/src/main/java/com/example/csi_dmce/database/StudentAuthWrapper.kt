@@ -1,5 +1,7 @@
 package com.example.csi_dmce.database
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
@@ -17,6 +19,7 @@ data class StudentAuth(
 class StudentAuthWrapper {
     companion object {
         private val authCollectionRef = FirebaseFirestore.getInstance().collection("auth")
+
         suspend fun getByEmail(email: String): StudentAuth? {
             val studentDocument = authCollectionRef
                 .document(email)

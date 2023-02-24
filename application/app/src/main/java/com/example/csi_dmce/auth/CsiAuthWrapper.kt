@@ -6,14 +6,15 @@ import kotlinx.coroutines.tasks.await
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.interfaces.DecodedJWT
 import com.google.firebase.firestore.FirebaseFirestore
 
 import com.example.csi_dmce.database.Student
 
 class CsiAuthWrapper {
     companion object {
-        private fun getCsiSharedPrefs(context: Context): SharedPreferences {
-            return context.getSharedPreferences("csi_shared_prefs", Context.MODE_PRIVATE)
+        private fun getCsiSharedPrefs(ctx: Context): SharedPreferences {
+            return ctx.getSharedPreferences("csi_shared_prefs", Context.MODE_PRIVATE)
         }
 
         private val jwtDocumentRef = FirebaseFirestore
@@ -36,23 +37,30 @@ class CsiAuthWrapper {
                 .sign(algorithm)
         }
 
-        suspend fun setAuthToken(student: Student, role: CSIRole = CSIRole.USER, context: Context): Boolean {
+        suspend fun setAuthToken(ctx: Context, student: Student, role: CSIRole = CSIRole.USER): Boolean {
             val token: String = generateAuthToken(student, role)
-            return getCsiSharedPrefs(context)
+            return getCsiSharedPrefs(ctx)
                 .edit()
                 .putString("auth_token", token)
                 .commit()
         }
 
-        fun deleteAuthToken(context: Context): Boolean {
-            return getCsiSharedPrefs(context)
+        fun deleteAuthToken(ctx: Context): Boolean {
+            return getCsiSharedPrefs(ctx)
                 .edit()
                 .remove("auth_token")
                 .commit()
         }
 
-        fun isAuthenticated(context: Context): Boolean {
-            return getCsiSharedPrefs(context).getString("auth_token", null) != null
+        fun parseAuthToken(ctx: Context): DecodedJWT {
+            val token = getCsiSharedPrefs(ctx)
+                .getString("auth_token", null)
+
+            return JWT.decode(token)
+        }
+
+        fun isAuthenticated(ctx: Context): Boolean {
+            return getCsiSharedPrefs(ctx).getString("auth_token", null) != null
         }
     }
 }

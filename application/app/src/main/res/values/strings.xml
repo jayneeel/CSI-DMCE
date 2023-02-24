@@ -30,11 +30,6 @@
     <string name="APPDATEFORMAT">dd-MM-yyyy</string>
 
 
-
-
-
-
-
     <string name="desc_a">GitHub, Inc. is an Internet hosting service for software development and versioncontrol using Git. It provides the distributed version control of Git plus access control,bug tracking,software feature requests, task management, continuous integration, and wikis for every project.The main purpose of GitHub.com is to facilitate the version control and issue tracking aspects of software development. Labels, milestones, responsibility assignment, and a search engine are available for issue tracking. </string>
     <string name="desc_b">HACKTOBERFEST IS DIGITALOCEAN’S ANNUAL EVENT THAT ENCOURAGES PEOPLE TO CONTRIBUTE TO OPEN SOURCE THROUGHOUT OCTOBER. MUCH OF MODERN TECH INFRASTRUCTURE—INCLUDING SOME OF DIGITALOCEAN’S OWN PRODUCTS—RELIES ON OPEN-SOURCE PROJECTS BUILT AND MAINTAINED BY PASSIONATE PEOPLE WHO OFTEN DON’T HAVE THE STAFF OR BUDGETS TO DO MUCH MORE THAN KEEP THE PROJECT ALIVE. HACKTOBERFEST IS ALL ABOUT GIVING BACK TO THOSE PROJECTS, SHARPENING SKILLS, AND CELEBRATING ALL THINGS OPEN SOURCE, ESPECIALLY THE PEOPLE THAT MAKE OPEN SOURCE SO SPECIAL.</string>
     <string name="desc_c">Web development refers to the creating, building, and maintaining of websites. It includes aspects such as web design, web publishing, web programming, and database management. It is the creation of an application that works over the internet i.e. websites.Backend is the server side of a website. It is the part of the website that users cannot see and interact. </string>
@@ -42,14 +37,10 @@
     <string name="desc_e">The blocks record and track all the data shared within or in between the business entities. It stores the source, destination, and timestamp of the files. Information such as intellectual, copyright, or any physical asset has its digital records that are secured using blockchain technology.</string>
     <string name="desc_f">Flutter is also a portable user interface toolkit with many widgets and features. It offers a platform for programmers to easily create and distribute natively built, aesthetically pleasing applications for various platforms. What’s more, Flutter is in great demand in the software industry. Dart is a client-side programming language that offers several tools for creating apps, including design features, dynamic typing, interface, classes, and optional typing. Dart is made to function on both the browser and the server.</string>
     <string name="desc_g">Beginning with the Industrial Revolution era, a workshop may be a room, rooms or building which provides both the area and tools (or machinery) that may be required for the manufacture or repair of manufactured goods. Workshops were the only places of production until the advent of industrialization and the development of larger factories.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-
-
-
-
-
-
->>>>>>> main
+    >>>>>>> main
 </resources>
 
