@@ -15,11 +15,10 @@ import javax.mail.internet.MimeMessage
 // TODO: Refactor emailKind into a separate enum.
 class EmailService {
     companion object {
-        private fun getHtmlTemplate(emailKind: String, ctx: Context): String {
+        private fun getHtmlTemplate(emailKind: EmailKind, ctx: Context): String {
             val emailTemplateId: Int = when(emailKind) {
-                "email_verification" -> R.raw.email_verification_template
-                "password_reset_verification" -> R.raw.reset_password_template
-                else -> throw NotImplementedError("Template doesn't exist")
+                EmailKind.EMAIL_VERIFICATION -> R.raw.email_verification_template
+                EmailKind.RESET_PASSWORD_VERIFICATION -> R.raw.reset_password_template
             }
 
             val htmlTemplate: String? = try {
@@ -35,7 +34,7 @@ class EmailService {
             return htmlTemplate!!
         }
 
-        suspend fun sendEmail(otp: String, emailKind: String, emailRecipient: String, ctx: Context): Boolean {
+        suspend fun sendEmail(otp: String, emailKind: EmailKind, emailRecipient: String, ctx: Context): Boolean {
             val smtpCredsRef = FirebaseFirestore
                 .getInstance()
                 .collection("credentials")
@@ -68,9 +67,8 @@ class EmailService {
                     setFrom(InternetAddress(SMTP_EMAIL))
                     addRecipient(Message.RecipientType.TO, InternetAddress(emailRecipient))
                     subject = when(emailKind) {
-                        "email_verification" -> "Verify Email address for CSI-DMCE"
-                        "password_reset_verification" -> "Reset your password for CSI-DMCE"
-                        else -> throw NotImplementedError("Email kind not supported")
+                        EmailKind.EMAIL_VERIFICATION -> "Verify Email address for CSI-DMCE"
+                        EmailKind.RESET_PASSWORD_VERIFICATION -> "Reset your password for CSI-DMCE"
                     }
                     setContent(templateString, "text/html; charset=utf-8")
                 }

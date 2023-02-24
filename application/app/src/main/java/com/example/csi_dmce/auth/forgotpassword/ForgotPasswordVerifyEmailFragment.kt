@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.auth.EmailKind
 import com.example.csi_dmce.auth.EmailService
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
@@ -52,7 +53,7 @@ class ForgotPasswordVerifyEmailFragment : Fragment() {
             runBlocking {
                 EmailService.sendEmail(
                     otp,
-                    "reset_password",
+                    EmailKind.RESET_PASSWORD_VERIFICATION,
                     studentObject.email!!,
                     requireContext().applicationContext
                 )

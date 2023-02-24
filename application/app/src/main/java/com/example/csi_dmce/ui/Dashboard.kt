@@ -7,6 +7,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.auth.EmailKind
 import com.example.csi_dmce.auth.EmailService
 import com.example.csi_dmce.events.EventPageActivity
 import com.example.csi_dmce.profile.Profile
@@ -40,7 +41,7 @@ class Dashboard: AppCompatActivity() {
             runBlocking {
                 launch {
                     withContext(Dispatchers.IO) {
-                        EmailService.sendEmail("1234", "password_reset", "amitkulkarni7839@gmail.com", applicationContext)
+                        EmailService.sendEmail("1234", EmailKind.RESET_PASSWORD_VERIFICATION, "amitkulkarni7839@gmail.com", applicationContext)
                 }
             }
         }

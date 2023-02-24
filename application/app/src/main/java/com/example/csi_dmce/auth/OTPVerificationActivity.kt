@@ -29,7 +29,9 @@ class OTPVerificationActivity: AppCompatActivity() {
         setContentView(R.layout.activity_otp_verification)
 
         emailId = intent.getStringExtra("email_id").toString()
-        val verificationKind: String = intent.getStringExtra("verification_kind").toString()
+        val verificationKind: EmailKind = EmailKind
+            .fromKind(intent.getStringExtra("verification_kind").toString())
+
         btnOtpSubmit = findViewById(R.id.button_submit_otp)
         btnOtpSubmit.isEnabled = false
 
@@ -46,9 +48,8 @@ class OTPVerificationActivity: AppCompatActivity() {
 
         btnOtpSubmit.setOnClickListener {
             val otpIsCorrect: Boolean = when(verificationKind) {
-                "email_verification" -> runBlocking { performEmailVerificationTasks() }
-                "password_reset_verification" -> runBlocking { performPasswordResetTasks() }
-                else -> throw NotImplementedError("OTP verification kind is incorrect.")
+                EmailKind.EMAIL_VERIFICATION -> runBlocking { performEmailVerificationTasks() }
+                EmailKind.RESET_PASSWORD_VERIFICATION -> runBlocking { performPasswordResetTasks() }
             }
 
             if (!otpIsCorrect) {
@@ -56,9 +57,8 @@ class OTPVerificationActivity: AppCompatActivity() {
             }
 
             val intent: Intent = when(verificationKind) {
-                "email_verification" -> Intent(applicationContext, Dashboard::class.java)
-                "password_reset_verification" -> Intent(applicationContext, SetPasswordActivity::class.java)
-                else -> throw NotImplementedError("OTP verification kind is incorrect.")
+                EmailKind.EMAIL_VERIFICATION -> Intent(applicationContext, Dashboard::class.java)
+                EmailKind.RESET_PASSWORD_VERIFICATION -> Intent(applicationContext, SetPasswordActivity::class.java)
             }
             startActivity(intent)
         }

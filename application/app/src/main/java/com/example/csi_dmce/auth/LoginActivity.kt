@@ -41,7 +41,7 @@ class LoginActivity: AppCompatActivity() {
                     it?.let {
                         runBlocking {
                             Log.d("DB_AUTH", "YEAH RUNNING")
-                            CsiAuthWrapper.setAuthToken(student = it, context = applicationContext)
+                            CsiAuthWrapper.setAuthToken(student = it, ctx = applicationContext)
 
                             val sharedPref = getSharedPreferences(
                                 "csi_shared_prefs", Context.MODE_PRIVATE)

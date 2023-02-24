@@ -14,3 +14,16 @@ fun tokenRoleToCsiRole(tokenRole: String): CSIRole {
         else -> CSIRole.USER
     }
 }
+
+enum class EmailKind(val kind: String) {
+    EMAIL_VERIFICATION("email_verification"),
+    RESET_PASSWORD_VERIFICATION("password_reset_verification");
+
+    companion object {
+        // kind assumes two values:
+        // "email_verification" and "reset_password_verification"
+        fun fromKind(kind: String): EmailKind {
+            return valueOf(kind)
+        }
+    }
+}

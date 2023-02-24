@@ -76,7 +76,7 @@ class RegistrationActivity: AppCompatActivity() {
 
             runBlocking {
                 val otp = Helpers.generateOTP()
-                EmailService.sendEmail(otp, "email_verification", etEmail.text.toString(), applicationContext)
+                EmailService.sendEmail(otp, EmailKind.EMAIL_VERIFICATION, etEmail.text.toString(), applicationContext)
                 StudentAuthWrapper.createEmailVerificationHashMap(etEmail.text.toString(), otp)
             }
 

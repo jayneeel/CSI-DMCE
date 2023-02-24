@@ -10,8 +10,6 @@ import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.SetPasswordActivity
 
 class ForgotPasswordActivity: AppCompatActivity() {
-    private var emailIdExists: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
