@@ -44,6 +44,11 @@
 
     <Button
         android:id="@+id/button_submit_otp"
+        android:width="200dp"
+        android:height="100dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        android:fontFamily="@font/lato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"

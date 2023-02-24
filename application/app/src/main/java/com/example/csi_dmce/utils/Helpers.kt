@@ -7,7 +7,9 @@ import java.util.*
 
 class Helpers {
     companion object {
-        val DAY_IN_MS = 86400000
+        const val DAY_IN_MS = 24 * 60 * 60 * 1000
+        const val TEN_MINUTES_IN_MS = 10 * 60 * 1000
+
         /**
          * Returns a SHA-256 Hash of a given string.
          *

@@ -16,8 +16,8 @@ class EmailService {
     companion object {
         private fun getHtmlTemplate(emailKind: String, ctx: Context): String {
             val emailTemplateId: Int = when(emailKind) {
-                "verification" -> R.raw.email_verification_template
-                "password_reset" -> R.raw.reset_password_template
+                "email_verification" -> R.raw.email_verification_template
+                "password_reset_verification" -> R.raw.reset_password_template
                 else -> throw NotImplementedError("Template doesn't exist")
             }
 
@@ -67,8 +67,8 @@ class EmailService {
                     setFrom(InternetAddress(SMTP_EMAIL))
                     addRecipient(Message.RecipientType.TO, InternetAddress(emailRecipient))
                     subject = when(emailKind) {
-                        "verification" -> "Verify Email address for CSI-DMCE"
-                        "password_reset" -> "Reset your password for CSI-DMCE"
+                        "email_verification" -> "Verify Email address for CSI-DMCE"
+                        "password_reset_verification" -> "Reset your password for CSI-DMCE"
                         else -> throw NotImplementedError("Email kind not supported")
                     }
                     setContent(templateString, "text/html; charset=utf-8")

@@ -1,11 +1,8 @@
 package com.example.csi_dmce.database
 
-import android.util.Log
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.*
-import com.google.rpc.Help
 import kotlinx.coroutines.tasks.await
-import java.time.Instant.now
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -14,7 +11,7 @@ data class StudentAuth(
     val email: String?                              = null,
     var password_hash: String?                      = null,
     var email_verification: HashMap<String, Any>?   = null,
-    val forgot_password: HashMap<String, Any>?      = null
+    var forgot_password: HashMap<String, Any>?      = null
 )
 
 class StudentAuthWrapper {
@@ -29,24 +26,11 @@ class StudentAuthWrapper {
             return studentDocument.toObject(StudentAuth::class.java)
         }
 
-        suspend fun addStudentAuth(studentAuth: StudentAuth, otp: String): String {
-            val creationDate: Date = Date()
-            val expiryDate: Date = Date(creationDate.time + Helpers.DAY_IN_MS)
-
-            val emailVerificationMap = hashMapOf<String, Any>()
-            emailVerificationMap["creation_timestamp"] = Helpers.generateUnixTimestampFromDate(creationDate)
-            emailVerificationMap["expiry_timestamp"] = Helpers.generateUnixTimestampFromDate(expiryDate)
-            emailVerificationMap["otp"] = otp
-            emailVerificationMap["verification_status"] = "unverified"
-
-
-            studentAuth.email_verification = emailVerificationMap
+        suspend fun addStudentAuth(studentAuth: StudentAuth) {
             authCollectionRef
                 .document(studentAuth.email!!)
                 .set(studentAuth)
                 .await()
-
-            return emailVerificationMap["otp"].toString()
         }
 
         /**
@@ -65,7 +49,24 @@ class StudentAuthWrapper {
 
             return callback(null)
         }
-        suspend fun EmailVerificationWrapper(emailId: String): HashMap<String, Any> {
+
+        suspend fun createEmailVerificationHashMap(emailId: String, otp: String) {
+            val studentAuthObject = getByEmail(emailId)
+
+            val currentDate = Date()
+            val futureDate = Date(currentDate.time + Helpers.DAY_IN_MS)
+
+            val emailVerificationHashMap = hashMapOf<String, Any>()
+            emailVerificationHashMap["otp"] = otp.toInt()
+            emailVerificationHashMap["creation_timestamp"] = Helpers.generateUnixTimestampFromDate(currentDate)
+            emailVerificationHashMap["expiry_timestamp"] = Helpers.generateUnixTimestampFromDate(futureDate)
+            emailVerificationHashMap["verification_status"] = "pending"
+
+            studentAuthObject!!.email_verification = emailVerificationHashMap
+            addStudentAuth(studentAuthObject)
+        }
+
+        suspend fun getEmailVerificationHashMap(emailId: String): HashMap<String, Any> {
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()

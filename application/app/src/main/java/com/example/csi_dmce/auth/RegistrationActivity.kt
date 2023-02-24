@@ -55,9 +55,8 @@ class RegistrationActivity: AppCompatActivity() {
 
                     val otp: String = Helpers.generateOTP()
                     runBlocking {
-                        StudentAuthWrapper.addStudentAuth(newStudentAuth, otp)
+                        StudentAuthWrapper.addStudentAuth(newStudentAuth)
                         StudentWrapper.addStudent(newStudent)
-                        EmailService.sendEmail(otp, "verification", newStudent.email!!, applicationContext)
                     }
 
                     val sharedPref: SharedPreferences = getSharedPreferences(
@@ -74,6 +73,17 @@ class RegistrationActivity: AppCompatActivity() {
 
                 Toast.makeText(applicationContext, "Account already exists", Toast.LENGTH_SHORT).show()
             }
+
+            runBlocking {
+                val otp = Helpers.generateOTP()
+                EmailService.sendEmail(otp, "email_verification", etEmail.text.toString(), applicationContext)
+                StudentAuthWrapper.createEmailVerificationHashMap(etEmail.text.toString(), otp)
+            }
+
+            val intent = Intent(applicationContext, OTPVerificationActivity::class.java)
+            intent.putExtra("email_id", etEmail.text.toString())
+            intent.putExtra("verification_kind", "email_verification")
+            startActivity(intent)
         }
 
         tvAccountExists = findViewById(R.id.text_view_account_exists)

@@ -35,16 +35,6 @@ class LoginActivity: AppCompatActivity() {
         btnLogin = findViewById(R.id.button_login)
         btnLogin.setOnClickListener {
             val email: String = etLoginEmail.text.toString()
-
-            val eIntent=Intent(this, EmailVerificationActivity::class.java)
-            eIntent.putExtra("login_email", email)
-
-            val fIntent=Intent(this, ForgotPasswordActivity::class.java)
-            fIntent.putExtra("login_email", email)
-
-            val sIntnet=Intent(this, SetPasswordActivity::class.java)
-            sIntnet.putExtra("login_email", email)
-
             val passwordHash: String = Helpers.getSha256Hash(etLoginPassword.text.toString())
             runBlocking {
                 StudentAuthWrapper.checkStudentCredentials(email, passwordHash) {
@@ -73,7 +63,8 @@ class LoginActivity: AppCompatActivity() {
 
         tvForgotPassword = findViewById(R.id.text_view_forgot_password)
         tvForgotPassword.setOnClickListener{
-            val intent = Intent(applicationContext, ForgotPasswordActivity::class.java)
+            // TODO: Implement ForgotPasswordActivity
+            val intent = Intent(applicationContext, OTPVerificationActivity::class.java)
             startActivity(intent)
         }
 
