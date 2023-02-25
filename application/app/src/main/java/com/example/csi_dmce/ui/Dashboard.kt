@@ -2,20 +2,17 @@ package com.example.csi_dmce.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.auth.EmailKind
 import com.example.csi_dmce.auth.EmailService
-import com.example.csi_dmce.events.EventPageActivity
 import com.example.csi_dmce.profile.Profile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import kotlin.concurrent.thread
 
 
 class Dashboard: AppCompatActivity() {
