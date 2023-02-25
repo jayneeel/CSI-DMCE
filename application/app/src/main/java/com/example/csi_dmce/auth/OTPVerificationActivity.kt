@@ -54,6 +54,7 @@ class OTPVerificationActivity: AppCompatActivity() {
 
             if (!otpIsCorrect) {
                 Toast.makeText(applicationContext, "The given OTP is incorrect!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             val intent: Intent = when(verificationKind) {
@@ -81,13 +82,15 @@ class OTPVerificationActivity: AppCompatActivity() {
             return false
         }
 
-
         // Updating auth
         StudentAuthWrapper.setEmailVerificationStatus(emailId, "verified")
 
         // Updating user
         val studentObj = StudentWrapper.getStudentByEmail(emailId)!!
         StudentWrapper.setStudentEmailIdVerificationStatus(studentObj.email!!, true)
+
+        // Set auth token
+        CsiAuthWrapper.setAuthToken(applicationContext, studentObj)
 
         return true
     }

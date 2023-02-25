@@ -53,7 +53,6 @@ class RegistrationActivity: AppCompatActivity() {
                         email = etEmail.text.toString()
                     )
 
-                    val otp: String = Helpers.generateOTP()
                     runBlocking {
                         StudentAuthWrapper.addStudentAuth(newStudentAuth)
                         StudentWrapper.addStudent(newStudent)

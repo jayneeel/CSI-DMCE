@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.MainActivity
 import com.example.csi_dmce.R
+import com.example.csi_dmce.auth.forgotpassword.ForgotPasswordActivity
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.utils.Helpers
 import kotlinx.coroutines.runBlocking
@@ -63,8 +64,7 @@ class LoginActivity: AppCompatActivity() {
 
         tvForgotPassword = findViewById(R.id.text_view_forgot_password)
         tvForgotPassword.setOnClickListener{
-            // TODO: Implement ForgotPasswordActivity
-            val intent = Intent(applicationContext, OTPVerificationActivity::class.java)
+            val intent = Intent(applicationContext, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 

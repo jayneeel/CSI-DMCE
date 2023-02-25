@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.csi_dmce.R
+import com.example.csi_dmce.auth.OTPVerificationActivity
 import com.example.csi_dmce.auth.SetPasswordActivity
 
 class ForgotPasswordActivity: AppCompatActivity() {
@@ -21,7 +22,7 @@ class ForgotPasswordActivity: AppCompatActivity() {
         val emailVerificationViewModel = ViewModelProvider(this).get(EmailVerificationViewModel::class.java)
         emailVerificationViewModel.emailIsVerified.observe(this, Observer { emailIdExists ->
             if (emailIdExists) {
-                val intent = Intent(applicationContext, SetPasswordActivity::class.java)
+                val intent = Intent(applicationContext, OTPVerificationActivity::class.java)
                 startActivity(intent)
             }
             Toast.makeText(applicationContext, "Your Email ID isn't correct.", Toast.LENGTH_SHORT).show()

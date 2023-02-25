@@ -12,7 +12,6 @@ import javax.mail.*
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
-// TODO: Refactor emailKind into a separate enum.
 class EmailService {
     companion object {
         private fun getHtmlTemplate(emailKind: EmailKind, ctx: Context): String {
