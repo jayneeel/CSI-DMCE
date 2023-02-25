@@ -1,20 +1,25 @@
 package com.example.csi_dmce.database
 
-import android.util.Log
+import android.content.Context
+import android.content.SharedPreferences
+import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
+import java.util.*
+import kotlin.collections.HashMap
 
 data class StudentAuth(
     @DocumentId
     val email: String?                              = null,
     var password_hash: String?                      = null,
-    val email_verification: HashMap<String, Any>?   = null,
-    val forgot_password: HashMap<String, Any>?      = null
+    var email_verification: HashMap<String, Any>?   = null,
+    var forgot_password: HashMap<String, Any>?      = null
 )
 
 class StudentAuthWrapper {
     companion object {
         private val authCollectionRef = FirebaseFirestore.getInstance().collection("auth")
+
         suspend fun getByEmail(email: String): StudentAuth? {
             val studentDocument = authCollectionRef
                 .document(email)
@@ -40,16 +45,31 @@ class StudentAuthWrapper {
          * @return a `Student` object if the student authenticates with valid credentials.
          */
         suspend fun checkStudentCredentials(email: String, passwordHash: String, callback: (Student?) -> Unit) {
-            Log.d("DB_AUTH", email.toString() + " AND HASH " + passwordHash.toString())
             val student: StudentAuth? = getByEmail(email)
-            Log.d("DB_AUTH", student.toString())
             if (student?.password_hash == passwordHash) {
                 return callback(StudentWrapper.getStudentByEmail(email))
             }
 
             return callback(null)
         }
-        suspend fun EmailVerificationWrapper(emailId: String): HashMap<String, Any> {
+
+        suspend fun createEmailVerificationHashMap(emailId: String, otp: String) {
+            val studentAuthObject = getByEmail(emailId)
+
+            val currentDate = Date()
+            val futureDate = Date(currentDate.time + Helpers.DAY_IN_MS)
+
+            val emailVerificationHashMap = hashMapOf<String, Any>()
+            emailVerificationHashMap["otp"] = otp.toInt()
+            emailVerificationHashMap["creation_timestamp"] = Helpers.generateUnixTimestampFromDate(currentDate)
+            emailVerificationHashMap["expiry_timestamp"] = Helpers.generateUnixTimestampFromDate(futureDate)
+            emailVerificationHashMap["verification_status"] = "pending"
+
+            studentAuthObject!!.email_verification = emailVerificationHashMap
+            addStudentAuth(studentAuthObject)
+        }
+
+        suspend fun getEmailVerificationHashMap(emailId: String): HashMap<String, Any> {
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()
@@ -58,7 +78,7 @@ class StudentAuthWrapper {
             return studentAuthObject.email_verification!!
         }
 
-        suspend fun SetEmailVerificationStatus(emailId: String, verificationStatus: String) {
+        suspend fun setEmailVerificationStatus(emailId: String, verificationStatus: String) {
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()
@@ -68,7 +88,7 @@ class StudentAuthWrapper {
             authCollectionRef.document(emailId).set(studentAuthObject).await()
         }
 
-        suspend fun ForgotPasswordWrapper(emailId: String): HashMap<String, Any> {
+        suspend fun forgotPasswordWrapper(emailId: String): HashMap<String, Any> {
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()
@@ -77,7 +97,7 @@ class StudentAuthWrapper {
             return studentAuthObject.forgot_password!!
         }
 
-        suspend fun SetPasswordWrapper(emailId: String, passwordHash: String) {
+        suspend fun setPasswordWrapper(emailId: String, passwordHash: String) {
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()

@@ -1,6 +1,6 @@
 package com.example.csi_dmce.database
 
-import android.util.Log
+import android.content.Context
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
@@ -89,12 +89,11 @@ class StudentWrapper {
             return null
         }
 
-        suspend fun setStudentEmailIdVerificationStatus(studentId: String, email_id_verified: Boolean) {
+        suspend fun setStudentEmailIdVerificationStatus(studentId: String, emailIdVerified: Boolean) {
             val studentDocument = getStudentDocument(studentCollectionRef, studentId).get().await()
-            val oldStudentObject: Student = studentDocument.toObject(Student::class.java)!!
-            val newStudentObject: Student = studentDocument.toObject(Student::class.java)!!
-            newStudentObject.email_id_verified = email_id_verified
-            updateStudent(oldStudentObject, newStudentObject)
+            val studentObject: Student = studentDocument.toObject(Student::class.java)!!
+            studentObject.email_id_verified = emailIdVerified
+            studentCollectionRef.document(studentId).set(studentObject)
         }
     }
 }

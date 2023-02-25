@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.MainActivity
 import com.example.csi_dmce.R
+import com.example.csi_dmce.auth.forgotpassword.ForgotPasswordActivity
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.utils.Helpers
 import kotlinx.coroutines.runBlocking
@@ -35,23 +36,13 @@ class LoginActivity: AppCompatActivity() {
         btnLogin = findViewById(R.id.button_login)
         btnLogin.setOnClickListener {
             val email: String = etLoginEmail.text.toString()
-
-            val eIntnet=Intent(this, EmailVerification::class.java)
-            eIntnet.putExtra("login_email", email)
-
-            val fIntnet=Intent(this, ForgotPasswordActivity::class.java)
-            fIntnet.putExtra("login_email", email)
-
-            val sIntnet=Intent(this, setNewPassword::class.java)
-            fIntnet.putExtra("login_email", email)
-
             val passwordHash: String = Helpers.getSha256Hash(etLoginPassword.text.toString())
             runBlocking {
                 StudentAuthWrapper.checkStudentCredentials(email, passwordHash) {
                     it?.let {
                         runBlocking {
                             Log.d("DB_AUTH", "YEAH RUNNING")
-                            CsiAuthWrapper.setAuthToken(student = it, context = applicationContext)
+                            CsiAuthWrapper.setAuthToken(student = it, ctx = applicationContext)
 
                             val sharedPref = getSharedPreferences(
                                 "csi_shared_prefs", Context.MODE_PRIVATE)

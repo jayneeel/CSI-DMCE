@@ -7,6 +7,9 @@ import java.util.*
 
 class Helpers {
     companion object {
+        const val DAY_IN_MS = 24 * 60 * 60 * 1000
+        const val TEN_MINUTES_IN_MS = 10 * 60 * 1000
+
         /**
          * Returns a SHA-256 Hash of a given string.
          *
@@ -51,6 +54,11 @@ class Helpers {
          */
         fun generateUnixTimestampFromDate(date: Date): Long {
             return (date.time / 1000)
+        }
+
+        fun generateOTP(): String {
+            val otp = (Math.random() * 9000).toInt() + 1000
+            return otp.toString()
         }
 
         fun getAcademicYear(admission_year: Int): String {

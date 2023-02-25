@@ -47,7 +47,9 @@ class RegistrationActivity: AppCompatActivity() {
                 StudentWrapper.getStudentByEmail(etEmail.text.toString()) ?: run {
                     val newStudentAuth =  StudentAuth(
                         email = etEmail.text.toString(),
-                        password_hash = Helpers.getSha256Hash(etPassword.text.toString())
+                        password_hash = Helpers.getSha256Hash(etPassword.text.toString()),
+                        email_verification = null,
+                        forgot_password = null,
                     )
 
                     val newStudent = Student(
@@ -56,6 +58,7 @@ class RegistrationActivity: AppCompatActivity() {
                         department = etStudentId.text.toString().slice(6..7),
                         email = etEmail.text.toString()
                     )
+
                     runBlocking {
                         StudentAuthWrapper.addStudentAuth(newStudentAuth)
                         StudentWrapper.addStudent(newStudent)
@@ -75,6 +78,17 @@ class RegistrationActivity: AppCompatActivity() {
 
                 Toast.makeText(applicationContext, "Account already exists", Toast.LENGTH_SHORT).show()
             }
+
+            runBlocking {
+                val otp = Helpers.generateOTP()
+                EmailService.sendEmail(otp, EmailKind.EMAIL_VERIFICATION, etEmail.text.toString(), applicationContext)
+                StudentAuthWrapper.createEmailVerificationHashMap(etEmail.text.toString(), otp)
+            }
+
+            val intent = Intent(applicationContext, OTPVerificationActivity::class.java)
+            intent.putExtra("email_id", etEmail.text.toString())
+            intent.putExtra("verification_kind", "email_verification")
+            startActivity(intent)
         }
 
         tvAccountExists = findViewById(R.id.text_view_account_exists)
