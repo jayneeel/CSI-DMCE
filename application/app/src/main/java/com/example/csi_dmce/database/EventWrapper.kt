@@ -17,7 +17,8 @@ data class Event (
     var datetime    : Long?         = null,
     var description : String?       = null,
     var poster_url  : String?       = null,
-    var attendees   : MutableList<String>? = null
+    var attendees   : MutableList<String>? = null,
+    var uuid        : String?       =null
 )
 
 class EventWrapper {
@@ -76,6 +77,14 @@ class EventWrapper {
          */
         fun deleteEvent(event: Event) {
             getEventDocument(eventsCollectionRef, event.eventId!!).delete()
+        }
+
+        suspend fun getEventUUID(eventId: String) : String? {
+            val eventDocument= eventsCollectionRef
+                .document(eventId)
+                .get()
+                .await()
+            return eventDocument.getString("uuid")
         }
     }
 }
