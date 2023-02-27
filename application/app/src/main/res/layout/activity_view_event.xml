@@ -9,49 +9,81 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/lato"
         android:text="Event Title"
         android:textColor="#3A3A3A"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="320dp"
-        android:layout_height="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="50dp"
         android:scaleType="fitXY"
-        android:src="@drawable/codeathon"
+        android:src="@drawable/csi_event_poster"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="122dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/textView5"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Description"
-        android:textColor="#3A3A3A"
-        android:textSize="24dp"
-        android:textStyle="bold"
+        android:src="@drawable/ic_event_location"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="324dp">
+    </ImageView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_date"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:elevation="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+
+        <TextView
+            android:id="@+id/text_view_event_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Nov"
+            android:textColor="#3A3A3A"
+            android:fontFamily="@font/lato"
+            android:textAlignment="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/text_view_event_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="28"
+            android:textColor="#3A3A3A"
+            android:textFontWeight="800"
+            android:fontFamily="@font/lato"
+            android:textAlignment="center">
+        </TextView>
+
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="24dp"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/lato"
         android:text="@string/loremipsum"
@@ -60,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        tools:layout_editor_absoluteY="366dp" />
 
     <TextView
         android:id="@+id/textView9"
@@ -89,6 +121,7 @@
         tools:layout_editor_absoluteY="532dp" />
 
     <TextView
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -115,14 +148,15 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="56dp"
         android:fontFamily="@font/lato"
         android:text="Date:"
         android:textColor="#3A3A3A"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        tools:layout_editor_absoluteX="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView10"
@@ -139,39 +173,39 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--        style="@style/Widget.Material3.Button"-->
-<!--        app:cornerRadius="0dp"-->
-<!--        android:id="@+id/filledButton"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginBottom="28dp"-->
-<!--        android:backgroundTint="#0D1542"-->
-<!--        android:fontFamily="@font/lato"-->
-<!--        android:text="Register"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textSize="20dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filledButton"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="#0D1542"
+        android:fontFamily="@font/lato"
+        android:text="Register"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button"
-            app:cornerRadius="0dp"
-            android:id="@+id/filledButton"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="28dp"
-            android:backgroundTint="#15420d"
-            android:drawableLeft="@drawable/ic_event_check_mark"
-            android:fontFamily="@font/lato"
-            android:text="Registered"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <!--        <com.google.android.material.button.MaterialButton-->
+    <!--            style="@style/Widget.Material3.Button"-->
+    <!--            app:cornerRadius="0dp"-->
+    <!--            android:id="@+id/filledButton"-->
+    <!--            android:layout_width="200dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_marginBottom="28dp"-->
+    <!--            android:backgroundTint="#388e3c"-->
+    <!--            android:drawableLeft="@drawable/ic_event_check_mark"-->
+    <!--            android:fontFamily="@font/lato"-->
+    <!--            android:text="Registered"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textStyle="bold"-->
+    <!--            android:textSize="20dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
