@@ -3,12 +3,17 @@ package com.example.csi_dmce.utils
 import com.google.firebase.firestore.ServerTimestamp
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Helpers {
     companion object {
         const val DAY_IN_MS = 24 * 60 * 60 * 1000
         const val TEN_MINUTES_IN_MS = 10 * 60 * 1000
+
+        val dateFormat = SimpleDateFormat("EEEE dd MMMM, yyyy")
+        val timeFormat = SimpleDateFormat("HH:mm a")
+
 
         /**
          * Returns a SHA-256 Hash of a given string.
@@ -54,6 +59,11 @@ class Helpers {
          */
         fun generateUnixTimestampFromDate(date: Date): Long {
             return (date.time / 1000)
+        }
+
+
+        fun generateDateFromUnixTimestamp(unixTimestamp: Long): Date {
+            return Date(unixTimestamp * 1000)
         }
 
         fun generateOTP(): String {
