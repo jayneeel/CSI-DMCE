@@ -9,17 +9,14 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.auth0.jwt.HeaderParams
 
 import com.example.csi_dmce.R
-import com.example.csi_dmce.attendance.GenerateQR
 import com.example.csi_dmce.attendance.scan_qr
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentAuth
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
-import com.google.rpc.Help
 import kotlinx.coroutines.runBlocking
 
 class RegistrationActivity: AppCompatActivity() {

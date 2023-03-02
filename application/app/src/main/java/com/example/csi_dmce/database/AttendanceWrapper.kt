@@ -31,7 +31,7 @@ class AttendanceWrapper {
                 .await()
         }
 
-        private suspend fun getAttendanceObject(studentID: String, eventUUID: String) : Attendance? {
+        suspend fun getAttendanceObject(studentID: String, eventUUID: String) : Attendance? {
             val attendanceDocument = getAttendanceDocument(studentID, eventUUID)
             return attendanceDocument.toObject(Attendance::class.java)
         }
