@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/text_view_event_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -29,6 +29,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/image_view_event_poster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -51,7 +52,7 @@
         android:layout_marginTop="12dp"
         android:src="@drawable/ic_event_location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/text_view_event_title"></ImageView>
 
     <ImageView
         android:id="@+id/icon_event_time"
@@ -80,10 +81,11 @@
             android:fontFamily="@font/lato"
             android:text="Nov"
             android:textAlignment="center"
-            android:textColor="#3A3A3A"></TextView>
+            android:textColor="#3A3A3A">
+        </TextView>
 
         <TextView
-            android:id="@+id/text_view_event_min_date"
+            android:id="@+id/text_view_event_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -91,27 +93,30 @@
             android:text="28"
             android:textAlignment="center"
             android:textColor="#3A3A3A"
-            android:textFontWeight="800"></TextView>
+            android:textFontWeight="800">
+        </TextView>
 
 
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/text_view_event_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/lato"
         android:text="@string/loremipsum"
         android:textAlignment="center"
         android:textColor="#3A3A3A"
+        app:layout_constraintBottom_toTopOf="@+id/button_event_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="562dp" />
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/text_view_event_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -119,11 +124,11 @@
         android:text="12:30PM - 2:30PM"
         android:textColor="#3A3A3A"
         android:textSize="18dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_event_venue"
         tools:layout_editor_absoluteX="51dp" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/text_view_event_venue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -133,7 +138,7 @@
         android:textColor="#3A3A3A"
         android:textSize="18dp"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_event_title" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -144,11 +149,11 @@
         android:text="About Event"
         android:textColor="#3A3A3A"
         android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_event_description"
         app:layout_constraintStart_toStartOf="parent"></TextView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/filledButton"
+        android:id="@+id/button_event_register"
         style="@style/Widget.Material3.Button"
         android:layout_width="200dp"
         android:layout_height="50dp"

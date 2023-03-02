@@ -1,10 +1,7 @@
 package com.example.csi_dmce.events
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -19,9 +16,23 @@ import com.example.csi_dmce.utils.Helpers
 import kotlinx.coroutines.runBlocking
 
 
-// TODO: Move the event card somewhere else, preferrably in the dashboard.
+// TODO: Move the event card somewhere else, preferably in the dashboard.
 class EventViewActivity: AppCompatActivity() {
     private lateinit var btnViewDetails: Button
+
+    private lateinit var tvEventMinPoster: ImageView
+    private lateinit var tvEventMinTitle: TextView
+    private lateinit var tvEventMinDate: TextView
+    private lateinit var tvEventMinTime: TextView
+    private lateinit var tvEventMinVenue: TextView
+
+    private lateinit var tvEventPoster: ImageView
+    private lateinit var tvEventTitle: TextView
+    private lateinit var tvEventMonth: TextView
+    private lateinit var tvEventDay: TextView
+    private lateinit var tvEventTime: TextView
+    private lateinit var tvEventVenue: TextView
+    private lateinit var tvEventDescription: TextView
 
     /**
      * 1. When the activity starts, pop up the card.
@@ -47,11 +58,11 @@ class EventViewActivity: AppCompatActivity() {
         val layoutOne = inflater.inflate(R.layout.component_event_cardview, container, false)
         container.addView(layoutOne)
 
-        val tvEventMinPoster: ImageView = layoutOne.findViewById(R.id.image_view_event_min_poster)
-        val tvEventMinTitle: TextView = layoutOne.findViewById(R.id.text_view_event_min_title)
-        val tvEventMinDate: TextView = layoutOne.findViewById(R.id.text_view_event_min_date)
-        val tvEventMinTime: TextView = layoutOne.findViewById(R.id.text_view_event_min_time)
-        val tvEventMinVenue: TextView = layoutOne.findViewById(R.id.text_view_event_min_venue)
+        tvEventMinPoster = layoutOne.findViewById(R.id.image_view_event_min_poster)
+        tvEventMinTitle = layoutOne.findViewById(R.id.text_view_event_min_title)
+        tvEventMinDate = layoutOne.findViewById(R.id.text_view_event_day)
+        tvEventMinTime = layoutOne.findViewById(R.id.text_view_event_min_time)
+        tvEventMinVenue = layoutOne.findViewById(R.id.text_view_event_min_venue)
 
         val eventDateTime = Helpers.generateDateFromUnixTimestamp(eventObject.datetime!!)
 
@@ -73,6 +84,14 @@ class EventViewActivity: AppCompatActivity() {
             val layoutTwo = inflater.inflate(R.layout.activity_view_event, container, false)
             container.removeAllViews()
             container.addView(layoutTwo)
+
+            tvEventPoster = layoutTwo.findViewById(R.id.image_view_event_poster)
+            tvEventTitle = layoutTwo.findViewById(R.id.text_view_event_title)
+            tvEventVenue = layoutTwo.findViewById(R.id.text_view_event_venue)
+            tvEventTime = layoutTwo.findViewById(R.id.text_view_event_time)
+            tvEventMonth = layoutTwo.findViewById(R.id.text_view_event_month)
+            tvEventDay = layoutTwo.findViewById(R.id.text_view_event_day)
+            tvEventDescription = layoutTwo.findViewById(R.id.text_view_event_description)
         }
     }
 }
