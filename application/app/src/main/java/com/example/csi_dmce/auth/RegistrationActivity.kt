@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 import com.example.csi_dmce.R
+import com.example.csi_dmce.attendance.Attendance
 import com.example.csi_dmce.attendance.scan_qr
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentAuth
@@ -35,7 +36,7 @@ class RegistrationActivity: AppCompatActivity() {
         etStudentId = findViewById(R.id.edit_text_register_student_id)
 
         var student_id = etStudentId.text.toString()
-        val intent = Intent(applicationContext, scan_qr::class.java)
+        val intent = Intent(applicationContext, Attendance::class.java)
         intent.putExtra("student_ID", student_id )
 
         btnRegister = findViewById(R.id.button_register)

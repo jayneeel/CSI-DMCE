@@ -44,7 +44,7 @@ class GenerateQR : AppCompatActivity() {
                             bmp.setPixel(x,y, if(bitMatrix[x,y]) Color.BLACK else Color.WHITE)
                         }
                     }
-                    QRcode.setImageBitmap(bmp)
+                    QRcode.setImageBitmap(bmp) //can set this as the scan btn bg (first qr)
                 } catch(e: WriterException) {
                     e.printStackTrace()
                 }
