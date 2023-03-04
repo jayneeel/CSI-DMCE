@@ -11,9 +11,12 @@ class Helpers {
         const val DAY_IN_MS = 24 * 60 * 60 * 1000
         const val TEN_MINUTES_IN_MS = 10 * 60 * 1000
 
-        val dateFormat = SimpleDateFormat("EEEE dd MMMM, yyyy")
-        val timeFormat = SimpleDateFormat("HH:mm a")
+        val eventDateMinFormat = SimpleDateFormat("EEEE dd MMMM, yyyy")
+        val eventTimeMinFormat = SimpleDateFormat("HH:mm a")
 
+        val eventTimeFormat = SimpleDateFormat("HH:mma")
+        val eventDayFormat = SimpleDateFormat("d")
+        val eventMonthFormat = SimpleDateFormat("MMM")
 
         /**
          * Returns a SHA-256 Hash of a given string.

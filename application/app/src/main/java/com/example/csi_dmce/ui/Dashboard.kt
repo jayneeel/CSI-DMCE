@@ -37,18 +37,6 @@ class Dashboard: AppCompatActivity() {
             startActivity(eventIntent)
         }
 
-        Log.i("CSI-UI", "Setting Email onClick")
-        btnEmail = findViewById(R.id.btn_dashboard_email)
-        btnEmail.setOnClickListener {
-            runBlocking {
-                launch {
-                    withContext(Dispatchers.IO) {
-                        EmailService.sendEmail("1234", EmailKind.RESET_PASSWORD_VERIFICATION, "amitkulkarni7839@gmail.com", applicationContext)
-                    }
-                }
-            }
-        }
-
 
         Log.i("CSI-UI", "Setting Events onClick")
         btn_events = findViewById(R.id.btn_dashboard_events)

@@ -1,18 +1,21 @@
 package com.example.csi_dmce.events
 
+import android.app.Dialog
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.utils.Helpers
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.runBlocking
 
 
@@ -33,6 +36,9 @@ class EventViewActivity: AppCompatActivity() {
     private lateinit var tvEventTime: TextView
     private lateinit var tvEventVenue: TextView
     private lateinit var tvEventDescription: TextView
+    private lateinit var tvEventRegister: Button
+
+    private var stateRegistered: Boolean = false
 
     /**
      * 1. When the activity starts, pop up the card.
@@ -76,22 +82,52 @@ class EventViewActivity: AppCompatActivity() {
 
         tvEventMinTitle.setText(eventObject.title)
         tvEventMinVenue.setText(eventObject.venue)
-        tvEventMinDate.setText(Helpers.dateFormat.format(eventDateTime))
-        tvEventMinTime.setText(Helpers.timeFormat.format(eventDateTime))
+        tvEventMinDate.setText(Helpers.eventDateMinFormat.format(eventDateTime))
+        tvEventMinTime.setText(Helpers.eventTimeMinFormat.format(eventDateTime))
+
+        val layoutTwo = inflater.inflate(R.layout.activity_view_event, container, false)
+        tvEventPoster = layoutTwo.findViewById(R.id.image_view_event_poster)
+        tvEventTitle = layoutTwo.findViewById(R.id.text_view_event_title)
+        tvEventVenue = layoutTwo.findViewById(R.id.text_view_event_venue)
+        tvEventTime = layoutTwo.findViewById(R.id.text_view_event_time)
+        tvEventMonth = layoutTwo.findViewById(R.id.text_view_event_month)
+        tvEventDay = layoutTwo.findViewById(R.id.text_view_event_day)
+        tvEventDescription = layoutTwo.findViewById(R.id.text_view_event_description)
+        tvEventRegister = layoutTwo.findViewById(R.id.button_event_register)
+        tvEventRegister.setOnClickListener {
+            MaterialAlertDialogBuilder(this, R.layout.component_event_confirmation_popup)
+                .show()
+
+            if (!stateRegistered) {
+                tvEventRegister.text = "Registered"
+                tvEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.green)));
+                val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_event_check_mark)
+                tvEventRegister.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+                stateRegistered = true
+            } else {
+                tvEventRegister.text = "Register"
+                tvEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.csi_primary_accent)));
+                tvEventRegister.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                stateRegistered = false
+            }
+        }
 
         btnViewDetails = layoutOne.findViewById(R.id.button_event_min_view_details)
         btnViewDetails.setOnClickListener {
-            val layoutTwo = inflater.inflate(R.layout.activity_view_event, container, false)
             container.removeAllViews()
             container.addView(layoutTwo)
 
-            tvEventPoster = layoutTwo.findViewById(R.id.image_view_event_poster)
-            tvEventTitle = layoutTwo.findViewById(R.id.text_view_event_title)
-            tvEventVenue = layoutTwo.findViewById(R.id.text_view_event_venue)
-            tvEventTime = layoutTwo.findViewById(R.id.text_view_event_time)
-            tvEventMonth = layoutTwo.findViewById(R.id.text_view_event_month)
-            tvEventDay = layoutTwo.findViewById(R.id.text_view_event_day)
-            tvEventDescription = layoutTwo.findViewById(R.id.text_view_event_description)
+            Glide.with(this)
+                .setDefaultRequestOptions(requestOptions)
+                .load(eventObject.poster_url)
+                .into(tvEventPoster)
+
+            tvEventTitle.setText(eventObject.title)
+            tvEventVenue.setText(eventObject.venue)
+            tvEventTime.setText(Helpers.eventTimeFormat.format(eventDateTime))
+            tvEventMonth.setText(Helpers.eventMonthFormat.format(eventDateTime))
+            tvEventDay.setText(Helpers.eventDayFormat.format(eventDateTime))
+            tvEventDescription.setText(eventObject.description)
         }
     }
 }

@@ -14,4 +14,6 @@
     <color name="perfectgrey">#6C6868</color>
     <color name="green">#108E16</color>
     <color name="blue">#0066FF</color>
+    <color name="csi_fg_text">#3A3A3A</color>
+    <color name="csi_primary_accent">#0D1542</color>
 </resources>

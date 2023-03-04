@@ -24,23 +24,22 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/image_view_event_poster"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:src="@drawable/csi_event_poster" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_gravity="bottom"
-            android:background="@drawable/event_poster_bottom_gradient" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:background="@drawable/event_poster_bottom_gradient" />-->
     </FrameLayout>
 
 
@@ -59,9 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:src="@drawable/ic_event_time"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="456dp"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"></ImageView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_date"
@@ -112,20 +112,22 @@
         android:textColor="#3A3A3A"
         app:layout_constraintBottom_toTopOf="@+id/button_event_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_event_time"
+        app:layout_constraintVertical_bias="0.78" />
 
     <TextView
         android:id="@+id/text_view_event_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/lato"
         android:text="12:30PM - 2:30PM"
         android:textColor="#3A3A3A"
         android:textSize="18dp"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_event_venue"
-        tools:layout_editor_absoluteX="51dp" />
+        app:layout_constraintStart_toEndOf="@+id/icon_event_time"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_event_venue" />
 
     <TextView
         android:id="@+id/text_view_event_venue"
@@ -140,7 +142,7 @@
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/text_view_event_title" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -150,14 +152,17 @@
         android:textColor="#3A3A3A"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/text_view_event_description"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_event_time"
+        app:layout_constraintVertical_bias="0.785">
+    </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_event_register"
         style="@style/Widget.Material3.Button"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="28dp"
         android:backgroundTint="#0D1542"
         android:fontFamily="@font/lato"
         android:text="Register"
