@@ -1,5 +1,6 @@
 package com.example.csi_dmce.ui
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,11 +19,11 @@ import kotlinx.coroutines.withContext
 
 
 class Dashboard: AppCompatActivity() {
-    private lateinit var btnEmail: Button
     private lateinit var btn_profile: Button
     private lateinit var btn_events: Button
-    private lateinit var btn_calendar: Button
     private lateinit var btn_logout: Button
+    private lateinit var btn_event1: Button
+    private lateinit var btn_event2: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,6 @@ class Dashboard: AppCompatActivity() {
             val eventIntent = Intent(this, Profile::class.java)
             startActivity(eventIntent)
         }
-
 
         Log.i("CSI-UI", "Setting Events onClick")
         btn_events = findViewById(R.id.btn_dashboard_events)

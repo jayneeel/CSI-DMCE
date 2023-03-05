@@ -13,7 +13,7 @@ import com.example.csi_dmce.ui.WelcomeActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = Intent(this, Dashboard::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
 
 //        val intent = if (CsiAuthWrapper.isAuthenticated(applicationContext)) {
 //            Intent(this, Dashboard::class.java)

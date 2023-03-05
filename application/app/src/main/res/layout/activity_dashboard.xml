@@ -33,6 +33,35 @@
 
 
     <Button
+        android:id="@+id/btn_event_1"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/lato"
+        android:text="Event 1"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_dashboard_logout"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_event_2"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/lato"
+        android:text="Event 2"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_dashboard_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toEndOf="@+id/btn_event_1"
+        tools:ignore="MissingConstraints"></Button>
+
+    <Button
         android:id="@+id/btn_dashboard_logout"
         android:layout_width="227dp"
         android:layout_height="87dp"
