@@ -6,96 +6,238 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/text_view_create_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:fontFamily="@font/lato"
-        android:text="Create New Account"
-        android:textColor="	#696969"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_text_register_email"
+    <FrameLayout
+        android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:fontFamily="@font/lato"
-        android:hint="Email"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_register_student_id" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/edit_text_register_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:fontFamily="@font/lato"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_register_email"
-        tools:layout_editor_absoluteX="0dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/welcome_corner_elllipse"
+            android:scaleType="fitXY"/>
 
-    <EditText
-        android:id="@+id/edit_text_register_student_id"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:fontFamily="@font/lato"
-        android:hint="Student ID"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_create_account" />
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/csi_logo"/>
 
-    <Button
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view_account_exists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="130dp"
+            android:text="Hello!"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_register"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="184dp"
-        android:background="@drawable/roundedbutton"
-        android:backgroundTint="@color/black"
-        android:fontFamily="@font/lato"
-        android:text="REGISTER"
-        android:textColor="@color/white"
-        android:textFontWeight="600"
+        style="@style/Widget.Material3.Button"
+        app:cornerRadius="28dp"
+        android:layout_width="320dp"
+        android:layout_height="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_register_password"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/csi_primary_accent"
+        android:text="Sign Up"
+        android:textSize="20dp"
+        android:fontFamily="@font/lato"
+        android:textFontWeight="600"
+        android:textAlignment="textStart"
+        android:drawableRight="@drawable/ic_next_arrow"/>
 
-    <TextView
-        android:id="@+id/text_view_account_exists"
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/lato"
-        android:text="Already have an account?"
-        android:textColor="	#696969"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        android:text="Sign Up"
+        android:textColor="@color/csi_fg_text"
+        android:textFontWeight="700"
+        android:textSize="28dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_register"
-        app:layout_constraintVertical_bias="0.559" />
+        app:layout_constraintTop_toBottomOf="@id/banner" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_student_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Student ID"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_register_student_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_email_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_student_id">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_register_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        app:endIconMode="password_toggle"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_email_id">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_register_password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:text="Already a member? Sign in!"
+        android:textColor="@color/csi_primary_accent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_password" />
+
+
+    <!--    <TextView-->
+<!--        android:id="@+id/text_view_create_account"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="52dp"-->
+<!--        android:fontFamily="@font/lato"-->
+<!--        android:text="Create New Account"-->
+<!--        android:textColor="	#696969"-->
+<!--        android:textSize="25dp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/edit_text_register_email"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="72dp"-->
+<!--        android:layout_marginLeft="40dp"-->
+<!--        android:layout_marginRight="40dp"-->
+<!--        android:fontFamily="@font/lato"-->
+<!--        android:hint="Email"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/edit_text_register_student_id" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/edit_text_register_password"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="76dp"-->
+<!--        android:layout_marginLeft="40dp"-->
+<!--        android:layout_marginRight="40dp"-->
+<!--        android:fontFamily="@font/lato"-->
+<!--        android:hint="Password"-->
+<!--        android:inputType="textPassword"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/edit_text_register_email"-->
+<!--        tools:layout_editor_absoluteX="0dp" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/edit_text_register_student_id"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_marginLeft="40dp"-->
+<!--        android:layout_marginRight="40dp"-->
+<!--        android:fontFamily="@font/lato"-->
+<!--        android:hint="Student ID"-->
+<!--        android:inputType="text"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/text_view_create_account" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button_register"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:layout_marginLeft="50dp"-->
+<!--        android:layout_marginRight="50dp"-->
+<!--        android:layout_marginBottom="184dp"-->
+<!--        android:background="@drawable/roundedbutton"-->
+<!--        android:backgroundTint="@color/black"-->
+<!--        android:fontFamily="@font/lato"-->
+<!--        android:text="REGISTER"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textFontWeight="600"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.494"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/edit_text_register_password"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/text_view_account_exists"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/lato"-->
+<!--        android:text="Already have an account?"-->
+<!--        android:textColor="	#696969"-->
+<!--        android:textSize="18dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/button_register"-->
+<!--        app:layout_constraintVertical_bias="0.559" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

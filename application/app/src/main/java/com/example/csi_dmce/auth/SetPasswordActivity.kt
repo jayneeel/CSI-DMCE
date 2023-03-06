@@ -27,7 +27,7 @@ class SetPasswordActivity: AppCompatActivity() {
         val loginEmailId: String = intent.getStringExtra("login_email").toString()
 
         otpSubmit.setOnClickListener {
-            if (etNewPassword == etConfirmNewPassword) {
+            if (etNewPassword.text.toString() == etConfirmNewPassword.text.toString()) {
                 val newPassword = Helpers.getSha256Hash(etNewPassword.text.toString())
                 runBlocking {
                     StudentAuthWrapper.setPasswordWrapper(loginEmailId, newPassword)

@@ -16,9 +16,13 @@ import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.auth.EmailKind
 import com.example.csi_dmce.auth.EmailService
+import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class ForgotPasswordVerifyEmailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +44,9 @@ class ForgotPasswordVerifyEmailFragment : Fragment() {
         val btnSubmit: Button = view.findViewById(R.id.button_fop_submit_email)
 
         btnSubmit.setOnClickListener {
-            val decodedToken: DecodedJWT = CsiAuthWrapper.parseAuthToken(requireContext().applicationContext)
-            val studentId = decodedToken.getClaim("student_id").asString()
-            val studentObject = runBlocking { StudentWrapper.getStudent(studentId) }
+//            val decodedToken: DecodedJWT = CsiAuthWrapper.parseAuthToken(requireContext().applicationContext)
+//            val studentId = decodedToken.getClaim("student_id").asString()
+            val studentObject = runBlocking { StudentWrapper.getStudentByEmail(etEmailId.text.toString()) }
 
             if (etEmailId.text.toString() != studentObject!!.email) {
                 Toast.makeText(requireContext().applicationContext, "The entered e-mail ID doesn't match yours!", Toast.LENGTH_SHORT).show()
@@ -51,17 +55,23 @@ class ForgotPasswordVerifyEmailFragment : Fragment() {
 
             val otp = Helpers.generateOTP()
             runBlocking {
-                EmailService.sendEmail(
-                    otp,
-                    EmailKind.RESET_PASSWORD_VERIFICATION,
-                    studentObject.email!!,
-                    requireContext().applicationContext
-                )
+                StudentAuthWrapper.createForgotPasswordHashMap(studentObject.email!!, otp)
+                launch {
+                    withContext(Dispatchers.IO) {
+                        EmailService.sendEmail(
+                            otp,
+                            EmailKind.RESET_PASSWORD_VERIFICATION,
+                            studentObject.email!!,
+                            requireContext().applicationContext
+                        )
+                    }
+                }
             }
 
             val emailVerificationViewModel = activity?.run {
                 ViewModelProvider(this).get(EmailVerificationViewModel::class.java)
             } ?: throw Exception("Invalid Activity")
+            emailVerificationViewModel.emailId.value = etEmailId.text.toString()
             emailVerificationViewModel.emailIsVerified.value = true
         }
     }

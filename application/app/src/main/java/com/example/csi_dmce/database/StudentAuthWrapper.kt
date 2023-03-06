@@ -1,7 +1,5 @@
 package com.example.csi_dmce.database
 
-import android.content.Context
-import android.content.SharedPreferences
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
@@ -66,6 +64,21 @@ class StudentAuthWrapper {
             emailVerificationHashMap["verification_status"] = "pending"
 
             studentAuthObject!!.email_verification = emailVerificationHashMap
+            addStudentAuth(studentAuthObject)
+        }
+
+        suspend fun createForgotPasswordHashMap(emailId: String, otp: String) {
+            val studentAuthObject = getByEmail(emailId)
+
+            val currentDate = Date()
+            val futureDate = Date(currentDate.time + Helpers.DAY_IN_MS)
+
+            val forgotPasswordHashMap = hashMapOf<String, Any>()
+            forgotPasswordHashMap["otp"] = otp.toInt()
+            forgotPasswordHashMap["creation_timestamp"] = Helpers.generateUnixTimestampFromDate(currentDate)
+            forgotPasswordHashMap["expiry_timestamp"] = Helpers.generateUnixTimestampFromDate(futureDate)
+
+            studentAuthObject!!.forgot_password = forgotPasswordHashMap
             addStudentAuth(studentAuthObject)
         }
 

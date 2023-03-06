@@ -78,6 +78,8 @@
                 android:value="" />
         </activity>
         <activity android:name=".ui.WelcomeActivity"/>
+        <activity android:name=".auth.OTPVerificationActivity"/>
+        <activity android:name=".auth.forgotpassword.ForgotPasswordActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -90,6 +92,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.RegistrationActivity" />
+        <activity android:name=".auth.SetPasswordActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

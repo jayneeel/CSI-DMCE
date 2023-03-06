@@ -5,74 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_dashboard_events"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="204dp"
-        android:backgroundTint="@color/black"
-        android:fontFamily="@font/lato"
-        android:text="Events"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/btn_dashboard_profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_dashboard_profile"
-        android:layout_width="120dp"
+        android:layout_width="280dp"
         android:layout_height="120dp"
-        android:layout_marginTop="204dp"
-        android:backgroundTint="@color/black"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="@color/csi_primary_accent"
         android:fontFamily="@font/lato"
         android:text="Profile"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_dashboard_events"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_event_1"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginBottom="44dp"
+        android:layout_width="280dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="40dp"
         android:backgroundTint="@color/black"
         android:fontFamily="@font/lato"
         android:text="Event 1"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btn_dashboard_logout"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_event_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_event_2"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="44dp"
+        android:layout_width="280dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="84dp"
         android:backgroundTint="@color/black"
         android:fontFamily="@font/lato"
         android:text="Event 2"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/btn_dashboard_logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.451"
-        app:layout_constraintStart_toEndOf="@+id/btn_event_1"
-        tools:ignore="MissingConstraints"></Button>
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_dashboard_logout"
-        android:layout_width="227dp"
-        android:layout_height="87dp"
-        android:layout_marginBottom="56dp"
-        android:backgroundTint="@color/black"
+        android:layout_width="280dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/csi_primary_accent"
         android:fontFamily="@font/lato"
         android:text="Logout"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

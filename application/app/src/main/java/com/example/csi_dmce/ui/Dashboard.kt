@@ -38,14 +38,6 @@ class Dashboard: AppCompatActivity() {
             startActivity(eventIntent)
         }
 
-        Log.i("CSI-UI", "Setting Events onClick")
-        btn_events = findViewById(R.id.btn_dashboard_events)
-        btn_events.setOnClickListener {
-            Log.i("CSI-UI", "Clicked on events")
-            val eventIntent = Intent(this, EventViewActivity::class.java)
-            startActivity(eventIntent)
-        }
-
         btn_logout = findViewById(R.id.btn_dashboard_logout)
         btn_logout.setOnClickListener {
             CsiAuthWrapper.deleteAuthToken(applicationContext)

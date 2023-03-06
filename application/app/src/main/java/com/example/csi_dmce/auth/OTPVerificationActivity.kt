@@ -1,8 +1,11 @@
 package com.example.csi_dmce.auth
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
@@ -21,19 +24,26 @@ class OTPVerificationActivity: AppCompatActivity() {
     private lateinit var btnOtpSubmit: Button
     private var inputOtp: Int? = null
 
+    private lateinit var tvVerificationEmail: TextView
+
     // The e-mail address that is being verified.
     private lateinit var emailId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp_verification)
+        Log.d("OTP_VERIF", intent.getStringExtra("verification_kind").toString())
 
         emailId = intent.getStringExtra("email_id").toString()
         val verificationKind: EmailKind = EmailKind
             .fromKind(intent.getStringExtra("verification_kind").toString())
 
+        tvVerificationEmail = findViewById(R.id.text_view_verification_email)
+        tvVerificationEmail.text = emailId
+
         btnOtpSubmit = findViewById(R.id.button_submit_otp)
-        btnOtpSubmit.isEnabled = false
+        btnOtpSubmit.isClickable = false
+        btnOtpSubmit.setBackgroundColor(Color.parseColor("#808080"))
 
         tvOtp = findViewById(R.id.otp_view)
         tvOtp.requestFocusOTP()
@@ -41,7 +51,9 @@ class OTPVerificationActivity: AppCompatActivity() {
             override fun onInteractionListener() { }
 
             override fun onOTPComplete(otp: String) {
-                btnOtpSubmit.isEnabled = true
+                btnOtpSubmit.isClickable = true
+                // TODO: Fix hardcoded RGB value
+                btnOtpSubmit.setBackgroundColor(Color.parseColor("#0A0630"))
                 inputOtp = otp.toInt()
             }
         }
@@ -69,10 +81,10 @@ class OTPVerificationActivity: AppCompatActivity() {
         val currentTimestamp: Long = Helpers.generateUnixTimestampFromDate(Date())
         val verificationHashMap: HashMap<String, Any> = StudentAuthWrapper.getEmailVerificationHashMap(emailId)
 
-        val correctOtp = verificationHashMap["otp"] as Int
-        val expiryTimestamp = verificationHashMap["expiry_timestamp"] as Int
+        val correctOtp: Long = verificationHashMap["otp"] as Long
+        val expiryTimestamp: Long = verificationHashMap["expiry_timestamp"] as Long
 
-        if (inputOtp != correctOtp) {
+        if (inputOtp!!.toLong() != correctOtp) {
             Toast.makeText(applicationContext, "Incorrect OTP!", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -87,7 +99,7 @@ class OTPVerificationActivity: AppCompatActivity() {
 
         // Updating user
         val studentObj = StudentWrapper.getStudentByEmail(emailId)!!
-        StudentWrapper.setStudentEmailIdVerificationStatus(studentObj.email!!, true)
+        StudentWrapper.setStudentEmailIdVerificationStatus(studentObj.student_id!!, true)
 
         // Set auth token
         CsiAuthWrapper.setAuthToken(applicationContext, studentObj)
@@ -96,13 +108,14 @@ class OTPVerificationActivity: AppCompatActivity() {
     }
 
     private suspend fun performPasswordResetTasks(): Boolean {
-        val emailVerificationMap = StudentAuthWrapper.forgotPasswordWrapper(emailId)
-        val correctOtp = emailVerificationMap["otp"]
-        val expiryTimestamp = emailVerificationMap["expiry_timestamp"].toString().toInt()
+        val forgotPasswordMap = StudentAuthWrapper.forgotPasswordWrapper(emailId)
+        val correctOtp = forgotPasswordMap["otp"]
+        val expiryTimestamp = forgotPasswordMap["expiry_timestamp"].toString().toInt()
 
         val currentTimestamp = Helpers.generateUnixTimestampFromDate(Date())
 
-        if (inputOtp != correctOtp) {
+        if (inputOtp.toString() != correctOtp.toString()) {
+            Log.d("DB_PWD_RESET", "HIT INCORRECT OTP")
             Toast.makeText(applicationContext, "Incorrect OTP!", Toast.LENGTH_SHORT).show()
             return false
         }

@@ -10,7 +10,7 @@
     <FrameLayout
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
-        android:layout_height="350dp">
+        android:layout_height="250dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView"
+        android:id="@+id/text_view_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -72,6 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -79,14 +80,13 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Email ID"
-        app:boxStrokeColor="@color/black"
-        app:boxStrokeWidth="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_login_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -104,6 +104,7 @@
         tools:layout_editor_absoluteX="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_login_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
@@ -111,7 +112,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_login_submit"
+        android:id="@+id/button_login"
         style="@style/Widget.Material3.Button"
         android:layout_width="320dp"
         android:layout_height="70dp"

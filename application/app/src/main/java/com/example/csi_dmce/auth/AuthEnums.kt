@@ -23,7 +23,11 @@ enum class EmailKind(val kind: String) {
         // kind assumes two values:
         // "email_verification" and "reset_password_verification"
         fun fromKind(kind: String): EmailKind {
-            return valueOf(kind)
+            return when(kind) {
+                "email_verification" -> EmailKind.EMAIL_VERIFICATION
+                "password_reset_verification" -> EmailKind.RESET_PASSWORD_VERIFICATION
+                else -> {throw NotImplementedError("Unknown email type!")}
+            }
         }
     }
 }

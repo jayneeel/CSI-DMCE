@@ -39,16 +39,14 @@
             android:layout_marginBottom="-50dp"
             android:src="@drawable/welcome_cubes"
             tools:layout_editor_absoluteX="79dp"
-            tools:layout_editor_absoluteY="472dp">
-        </ImageView>
+            tools:layout_editor_absoluteY="472dp"></ImageView>
 
         <ImageView
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:src="@drawable/welcome_bubbles"
             android:layout_gravity="end"
-            android:layout_marginRight="-70dp">
-        </ImageView>
+            android:layout_marginRight="-70dp"
+            android:src="@drawable/welcome_bubbles"></ImageView>
 
 
         <TextView
@@ -65,50 +63,45 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/event_dialog_cancel_button"
+        android:id="@+id/button_welcome_sign_in"
         style="@style/Widget.Material3.Button"
-        app:cornerRadius="28dp"
         android:layout_width="320dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="172dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#0A0630"
         android:drawableEnd="@drawable/ic_next_arrow"
         android:fontFamily="@font/lato"
         android:text="Sign In"
-        android:backgroundTint="#0A0630"
         android:textAlignment="textStart"
         android:textColor="@color/white"
         android:textFontWeight="800"
         android:textSize="20dp"
+        app:cornerRadius="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_welcome_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout2">
-    </com.google.android.material.button.MaterialButton>
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"></com.google.android.material.button.MaterialButton>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_welcome_sign_up"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        app:cornerRadius="28dp"
         android:layout_width="320dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginBottom="36dp"
         android:drawableEnd="@drawable/ic_next_arrow"
         android:drawableTint="#0A0630"
         android:fontFamily="@font/lato"
         android:text="Sign Up"
-        android:textFontWeight="800"
         android:textAlignment="textStart"
         android:textColor="#0A0630"
+        android:textFontWeight="800"
         android:textSize="20dp"
+        app:cornerRadius="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_dialog_cancel_button"
-        app:strokeColor="#0A0630">
-    </com.google.android.material.button.MaterialButton>
+        app:strokeColor="#0A0630"></com.google.android.material.button.MaterialButton>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
