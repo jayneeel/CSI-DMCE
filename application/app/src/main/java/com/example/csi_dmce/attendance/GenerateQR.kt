@@ -29,7 +29,7 @@ class GenerateQR : AppCompatActivity() {
             val intent = intent
             val data = intent.getStringExtra("Student_ID")
 
-            if(data!!.isEmpty()){
+            if(data == null){
                 Toast.makeText(this, "Account not found, please register!", Toast.LENGTH_SHORT).show()
             } else {
                 val writer= QRCodeWriter()

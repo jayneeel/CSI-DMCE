@@ -1,24 +1,19 @@
 package com.example.csi_dmce.attendance
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
-import com.example.csi_dmce.auth.RegistrationActivity
 import com.example.csi_dmce.database.Attendance
-import com.example.csi_dmce.database.AttendanceWrapper
 import com.journeyapps.barcodescanner.CaptureActivity
 import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
-import kotlinx.coroutines.runBlocking
 
 
-class scan_qr : AppCompatActivity() {
+class scanQrActivity : AppCompatActivity() {
     private lateinit var qrContent: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,13 +21,13 @@ class scan_qr : AppCompatActivity() {
         setContentView(R.layout.scan_qr)
 
         val sharedPreferences =
-            getSharedPreferences("KEY_DISABLE_AUTO_ORIENTATION", MODE_PRIVATE)
+            getSharedPreferences("csi_shared_prefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         val btnscan = findViewById<Button>(R.id.button)
         btnscan.setOnClickListener {
             editor.apply {
-                putBoolean("KEY_DISABLE_AUTO_ORIENTATION", true)
+                putBoolean("csi_shared_prefs", true)
                 apply()
             }
             scanQR()
