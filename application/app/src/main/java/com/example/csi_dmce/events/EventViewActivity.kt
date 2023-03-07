@@ -1,12 +1,16 @@
 package com.example.csi_dmce.events
 
 
+import android.app.Dialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -56,9 +60,8 @@ class EventViewActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_event)
 
-        // val eventId: String = intent.getStringExtra("event_id").toString()
+         val eventId: String = intent.getStringExtra("event_id").toString()
 
-        val eventId: String = "WoamCT-2839823829"
         val eventObject: Event = runBlocking { EventWrapper.getEvent(eventId)!! }
 
         val eventDateTime: Date = Helpers.generateDateFromUnixTimestamp(eventObject.datetime!!)
@@ -68,6 +71,18 @@ class EventViewActivity: AppCompatActivity() {
             .setDefaultRequestOptions(RequestOptions())
             .load(eventObject.poster_url)
             .into(ivEventPoster)
+
+
+        ivEventPoster.setOnClickListener{
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.component_image_scale_popup)
+            val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
+            ivFullScale.setImageDrawable(ivEventPoster.drawable)
+
+            dialog.show()
+            dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+        }
+
 
         tvEventTitle = findViewById(R.id.text_view_event_title)
         tvEventTitle.text = eventObject.title

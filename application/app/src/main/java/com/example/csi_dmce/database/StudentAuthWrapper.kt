@@ -1,5 +1,6 @@
 package com.example.csi_dmce.database
 
+import android.util.Log
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
@@ -111,9 +112,13 @@ class StudentAuthWrapper {
         }
 
         suspend fun setPasswordWrapper(emailId: String, passwordHash: String) {
+            Log.d("DB_SET_PASS", emailId)
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()
+
+
+            Log.d("DB_SET_PASS", studentAuthRef.toString())
 
             val studentAuthObject = studentAuthRef!!.toObject(StudentAuth::class.java)!!
             studentAuthObject.password_hash = passwordHash

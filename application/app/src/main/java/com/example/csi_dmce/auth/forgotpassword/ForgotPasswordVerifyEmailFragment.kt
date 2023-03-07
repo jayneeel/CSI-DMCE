@@ -3,6 +3,8 @@ package com.example.csi_dmce.auth.forgotpassword
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.example.csi_dmce.R
@@ -44,9 +47,20 @@ class ForgotPasswordVerifyEmailFragment : Fragment() {
         val btnSubmit: Button = view.findViewById(R.id.button_fop_submit_email)
 
         btnSubmit.setOnClickListener {
-//            val decodedToken: DecodedJWT = CsiAuthWrapper.parseAuthToken(requireContext().applicationContext)
-//            val studentId = decodedToken.getClaim("student_id").asString()
             val studentObject = runBlocking { StudentWrapper.getStudentByEmail(etEmailId.text.toString()) }
+
+            if (studentObject == null) {
+                Toast.makeText(requireContext().applicationContext, "This E-mail ID does not exist.", Toast.LENGTH_SHORT).show()
+                btnSubmit.setBackgroundColor(ContextCompat.getColor(requireActivity().applicationContext, com.otpview.R.color.red))
+                btnSubmit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_wrong_cross, 0)
+                btnSubmit.text = "Email ID doesn't exist!"
+                Handler(Looper.getMainLooper()).postDelayed({
+                    btnSubmit.text = "Submit"
+                    btnSubmit.setBackgroundColor(ContextCompat.getColor(requireActivity().applicationContext, R.color.csi_primary_accent))
+                    btnSubmit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_next_arrow, 0)
+                }, 1000)
+                return@setOnClickListener
+            }
 
             if (etEmailId.text.toString() != studentObject!!.email) {
                 Toast.makeText(requireContext().applicationContext, "The entered e-mail ID doesn't match yours!", Toast.LENGTH_SHORT).show()

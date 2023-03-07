@@ -73,6 +73,7 @@ class OTPVerificationActivity: AppCompatActivity() {
                 EmailKind.EMAIL_VERIFICATION -> Intent(applicationContext, Dashboard::class.java)
                 EmailKind.RESET_PASSWORD_VERIFICATION -> Intent(applicationContext, SetPasswordActivity::class.java)
             }
+            intent.putExtra("email_id", emailId)
             startActivity(intent)
         }
     }

@@ -106,7 +106,7 @@ class RegistrationActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
-        tvAccountExists = findViewById(R.id.text_view_account_exists)
+        tvAccountExists = findViewById(R.id.text_view_register_to_login)
         tvAccountExists.setOnClickListener{
             val intent = Intent(applicationContext, LoginActivity::class.java)
             finish()

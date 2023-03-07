@@ -20,7 +20,6 @@ import kotlinx.coroutines.withContext
 
 class Dashboard: AppCompatActivity() {
     private lateinit var btn_profile: Button
-    private lateinit var btn_events: Button
     private lateinit var btn_logout: Button
     private lateinit var btn_event1: Button
     private lateinit var btn_event2: Button
@@ -36,6 +35,20 @@ class Dashboard: AppCompatActivity() {
         btn_profile.setOnClickListener {
             val eventIntent = Intent(this, Profile::class.java)
             startActivity(eventIntent)
+        }
+
+        btn_event1 = findViewById(R.id.btn_event_1)
+        btn_event1.setOnClickListener {
+            val intent = Intent(applicationContext, EventViewActivity::class.java)
+            intent.putExtra("event_id", "WoamCT-2839823829")
+            startActivity(intent)
+        }
+
+        btn_event2 = findViewById(R.id.btn_event_2)
+        btn_event2.setOnClickListener {
+            val intent = Intent(applicationContext, EventViewActivity::class.java)
+            intent.putExtra("event_id", "DCF-1674498731")
+            startActivity(intent)
         }
 
         btn_logout = findViewById(R.id.btn_dashboard_logout)
