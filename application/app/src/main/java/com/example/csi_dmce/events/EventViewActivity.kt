@@ -19,6 +19,7 @@ import androidx.core.graphics.BlendModeCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
+import com.example.csi_dmce.database.AttendanceWrapper
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.utils.Helpers
@@ -66,24 +67,6 @@ class EventViewActivity: AppCompatActivity() {
 
         val eventDateTime: Date = Helpers.generateDateFromUnixTimestamp(eventObject.datetime!!)
 
-        ivEventPoster = findViewById(R.id.image_view_event_poster)
-        Glide.with(this)
-            .setDefaultRequestOptions(RequestOptions())
-            .load(eventObject.poster_url)
-            .into(ivEventPoster)
-
-
-        ivEventPoster.setOnClickListener{
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.component_image_scale_popup)
-            val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
-            ivFullScale.setImageDrawable(ivEventPoster.drawable)
-
-            dialog.show()
-            dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
-        }
-
-
         tvEventTitle = findViewById(R.id.text_view_event_title)
         tvEventTitle.text = eventObject.title
 
@@ -101,6 +84,23 @@ class EventViewActivity: AppCompatActivity() {
 
         tvEventDescription = findViewById(R.id.text_view_event_description)
         tvEventDescription.text = eventObject.description
+
+        ivEventPoster = findViewById(R.id.image_view_event_poster)
+        Glide.with(this)
+            .setDefaultRequestOptions(RequestOptions())
+            .load(eventObject.poster_url)
+            .into(ivEventPoster)
+
+
+        ivEventPoster.setOnClickListener{
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.component_image_scale_popup)
+            val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
+            ivFullScale.setImageDrawable(ivEventPoster.drawable)
+
+            dialog.show()
+            dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+        }
 
         btnEventAttendance = findViewById(R.id.button_event_attendance)
         val currentDateTime = Date()
@@ -135,6 +135,15 @@ class EventViewActivity: AppCompatActivity() {
                     btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                     stateRegistered = false
                 }
+
+
+                if (!stateRegistered) {
+                   // Insert attendee into the database
+                } else {
+                    // Remove attendee from the database.
+                }
+
+
                 dialog.dismiss()
             }
             dialog.findViewById<Button>(R.id.event_dialog_cancel_button)?.setOnClickListener {

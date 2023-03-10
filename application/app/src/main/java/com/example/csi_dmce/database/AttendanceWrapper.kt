@@ -24,6 +24,23 @@ class AttendanceWrapper {
                 .document(studentId!!)
         }
 
+        suspend fun createAttendanceEntry(studentId: String, eventId: String) {
+            val newAttendanceObject: Attendance = Attendance(
+                student_id = studentId,
+                event_id = eventId,
+                first = false,
+                second = false
+            )
+
+            val eventUuid: String = EventWrapper.getEventUuid(eventId)
+
+            attendanceCollectionRef
+                .document(studentId)
+                .collection("events")
+                .document(eventUuid)
+                .set(newAttendanceObject)
+        }
+
         suspend fun setSecond(eventID: String?, studentId: String?) :Boolean {
             val attendanceDocumentRef = getStudentDocumentRef(eventID, studentId)
             val attendanceObject: Attendance? = attendanceDocumentRef

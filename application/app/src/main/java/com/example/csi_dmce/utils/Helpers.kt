@@ -1,6 +1,7 @@
 package com.example.csi_dmce.utils
 
 import com.google.firebase.firestore.ServerTimestamp
+import kotlinx.serialization.descriptors.PrimitiveKind
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
@@ -82,6 +83,10 @@ class Helpers {
                 1 -> "FE"
                 else -> "UNKNOWN"
             }
+        }
+
+        fun generateEventUuid(): String{
+            return UUID.randomUUID().toString()
         }
     }
 }
