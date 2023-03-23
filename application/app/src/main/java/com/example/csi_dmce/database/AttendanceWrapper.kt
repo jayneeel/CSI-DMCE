@@ -3,6 +3,7 @@ package com.example.csi_dmce.database
 import kotlinx.coroutines.tasks.await
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 data class Attendance(
@@ -14,47 +15,42 @@ data class Attendance(
 )
 
 class AttendanceWrapper {
-    companion object{
+    companion object {
         private val attendanceCollectionRef = FirebaseFirestore.getInstance().collection("attendance")
 
-        fun getStudentDocumentRef(eventID: String?, studentId: String?): DocumentReference {
-            return attendanceCollectionRef
-                .document(eventID!!)
-                .collection("students")
-                .document(studentId!!)
-        }
-
-        suspend fun createAttendanceEntry(studentId: String, eventId: String) {
-            val newAttendanceObject: Attendance = Attendance(
-                student_id = studentId,
-                event_id = eventId,
-                first = false,
-                second = false
-            )
-
-            val eventUuid: String = EventWrapper.getEventUuid(eventId)
-
-            attendanceCollectionRef
-                .document(studentId)
+        private suspend fun getAttendanceDocumentReference(studentID: String, eventUUID: String) : DocumentReference {
+            return attendanceCollectionRef.document(studentID)
                 .collection("events")
-                .document(eventUuid)
-                .set(newAttendanceObject)
+                .document(eventUUID)
         }
 
-        suspend fun setSecond(eventID: String?, studentId: String?) :Boolean {
-            val attendanceDocumentRef = getStudentDocumentRef(eventID, studentId)
-            val attendanceObject: Attendance? = attendanceDocumentRef
+        private suspend fun getAttendanceDocument(studentID: String, eventUUID: String) : DocumentSnapshot {
+            return attendanceCollectionRef.document(studentID)
+                .collection("events")
+                .document(eventUUID)
                 .get()
                 .await()
-                .toObject(Attendance::class.java)
-
-            attendanceObject!!.second = true
-            return true
         }
 
-        suspend fun getAttendance(studentId: String, eventID: String?) : Attendance? {
-            val studentDocumentRef: DocumentReference = getStudentDocumentRef(studentId, eventID)
-            return studentDocumentRef.get().await().toObject(Attendance::class.java)
+        suspend fun getAttendanceObject(studentID: String, eventUUID: String) : Attendance? {
+            val attendanceDocument = getAttendanceDocument(studentID, eventUUID)
+            return attendanceDocument.toObject(Attendance::class.java)
+        }
+
+        suspend fun setQRAttendance(studentID: String, eventUUID: String, attendanceType: String, attendanceStatus: Boolean){
+            val attendanceDocumentReference = getAttendanceDocumentReference(studentID, eventUUID)
+            attendanceDocumentReference
+                .update(attendanceType, attendanceStatus)
+                .await()
+        }
+
+        suspend fun checkAttendanceStatus(studentID: String, eventUUID: String, attendanceType: String): Boolean? {
+            val attendanceDocument = getAttendanceObject(studentID, eventUUID)
+            return when(attendanceType) {
+                "first" -> attendanceDocument?.first
+                "second" -> attendanceDocument?.second
+                else -> throw NotImplementedError("Invalid attendance type.")
+            }
         }
     }
 }

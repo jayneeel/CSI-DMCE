@@ -2,6 +2,7 @@ package com.example.csi_dmce.events
 
 
 import android.app.Dialog
+import android.content.Intent
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -19,6 +20,7 @@ import androidx.core.graphics.BlendModeCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
+import com.example.csi_dmce.attendance.AttendanceActivity
 import com.example.csi_dmce.database.AttendanceWrapper
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
@@ -110,6 +112,8 @@ class EventViewActivity: AppCompatActivity() {
         } else {
             btnEventAttendance.setOnClickListener {
                 // TODO: Add attendance activity here.
+                val intent = Intent(applicationContext, AttendanceActivity::class.java)
+                startActivity(intent)
             }
         }
 

@@ -40,7 +40,7 @@ class Dashboard: AppCompatActivity() {
         btn_event1 = findViewById(R.id.btn_event_1)
         btn_event1.setOnClickListener {
             val intent = Intent(applicationContext, EventViewActivity::class.java)
-            intent.putExtra("event_id", "WoamCT-2839823829")
+            intent.putExtra("event_id", "CSCT-1678280388")
             startActivity(intent)
         }
 

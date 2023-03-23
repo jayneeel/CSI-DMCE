@@ -43,13 +43,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".events.EventPageActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".auth.LoginActivity"
             android:exported="false">
             <meta-data
@@ -93,6 +86,8 @@
         </activity>
         <activity android:name=".auth.RegistrationActivity" />
         <activity android:name=".auth.SetPasswordActivity" />
+        <activity android:name=".attendance.AttendanceActivity" />
+        <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>
 
         <meta-data
             android:name="preloaded_fonts"
