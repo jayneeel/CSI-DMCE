@@ -1,6 +1,7 @@
 package com.example.csi_dmce.database
 
 import android.content.Context
+import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
@@ -91,6 +92,7 @@ class StudentWrapper {
 
         suspend fun setStudentEmailIdVerificationStatus(studentId: String, emailIdVerified: Boolean) {
             val studentDocument = getStudentDocument(studentCollectionRef, studentId).get().await()
+            Log.d("DB_EMAIL_VERIF_WRAPPER", studentDocument.toString())
             val studentObject: Student = studentDocument.toObject(Student::class.java)!!
             studentObject.email_id_verified = emailIdVerified
             studentCollectionRef.document(studentId).set(studentObject)

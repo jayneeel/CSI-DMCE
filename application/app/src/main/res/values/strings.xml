@@ -39,6 +39,7 @@
     <string name="desc_g">Beginning with the Industrial Revolution era, a workshop may be a room, rooms or building which provides both the area and tools (or machinery) that may be required for the manufacture or repair of manufactured goods. Workshops were the only places of production until the advent of industrialization and the development of larger factories.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loremipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra iaculis sapien vitae imperdiet. Quisque quis risus nunc. Cras consequat consectetur dui, sit amet pulvinar dui condimentum et.</string>
 
 
     >>>>>>> main

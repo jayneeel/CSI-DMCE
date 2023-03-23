@@ -1,14 +1,23 @@
 package com.example.csi_dmce.utils
 
 import com.google.firebase.firestore.ServerTimestamp
+import kotlinx.serialization.descriptors.PrimitiveKind
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Helpers {
     companion object {
         const val DAY_IN_MS = 24 * 60 * 60 * 1000
         const val TEN_MINUTES_IN_MS = 10 * 60 * 1000
+
+        val eventDateMinFormat = SimpleDateFormat("EEEE dd MMMM, yyyy")
+        val eventTimeMinFormat = SimpleDateFormat("HH:mm a")
+
+        val eventTimeFormat = SimpleDateFormat("HH:mma")
+        val eventDayFormat = SimpleDateFormat("d")
+        val eventMonthFormat = SimpleDateFormat("MMM")
 
         /**
          * Returns a SHA-256 Hash of a given string.
@@ -56,6 +65,11 @@ class Helpers {
             return (date.time / 1000)
         }
 
+
+        fun generateDateFromUnixTimestamp(unixTimestamp: Long): Date {
+            return Date(unixTimestamp * 1000)
+        }
+
         fun generateOTP(): String {
             val otp = (Math.random() * 9000).toInt() + 1000
             return otp.toString()
@@ -69,6 +83,10 @@ class Helpers {
                 1 -> "FE"
                 else -> "UNKNOWN"
             }
+        }
+
+        fun generateEventUuid(): String{
+            return UUID.randomUUID().toString()
         }
     }
 }

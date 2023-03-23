@@ -43,13 +43,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".events.EventPageActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".auth.LoginActivity"
             android:exported="false">
             <meta-data
@@ -70,7 +63,16 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".events.EventViewActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity android:name=".ui.WelcomeActivity"/>
+        <activity android:name=".auth.OTPVerificationActivity"/>
+        <activity android:name=".auth.forgotpassword.ForgotPasswordActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -83,6 +85,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.RegistrationActivity" />
+        <activity android:name=".auth.SetPasswordActivity" />
+        <activity android:name=".attendance.AttendanceActivity" />
+        <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>
 
         <meta-data
             android:name="preloaded_fonts"

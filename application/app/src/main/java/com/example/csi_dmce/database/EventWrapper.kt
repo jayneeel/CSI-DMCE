@@ -8,12 +8,15 @@ import java.util.Date
 import com.example.csi_dmce.R
 
 import com.example.csi_dmce.utils.Helpers
+import com.google.firebase.firestore.ktx.toObject
+import java.util.UUID
 
 data class Event (
     @DocumentId
     var eventId     : String?       = null,
     var title       : String?       = null,
     var venue       : String?       = null,
+    var uuid        : String?       = null,
     var datetime    : Long?         = null,
     var description : String?       = null,
     var poster_url  : String?       = null,
@@ -24,8 +27,8 @@ class EventWrapper {
     companion object {
         private val eventsCollectionRef = FirebaseFirestore.getInstance().collection("events")
 
-        private fun getEventDocument(eventCollectionRef: CollectionReference, eventId: String): DocumentReference {
-            return eventCollectionRef.document(eventId)
+        private fun getEventDocument(eventId: String): DocumentReference {
+            return eventsCollectionRef.document(eventId)
         }
 
         /**
@@ -48,7 +51,7 @@ class EventWrapper {
          * @return the deserialized `Event` data class
          */
         suspend fun getEvent(eventId: String): Event? {
-            val eventDocument = getEventDocument(eventsCollectionRef, eventId).get().await()
+            val eventDocument = getEventDocument(eventId).get().await()
             return eventDocument.toObject(Event::class.java)!!
         }
 
@@ -62,7 +65,7 @@ class EventWrapper {
             // If the event IDs are equal, then we have to delete the old document. This can
             // happen when and if the event's time or title is changed.
             if (newEvent.eventId != null && oldEvent.eventId == newEvent.eventId) {
-                getEventDocument(eventsCollectionRef, oldEvent.eventId!!).delete()
+                getEventDocument(oldEvent.eventId!!).delete()
             }
 
             // And a add a new event.
@@ -75,7 +78,27 @@ class EventWrapper {
          * @param event the event to be deleted.
          */
         fun deleteEvent(event: Event) {
-            getEventDocument(eventsCollectionRef, event.eventId!!).delete()
+            getEventDocument(event.eventId!!).delete()
+        }
+
+
+        /**
+         * Return the event's UUID given its ID.
+         *
+         * @param eventId the event's ID
+         * @return The UUID of the event.
+         */
+        suspend fun getEventUuid(eventId: String): String {
+            val eventObject = getEventDocument(eventId)
+                .get()
+                .await()
+                .toObject(Event::class.java)
+
+            if (eventObject != null ){
+                return eventObject.uuid!!
+            }
+
+            throw NullPointerException("No event UUID!")
         }
     }
 }

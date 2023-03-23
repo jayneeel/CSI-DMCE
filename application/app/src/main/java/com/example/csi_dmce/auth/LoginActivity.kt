@@ -13,6 +13,7 @@ import com.example.csi_dmce.MainActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.forgotpassword.ForgotPasswordActivity
 import com.example.csi_dmce.database.StudentAuthWrapper
+import com.example.csi_dmce.ui.Dashboard
 import com.example.csi_dmce.utils.Helpers
 import kotlinx.coroutines.runBlocking
 
@@ -30,8 +31,6 @@ class LoginActivity: AppCompatActivity() {
 
         etLoginEmail      = findViewById(R.id.edit_text_login_email)
         etLoginPassword   = findViewById(R.id.edit_text_login_password)
-        etLoginEmail.setText("amit@gmail.com")
-        etLoginPassword.setText("root")
 
         btnLogin = findViewById(R.id.button_login)
         btnLogin.setOnClickListener {
@@ -49,8 +48,8 @@ class LoginActivity: AppCompatActivity() {
                             if (sharedPref.getBoolean("firstTime", true)) {
                                 sharedPref.edit().putBoolean("firstTime", false).apply()
                             }
-                            
-                            val mIntent = Intent(applicationContext, MainActivity::class.java)
+
+                            val mIntent = Intent(applicationContext, Dashboard::class.java)
                             finishAffinity()
                             startActivity(mIntent)
                         }
@@ -65,13 +64,6 @@ class LoginActivity: AppCompatActivity() {
         tvForgotPassword = findViewById(R.id.text_view_forgot_password)
         tvForgotPassword.setOnClickListener{
             val intent = Intent(applicationContext, ForgotPasswordActivity::class.java)
-            startActivity(intent)
-        }
-
-        tvNoAccount = findViewById(R.id.text_view_new_account)
-        tvNoAccount.setOnClickListener{
-            val intent = Intent(applicationContext, RegistrationActivity::class.java)
-            finish()
             startActivity(intent)
         }
     }

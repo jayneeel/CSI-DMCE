@@ -5,12 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/otp_illustration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.otpview.OTPTextView
         android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        app:bar_active_color="@color/black"
+        app:bar_active_color="@color/csi_primary_accent"
         app:bar_enabled="true"
         app:bar_error_color="@color/red"
         app:bar_height="1.5dp"
@@ -20,42 +32,110 @@
         app:bar_margin_right="2dp"
         app:bar_success_color="#33cc33"
         app:box_margin="0dp"
-        app:height="40dp"
+        app:height="60dp"
         app:hide_otp="true"
         app:hide_otp_drawable="@drawable/bg_otp_box_hide"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.623"
         app:length="4"
         app:otp=""
         app:otp_text_size="20dp"
-        app:width="40dp" />
+        app:width="60dp" />
 
-    <TextView
-        android:id="@+id/textView2"
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please enter the OTP!"
-        app:layout_constraintBottom_toTopOf="@+id/otp_view"
-        app:layout_constraintEnd_toEndOf="@+id/otp_view"
-        app:layout_constraintStart_toStartOf="@+id/otp_view"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_submit_otp"
-        android:width="200dp"
-        android:height="100dp"
-        android:backgroundTint="@color/black"
-        android:textColor="@color/white"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/lato"
+        android:text="Didn't receive the OTP?"
+        android:textColor="@color/csi_fg_text"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/materialTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otp_view"
+        app:layout_constraintVertical_bias="0.974" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:layout_marginStart="152dp"
+        android:layout_marginBottom="84dp"
+        android:text="Resend OTP"
+        android:textColor="#2743FD"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_submit_otp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/lato"
+        android:text="Verify your OTP"
+        android:textColor="@color/csi_fg_text"
+        android:textFontWeight="700"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/lato"
+        android:text="Enter the OTP sent to"
+        android:textColor="@color/csi_fg_text"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/otp_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView5"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_verification_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/lato"
+        android:text="sample@gmail.com"
+        android:textColor="@color/csi_fg_text"
+        android:textFontWeight="600"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/otp_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView5"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_submit_otp"
+        android:layout_width="320dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/csi_primary_accent"
+        android:drawableRight="@drawable/ic_next_arrow"
+        android:fontFamily="@font/lato"
+        android:text="Submit OTP"
+        android:textAlignment="textStart"
+        android:textFontWeight="700"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/otp_view"
-        app:layout_constraintStart_toStartOf="@+id/otp_view"
-        app:layout_constraintTop_toBottomOf="@+id/otp_view" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

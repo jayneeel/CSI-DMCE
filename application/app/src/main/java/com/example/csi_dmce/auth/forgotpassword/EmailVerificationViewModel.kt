@@ -6,4 +6,5 @@ import androidx.lifecycle.MutableLiveData
 
 class EmailVerificationViewModel(application: Application) : AndroidViewModel(application) {
     val emailIsVerified = MutableLiveData<Boolean>()
+    val emailId = MutableLiveData<String>()
 }

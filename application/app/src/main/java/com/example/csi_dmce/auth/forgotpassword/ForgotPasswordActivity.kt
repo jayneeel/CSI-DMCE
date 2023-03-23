@@ -23,6 +23,8 @@ class ForgotPasswordActivity: AppCompatActivity() {
         emailVerificationViewModel.emailIsVerified.observe(this, Observer { emailIdExists ->
             if (emailIdExists) {
                 val intent = Intent(applicationContext, OTPVerificationActivity::class.java)
+                intent.putExtra("email_id", emailVerificationViewModel.emailId.value)
+                intent.putExtra("verification_kind", "password_reset_verification")
                 startActivity(intent)
             }
             Toast.makeText(applicationContext, "Your Email ID isn't correct.", Toast.LENGTH_SHORT).show()

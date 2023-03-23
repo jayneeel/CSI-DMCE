@@ -16,6 +16,7 @@ class SetPasswordActivity: AppCompatActivity() {
     private lateinit var etConfirmNewPassword: EditText
     private lateinit var otpSubmit: Button
 
+    // TODO: Convert this to a fragment.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_password)
@@ -24,13 +25,13 @@ class SetPasswordActivity: AppCompatActivity() {
         etConfirmNewPassword = findViewById(R.id.edit_text_fop_confirm_new_password)
         otpSubmit = findViewById(R.id.button_forgot_pass_submit)
 
-        val loginEmailId: String = intent.getStringExtra("login_email").toString()
+        val emailId: String = intent.getStringExtra("email_id").toString()
 
         otpSubmit.setOnClickListener {
-            if (etNewPassword == etConfirmNewPassword) {
+            if (etNewPassword.text.toString() == etConfirmNewPassword.text.toString()) {
                 val newPassword = Helpers.getSha256Hash(etNewPassword.text.toString())
                 runBlocking {
-                    StudentAuthWrapper.setPasswordWrapper(loginEmailId, newPassword)
+                    StudentAuthWrapper.setPasswordWrapper(emailId, newPassword)
                 }
             } else {
                 Toast.makeText(applicationContext,"Passwords don't match!", Toast.LENGTH_SHORT).show()

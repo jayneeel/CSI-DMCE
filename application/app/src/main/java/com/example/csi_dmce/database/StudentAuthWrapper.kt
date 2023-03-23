@@ -1,7 +1,6 @@
 package com.example.csi_dmce.database
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.util.Log
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
@@ -69,6 +68,21 @@ class StudentAuthWrapper {
             addStudentAuth(studentAuthObject)
         }
 
+        suspend fun createForgotPasswordHashMap(emailId: String, otp: String) {
+            val studentAuthObject = getByEmail(emailId)
+
+            val currentDate = Date()
+            val futureDate = Date(currentDate.time + Helpers.DAY_IN_MS)
+
+            val forgotPasswordHashMap = hashMapOf<String, Any>()
+            forgotPasswordHashMap["otp"] = otp.toInt()
+            forgotPasswordHashMap["creation_timestamp"] = Helpers.generateUnixTimestampFromDate(currentDate)
+            forgotPasswordHashMap["expiry_timestamp"] = Helpers.generateUnixTimestampFromDate(futureDate)
+
+            studentAuthObject!!.forgot_password = forgotPasswordHashMap
+            addStudentAuth(studentAuthObject)
+        }
+
         suspend fun getEmailVerificationHashMap(emailId: String): HashMap<String, Any> {
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
@@ -98,9 +112,13 @@ class StudentAuthWrapper {
         }
 
         suspend fun setPasswordWrapper(emailId: String, passwordHash: String) {
+            Log.d("DB_SET_PASS", emailId)
             val studentAuthRef: DocumentSnapshot? = authCollectionRef
                 .document(emailId)
                 .get().await()
+
+
+            Log.d("DB_SET_PASS", studentAuthRef.toString())
 
             val studentAuthObject = studentAuthRef!!.toObject(StudentAuth::class.java)!!
             studentAuthObject.password_hash = passwordHash

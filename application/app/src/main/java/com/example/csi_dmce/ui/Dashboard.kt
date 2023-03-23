@@ -1,5 +1,6 @@
 package com.example.csi_dmce.ui
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,26 +10,26 @@ import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.auth.EmailKind
 import com.example.csi_dmce.auth.EmailService
-import com.example.csi_dmce.events.EventPageActivity
+import com.example.csi_dmce.events.EventViewActivity
 import com.example.csi_dmce.profile.Profile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import kotlin.concurrent.thread
 
 
 class Dashboard: AppCompatActivity() {
-    private lateinit var btnEmail: Button
     private lateinit var btn_profile: Button
-    private lateinit var btn_events: Button
-    private lateinit var btn_calendar: Button
     private lateinit var btn_logout: Button
+    private lateinit var btn_event1: Button
+    private lateinit var btn_event2: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        Log.d("CSI-UI", "Launching Dashboard")
 
         btn_profile = findViewById(R.id.btn_dashboard_profile)
         btn_profile.setOnClickListener {
@@ -36,20 +37,18 @@ class Dashboard: AppCompatActivity() {
             startActivity(eventIntent)
         }
 
-        btnEmail = findViewById(R.id.btn_dashboard_email)
-        btnEmail.setOnClickListener {
-            runBlocking {
-                launch {
-                    withContext(Dispatchers.IO) {
-                        EmailService.sendEmail("1234", EmailKind.RESET_PASSWORD_VERIFICATION, "amitkulkarni7839@gmail.com", applicationContext)
-                }
-            }
+        btn_event1 = findViewById(R.id.btn_event_1)
+        btn_event1.setOnClickListener {
+            val intent = Intent(applicationContext, EventViewActivity::class.java)
+            intent.putExtra("event_id", "CSCT-1678280388")
+            startActivity(intent)
         }
 
-        btn_events = findViewById(R.id.btn_dashboard_events)
-        btn_events.setOnClickListener {
-            val eventIntent = Intent(this, EventPageActivity::class.java)
-            startActivity(eventIntent)
+        btn_event2 = findViewById(R.id.btn_event_2)
+        btn_event2.setOnClickListener {
+            val intent = Intent(applicationContext, EventViewActivity::class.java)
+            intent.putExtra("event_id", "DCF-1674498731")
+            startActivity(intent)
         }
 
         btn_logout = findViewById(R.id.btn_dashboard_logout)
@@ -60,4 +59,4 @@ class Dashboard: AppCompatActivity() {
             startActivity(intent)
         }
     }
-}}
+}
