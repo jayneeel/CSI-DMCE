@@ -55,6 +55,13 @@ class EventWrapper {
             return eventDocument.toObject(Event::class.java)!!
         }
 
+        suspend fun getEvents(): List<Event> {
+            return eventsCollectionRef
+                .get()
+                .await()
+                .toObjects(Event::class.java)
+        }
+
         /**
          * Update an event in the database.
          *

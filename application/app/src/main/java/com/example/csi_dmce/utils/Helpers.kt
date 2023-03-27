@@ -19,6 +19,9 @@ class Helpers {
         val eventDayFormat = SimpleDateFormat("d")
         val eventMonthFormat = SimpleDateFormat("MMM")
 
+        // For the RecyclerView
+        val rvEventDateFormat = SimpleDateFormat("MMM dd")
+
         /**
          * Returns a SHA-256 Hash of a given string.
          *
