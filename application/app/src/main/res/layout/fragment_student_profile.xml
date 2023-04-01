@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".profile.student_profile">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="300dp"
+           android:padding="20dp">
+
+           <ImageView
+               android:id="@+id/profile_image"
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:layout_centerVertical="true" />
+
+           <TextView
+               android:id="@+id/fullname_field"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:text="Vedant Prabhu"
+               android:textColor="#000"
+               android:layout_marginLeft="10dp"
+               android:fontFamily="@font/lato"
+               android:includeFontPadding="false"
+               android:textStyle="bold"
+               android:layout_toRightOf="@+id/profile_image"
+               android:textSize="20sp" />
+
+           <TextView
+               android:id="@+id/username_field"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/fullname_field"
+               android:layout_marginLeft="10dp"
+               android:layout_toRightOf="@+id/profile_image"
+               android:includeFontPadding="false"
+               android:text="Ved@123"
+               android:textSize="14sp" />
+       </RelativeLayout>
+
+<!--       <LinearLayout-->
+<!--           android:layout_height="wrap_content"-->
+<!--           android:layout_marginTop="-100dp"-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:padding="20dp">-->
+<!--           <com.google.android.material.card.MaterialCardView-->
+<!--               android:layout_height="125dp"-->
+<!--               android:layout_margin="10dp"-->
+<!--               android:layout_weight="1"-->
+<!--               android:layout_width="0dp"-->
+<!--               app:cardBackgroundColor="#fece2f"-->
+<!--               app:cardElevation="10dp">-->
+<!--               <RelativeLayout-->
+<!--                   android:layout_height="match_parent"-->
+<!--                   android:layout_width="match_parent"-->
+<!--                   android:padding="5dp">-->
+<!--                   <ImageView-->
+<!--                       android:layout_centerHorizontal="true"-->
+<!--                       android:layout_height="50dp"-->
+<!--                       android:layout_width="50dp" />-->
+<!--                   <TextView-->
+<!--                       android:id="@+id/payment_label"-->
+<!--                       android:includeFontPadding="false"-->
+<!--                       android:layout_centerInParent="true"-->
+<!--                       android:layout_height="wrap_content"-->
+<!--                       android:layout_width="wrap_content"-->
+<!--                       android:text="$123"-->
+<!--                       android:fontFamily="@font/lato"-->
+<!--                       android:textSize="20sp" />-->
+<!--                   <TextView-->
+<!--                       android:id="@+id/payment_desc"-->
+<!--                       android:includeFontPadding="false"-->
+<!--                       android:layout_below="@id/payment_label"-->
+<!--                       android:layout_centerHorizontal="true"-->
+<!--                       android:layout_height="wrap_content"-->
+<!--                       android:layout_width="wrap_content"-->
+<!--                       android:text=" Community"-->
+<!--                       android:fontFamily="@font/lato"-->
+<!--                       android:textSize="20sp" />-->
+<!--               </RelativeLayout>-->
+<!--           </com.google.android.material.card.MaterialCardView>-->
+
+<!--           <com.google.android.material.card.MaterialCardView-->
+<!--               android:layout_height="125dp"-->
+<!--               android:layout_margin="10dp"-->
+<!--               android:layout_weight="1"-->
+<!--               android:layout_width="0dp"-->
+<!--               app:cardBackgroundColor="#fece2f"-->
+<!--               app:cardElevation="10dp">-->
+<!--               <RelativeLayout-->
+<!--                   android:layout_height="match_parent"-->
+<!--                   android:layout_width="match_parent"-->
+<!--                   android:padding="5dp">-->
+<!--                   <ImageView-->
+<!--                       android:layout_centerHorizontal="true"-->
+<!--                       android:layout_height="40dp"-->
+<!--                       android:layout_width="40dp"-->
+<!--                       />-->
+
+<!--                   <TextView-->
+<!--                       android:id="@+id/booking_label"-->
+<!--                       android:layout_width="wrap_content"-->
+<!--                       android:layout_height="wrap_content"-->
+<!--                       android:layout_centerInParent="true"-->
+<!--                       android:fontFamily="@font/lato"-->
+<!--                       android:includeFontPadding="false"-->
+<!--                       android:text="Search"-->
+<!--                       android:textSize="20sp" />-->
+<!--                   <TextView-->
+<!--                       android:id="@+id/booking_desc"-->
+<!--                       android:includeFontPadding="false"-->
+<!--                       android:layout_below="@id/booking_label"-->
+<!--                       android:layout_centerHorizontal="true"-->
+<!--                       android:layout_height="wrap_content"-->
+<!--                       android:layout_width="wrap_content"-->
+<!--                       android:text="Trainers"-->
+<!--                       android:fontFamily="@font/lato"-->
+<!--                       android:textSize="20sp" />-->
+<!--               </RelativeLayout>-->
+<!--           </com.google.android.material.card.MaterialCardView>-->
+<!--       </LinearLayout>-->
+
+       <LinearLayout
+           android:layout_height="wrap_content"
+           android:layout_width="match_parent"
+           android:orientation="vertical"
+           android:padding="20dp">
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:hint="Full Name"
+               android:id="@+id/full_name_profile"
+               android:layout_height="wrap_content"
+               android:layout_margin="5sp"
+               android:background="@color/white"
+               android:layout_width="match_parent">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:drawablePadding="30dp"
+                   android:text="Vedant Prabhu"
+                   android:background="@color/white"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="@font/lato"
+                   android:editable="false"
+                   android:layout_width="match_parent" />
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:hint="Your Password"
+               android:layout_margin="5sp"
+               android:background="@color/white"
+               android:id="@+id/phass"
+               app:passwordToggleEnabled="true"
+               android:layout_height="wrap_content"
+               android:layout_width="match_parent">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:drawablePadding="30dp"
+                   android:text="Password"
+                   android:inputType="textPassword"
+                   android:background="@color/white"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="@font/lato"
+                   android:layout_width="match_parent" />
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:hint="Student ID"
+               android:layout_margin="5sp"
+               android:id="@+id/email_name_profile"
+               android:layout_height="wrap_content"
+               android:layout_width="match_parent">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:drawablePadding="30dp"
+                   android:text="2021DSC002"
+                   android:background="@color/white"
+                   android:fontFamily="@font/lato"
+                   android:layout_height="wrap_content"
+                   android:layout_width="match_parent" />
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:hint="Contact"
+               android:layout_margin="5sp"
+               android:id="@+id/phno"
+               android:fontFamily="@font/lato"
+               android:layout_height="wrap_content"
+               android:layout_width="match_parent">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:drawablePadding="30dp"
+                   android:text="+91 8787654732"
+                   android:background="@color/white"
+                   android:layout_height="wrap_content"
+                   android:layout_width="match_parent" />
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <Button
+               android:background="#fece2f"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="30dp"
+               android:layout_width="match_parent"
+               android:fontFamily="@font/lato"
+               android:text="UPDATE"
+               android:layout_margin="15dp" />
+       </LinearLayout>
+   </LinearLayout>
+</ScrollView>
