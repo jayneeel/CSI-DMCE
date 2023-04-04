@@ -9,7 +9,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 class GenerateQRHelper {
     companion object {
         // qrKind is either "first" or "second"
-        fun generateQr(qrData: String): Bitmap {
+        fun generateQr(qrData: String, dimensions: Pair<Int, Int>): Bitmap {
             val writer= QRCodeWriter()
 
             val bitMatrix: BitMatrix = writer.encode(qrData, BarcodeFormat.QR_CODE, 512, 512)
