@@ -4,23 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.auth0.jwt.HeaderParams
 
 import com.example.csi_dmce.R
-import com.example.csi_dmce.attendance.GenerateQR
-import com.example.csi_dmce.attendance.scan_qr
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentAuth
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
-import com.google.rpc.Help
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

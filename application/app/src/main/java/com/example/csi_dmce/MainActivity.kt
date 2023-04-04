@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.events.EventListActivity
+import com.example.csi_dmce.events.EventQRGenerationActivity
 import com.example.csi_dmce.events.EventUpsertActivity
 import com.example.csi_dmce.ui.Dashboard
 import com.example.csi_dmce.ui.WelcomeActivity
@@ -20,8 +21,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        val intent = Intent(this, EventUpsertActivity::class.java)
+        val intent = Intent(this, EventQRGenerationActivity::class.java)
         startActivity(intent)
+    }
+}
 
 //        setContentView(R.layout.splash_screen)
 //
@@ -43,5 +46,3 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }, SPLASHTIMEOUT)
 //    }
-    }
-}

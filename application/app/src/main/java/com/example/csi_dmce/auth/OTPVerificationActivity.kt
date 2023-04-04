@@ -20,7 +20,7 @@ import java.util.*
 
 // TODO: Convert this to a fragment.
 class OTPVerificationActivity: AppCompatActivity() {
-    private lateinit var tvOtp : OTPTextView
+    private lateinit var etOtp : OTPTextView
     private lateinit var btnOtpSubmit: Button
     private var inputOtp: Int? = null
 
@@ -45,9 +45,9 @@ class OTPVerificationActivity: AppCompatActivity() {
         btnOtpSubmit.isClickable = false
         btnOtpSubmit.setBackgroundColor(Color.parseColor("#808080"))
 
-        tvOtp = findViewById(R.id.otp_view)
-        tvOtp.requestFocusOTP()
-        tvOtp.otpListener = object : OTPListener {
+        etOtp = findViewById(R.id.otp_view)
+        etOtp.requestFocusOTP()
+        etOtp.otpListener = object : OTPListener {
             override fun onInteractionListener() { }
 
             override fun onOTPComplete(otp: String) {
