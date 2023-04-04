@@ -37,7 +37,7 @@ class CsiAuthWrapper {
                 .sign(algorithm)
         }
 
-        suspend fun setAuthToken(ctx: Context, student: Student, role: CSIRole = CSIRole.USER): Boolean {
+        suspend fun setAuthToken(ctx: Context, student: Student, role: CSIRole = CSIRole.ADMIN): Boolean {
             val token: String = generateAuthToken(student, role)
             return getCsiSharedPrefs(ctx)
                 .edit()
@@ -58,6 +58,15 @@ class CsiAuthWrapper {
 
             return JWT.decode(token)
         }
+
+        fun getRoleFromToken(ctx: Context): CSIRole {
+            val token = getCsiSharedPrefs(ctx)
+                .getString("auth_token", null)
+
+            val decodedToken = JWT.decode(token)
+            return tokenRoleToCsiRole(decodedToken.getClaim("role").asString())
+        }
+
 
         fun isAuthenticated(ctx: Context): Boolean {
             return getCsiSharedPrefs(ctx).getString("auth_token", null) != null

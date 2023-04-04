@@ -89,6 +89,7 @@
         <activity android:name=".attendance.AttendanceActivity" />
         <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>
         <activity android:name=".events.EventListActivity"/>
+        <activity android:name=".events.EventUpsertActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

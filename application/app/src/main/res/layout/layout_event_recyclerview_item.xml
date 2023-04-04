@@ -5,7 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_event_container"
         android:layout_width="match_parent"
@@ -78,8 +77,8 @@
                 android:textColor="@color/black"
                 android:textSize="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.757"
-                app:layout_constraintStart_toEndOf="@+id/materialTextView3"
+                app:layout_constraintHorizontal_bias="0.771"
+                app:layout_constraintStart_toEndOf="@+id/text_view_rv_event_title"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

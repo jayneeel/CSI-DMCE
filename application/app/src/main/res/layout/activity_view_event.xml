@@ -31,10 +31,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_view_event_poster"
-            android:layout_marginTop="50dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/csi_event_poster"/>
+            android:layout_marginTop="50dp"
+            android:src="@drawable/csi_event_poster" />
 
 
         <!--        <View-->
@@ -181,6 +181,7 @@
         android:backgroundTint="#0D1542"
         android:fontFamily="@font/lato"
         android:text="Register"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -188,6 +189,43 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_event_update"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="28dp"
+        android:visibility="gone"
+        android:backgroundTint="@color/csi_primary_accent"
+        android:fontFamily="@font/lato"
+        android:text="Update"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.869"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_event_delete"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="28dp"
+        android:visibility="gone"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/lato"
+        android:text="Delete"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!--        <com.google.android.material.button.MaterialButton-->

@@ -10,6 +10,7 @@ import android.graphics.PorterDuff
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.*
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
 import com.example.csi_dmce.attendance.AttendanceActivity
+import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.AttendanceWrapper
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
@@ -45,6 +47,8 @@ class EventViewActivity: AppCompatActivity() {
     private lateinit var tvEventVenue: TextView
     private lateinit var tvEventDescription: TextView
     private lateinit var btnEventRegister: Button
+    private lateinit var btnEventUpdate: Button
+    private lateinit var btnEventDelete: Button
     private lateinit var btnEventAttendance: Button
 
     private var stateRegistered: Boolean = false
@@ -117,43 +121,59 @@ class EventViewActivity: AppCompatActivity() {
             }
         }
 
-        btnEventRegister = findViewById(R.id.button_event_register)
-        btnEventRegister.setOnClickListener {
-            val dialog = BottomSheetDialog(this)
-            if (!stateRegistered) {
-                dialog.setContentView(R.layout.component_event_register_popup)
-            } else {
-                dialog.setContentView(R.layout.component_event_unregister_popup)
+        if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
+            // TODO: Add onClickListener for this
+            btnEventUpdate = findViewById(R.id.button_event_update)
+            btnEventUpdate.visibility = View.VISIBLE
+
+            btnEventDelete = findViewById(R.id.button_event_delete)
+            btnEventDelete.visibility = View.VISIBLE
+            btnEventDelete.setOnClickListener {
+                val dialog = Dialog(this)
+                dialog.setContentView(R.layout.component_event_delete_popup)
+                dialog.show()
             }
-            dialog.setCancelable(true)
-            dialog.findViewById<Button>(R.id.event_dialog_confirm_button)?.setOnClickListener {
+
+        } else {
+            btnEventRegister = findViewById(R.id.button_event_register)
+            btnEventRegister.visibility = View.VISIBLE
+            btnEventRegister.setOnClickListener {
+                val dialog = BottomSheetDialog(this)
                 if (!stateRegistered) {
-                    btnEventRegister.text = "Registered"
-                    btnEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.green)));
-                    val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_event_check_mark)
-                    btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-                    stateRegistered = true
+                    dialog.setContentView(R.layout.component_event_register_popup)
                 } else {
-                    btnEventRegister.text = "Register"
-                    btnEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.csi_primary_accent)));
-                    btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                    stateRegistered = false
+                    dialog.setContentView(R.layout.component_event_unregister_popup)
                 }
+                dialog.setCancelable(true)
+                dialog.findViewById<Button>(R.id.event_dialog_confirm_button)?.setOnClickListener {
+                    if (!stateRegistered) {
+                        btnEventRegister.text = "Registered"
+                        btnEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.green)));
+                        val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_event_check_mark)
+                        btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+                        stateRegistered = true
+                    } else {
+                        btnEventRegister.text = "Register"
+                        btnEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.csi_primary_accent)));
+                        btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                        stateRegistered = false
+                    }
 
 
-                if (!stateRegistered) {
-                   // Insert attendee into the database
-                } else {
-                    // Remove attendee from the database.
+                    if (!stateRegistered) {
+                        // TODO: Insert attendee into the database
+                    } else {
+                        // TODO: Remove attendee from the database.
+                    }
+
+
+                    dialog.dismiss()
                 }
-
-
-                dialog.dismiss()
+                dialog.findViewById<Button>(R.id.event_dialog_cancel_button)?.setOnClickListener {
+                    dialog.dismiss()
+                }
+                dialog.show()
             }
-            dialog.findViewById<Button>(R.id.event_dialog_cancel_button)?.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.show()
         }
     }
 }
