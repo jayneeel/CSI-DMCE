@@ -1,5 +1,6 @@
 package com.example.csi_dmce.events
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +25,15 @@ class EventListActivity: AppCompatActivity() {
 
         val userRole: CSIRole = CsiAuthWrapper.getRoleFromToken(applicationContext)
 
+        Log.d("EVENTS", userRole.isAdmin().toString())
+
         btnEventAdd = findViewById(R.id.fab_admin_event_add)
+        btnEventAdd.setOnClickListener {
+            val intent = Intent(applicationContext, EventUpsertActivity::class.java)
+            intent.putExtra("is_add_intent", true)
+            startActivity(intent)
+        }
+
         if (!userRole.isAdmin()) {
            btnEventAdd.hide()
         }

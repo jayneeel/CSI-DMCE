@@ -51,7 +51,7 @@ repositories {
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
 dependencies {
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -75,6 +75,10 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-auth:21.1.0'
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+
+    // Firebase storage
+    implementation platform('com.google.firebase:firebase-bom:31.4.0')
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     // For serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'

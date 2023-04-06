@@ -129,7 +129,7 @@ class EventViewActivity: AppCompatActivity() {
             btnEventDelete = findViewById(R.id.button_event_delete)
             btnEventDelete.visibility = View.VISIBLE
             btnEventDelete.setOnClickListener {
-                val dialog = Dialog(this)
+                val dialog = Dialog(applicationContext)
                 dialog.setContentView(R.layout.component_event_delete_popup)
                 dialog.show()
             }

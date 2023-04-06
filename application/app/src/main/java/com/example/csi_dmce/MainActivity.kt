@@ -21,28 +21,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        val intent = Intent(this, EventQRGenerationActivity::class.java)
-        startActivity(intent)
+        setContentView(R.layout.splash_screen)
+
+        val sharedPrefs: SharedPreferences = getSharedPreferences("csi_shared_prefs", MODE_PRIVATE)
+
+        val intent = if (CsiAuthWrapper.isAuthenticated(applicationContext)) {
+            val role = CsiAuthWrapper.getRoleFromToken(applicationContext)
+            sharedPrefs
+                .edit()
+                .putString("csi_role", role.role)
+                .apply()
+
+            Intent(this, Dashboard::class.java)
+        } else {
+            Intent(this, WelcomeActivity::class.java)
+        }
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(intent)
+        }, SPLASHTIMEOUT)
     }
 }
-
-//        setContentView(R.layout.splash_screen)
-//
-//        val sharedPrefs: SharedPreferences = getSharedPreferences("csi_shared_prefs", MODE_PRIVATE)
-//
-//        val intent = if (CsiAuthWrapper.isAuthenticated(applicationContext)) {
-//            val role = CsiAuthWrapper.getRoleFromToken(applicationContext)
-//            sharedPrefs
-//                .edit()
-//                .putString("csi_role", role.role)
-//                .apply()
-//
-//            Intent(this, Dashboard::class.java)
-//        } else {
-//            Intent(this, WelcomeActivity::class.java)
-//        }
-//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            startActivity(intent)
-//        }, SPLASHTIMEOUT)
-//    }

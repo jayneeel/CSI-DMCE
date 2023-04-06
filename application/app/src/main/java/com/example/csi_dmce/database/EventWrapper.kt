@@ -1,6 +1,7 @@
 package com.example.csi_dmce.database
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
@@ -20,6 +21,7 @@ data class Event (
     var datetime    : Long?         = null,
     var description : String?       = null,
     var poster_url  : String?       = null,
+    var speaker     : String?       = null,
     var attendees   : MutableList<String>? = null
 )
 
