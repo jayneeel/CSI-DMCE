@@ -19,6 +19,8 @@ class Helpers {
         val eventDayFormat = SimpleDateFormat("d")
         val eventMonthFormat = SimpleDateFormat("MMM")
 
+        val eventUpsertDateTimeFormat = SimpleDateFormat("EEEE d MMMM yyyy, hh:mm a")
+
         // For the RecyclerView
         val rvEventDateFormat = SimpleDateFormat("MMM dd")
 

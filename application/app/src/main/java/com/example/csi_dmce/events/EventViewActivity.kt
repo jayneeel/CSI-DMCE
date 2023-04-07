@@ -42,6 +42,8 @@ class EventViewActivity: AppCompatActivity() {
 //    private lateinit var tvEventMinTime: TextView
 //    private lateinit var tvEventMinVenue: TextView
 
+    private val REQUEST_CODE_EVENT_UPDATE = 102
+
     private lateinit var ivEventPoster: ImageView
     private lateinit var tvEventTitle: TextView
     private lateinit var tvEventMonth: TextView
@@ -95,9 +97,12 @@ class EventViewActivity: AppCompatActivity() {
         tvEventDescription.text = eventObject.description
 
         ivEventPoster = findViewById(R.id.image_view_event_poster)
+
+        val eventPosterUrl = eventObject.poster_url ?: runBlocking { EventWrapper.getPosterUrl(eventId, eventObject.poster_extension!!) }
+
         Glide.with(this)
             .setDefaultRequestOptions(RequestOptions())
-            .load(eventObject.poster_url)
+            .load(eventPosterUrl)
             .into(ivEventPoster)
 
 
@@ -125,9 +130,12 @@ class EventViewActivity: AppCompatActivity() {
         }
 
         if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
-            // TODO: Add onClickListener for this
             btnEventUpdate = findViewById(R.id.button_event_update)
             btnEventUpdate.visibility = View.VISIBLE
+            btnEventUpdate.setOnClickListener {
+                val intent = Intent(this, EventUpsertActivity::class.java)
+                startActivityForResult(intent, REQUEST_CODE_EVENT_UPDATE)
+            }
 
             btnEventDelete = findViewById(R.id.button_event_delete)
             btnEventDelete.visibility = View.VISIBLE
@@ -205,6 +213,16 @@ class EventViewActivity: AppCompatActivity() {
                 }
                 dialog.show()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_EVENT_UPDATE && resultCode == RESULT_OK && data != null && data.data != null) {
+            finish()
+
+            val intent = Intent(applicationContext, EventViewActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.csi_dmce.database
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
@@ -10,6 +11,9 @@ import com.example.csi_dmce.R
 
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.runBlocking
 import java.util.UUID
 
 data class Event (
@@ -20,7 +24,8 @@ data class Event (
     var uuid        : String?       = null,
     var datetime    : Long?         = null,
     var description : String?       = null,
-    var poster_url  : String?       = null,
+    var poster_extension  : String? = null,
+    var poster_url  : String? = null,
     var speaker     : String?       = null,
     var attendees   : MutableList<String>? = null
 )
@@ -28,6 +33,7 @@ data class Event (
 class EventWrapper {
     companion object {
         private val eventsCollectionRef = FirebaseFirestore.getInstance().collection("events")
+        private val storageRef = FirebaseStorage.getInstance().reference.child("events")
 
         private fun getEventDocument(eventId: String): DocumentReference {
             return eventsCollectionRef.document(eventId)
@@ -40,8 +46,21 @@ class EventWrapper {
          * @param event the deserialized event
          * @return void
          */
-        suspend fun addEvent(event: Event): Void? {
+        suspend fun addEvent(event: Event, imageUri: Uri? = null): Void? {
             event.eventId = Helpers.createEventId(event.title!!, event.datetime!!)
+
+            if (imageUri != null) {
+                // Upload to Firebase storage
+                var fileExtension = imageUri.lastPathSegment.toString()
+                fileExtension = fileExtension.substring(fileExtension.lastIndexOf(".") + 1)
+
+                event.poster_extension = fileExtension
+
+                storageRef.child("${event.eventId}/poster.${fileExtension}")
+                    .putFile(imageUri)
+                    .await()
+            }
+
             val eventDocumentRef = eventsCollectionRef.document(event.eventId!!)
             return eventDocumentRef.set(event).await()
         }
@@ -108,6 +127,15 @@ class EventWrapper {
             }
 
             throw NullPointerException("No event UUID!")
+        }
+
+
+        suspend fun getPosterUrl(eventId: String, posterExtension: String): String {
+            return storageRef
+                .child("${eventId}/poster.${posterExtension}")
+                .downloadUrl
+                .await()
+                .toString()
         }
     }
 }

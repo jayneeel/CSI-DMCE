@@ -13,8 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.database.Event
+import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.events.EventViewActivity
 import com.example.csi_dmce.utils.Helpers
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 class EventAdapter(private val events: List<Event>) :
     RecyclerView.Adapter<EventAdapter.ViewHolder>() {
@@ -48,9 +52,11 @@ class EventAdapter(private val events: List<Event>) :
         holder.tvEventDescription.text = event.description
         holder.tvEventDate.text = Helpers.rvEventDateFormat.format(Helpers.generateDateFromUnixTimestamp(event.datetime!!))
 
+        val eventPosterUrl = event.poster_url ?: runBlocking { EventWrapper.getPosterUrl(event.eventId!!, event.poster_extension!!) }
+
         Glide.with(holder.ivEventPoster.context)
             .setDefaultRequestOptions(RequestOptions())
-            .load(event.poster_url)
+            .load(eventPosterUrl)
             .into(holder.ivEventPoster)
     }
 
