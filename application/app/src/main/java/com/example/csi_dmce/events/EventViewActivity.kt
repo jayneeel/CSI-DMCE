@@ -1,12 +1,15 @@
 package com.example.csi_dmce.events
 
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
@@ -129,8 +132,36 @@ class EventViewActivity: AppCompatActivity() {
             btnEventDelete = findViewById(R.id.button_event_delete)
             btnEventDelete.visibility = View.VISIBLE
             btnEventDelete.setOnClickListener {
-                val dialog = Dialog(applicationContext)
+                val dialog = Dialog(this, R.style.Theme_CSIDMCE)
                 dialog.setContentView(R.layout.component_event_delete_popup)
+
+                val etDeleteEventName = dialog.findViewById<EditText>(R.id.edit_text_event_delete_name)
+                etDeleteEventName.setHint(eventObject.title)
+
+                val tvDeleteEventTitle = dialog.findViewById<TextView>(R.id.text_view_event_delete_title)
+                tvDeleteEventTitle.setText(eventObject.title)
+
+                val btnDeletePositive = dialog.findViewById<Button>(R.id.button_delete_positive)
+                btnDeletePositive.setOnClickListener {
+                    if (etDeleteEventName.text.toString() != eventObject.title) {
+                        Toast.makeText(this, "Please enter the event's title", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+
+                    EventWrapper.deleteEvent(eventObject)
+                    Toast.makeText(this, "Deleted event successfully", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
+
+                val btnDeleteNegative = dialog.findViewById<Button>(R.id.button_delete_negative)
+                btnDeleteNegative.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 dialog.show()
             }
 

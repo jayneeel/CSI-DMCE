@@ -1,5 +1,6 @@
 package com.example.csi_dmce.events
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -74,6 +75,8 @@ class EventUpsertActivity: AppCompatActivity() {
 
         runBlocking { EventWrapper.addEvent(event) }
         Toast.makeText(applicationContext, "Added event", Toast.LENGTH_SHORT).show()
+
+        setResult(Activity.RESULT_OK)
         finish()
     }
 
