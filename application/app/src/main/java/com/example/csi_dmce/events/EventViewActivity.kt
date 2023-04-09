@@ -30,6 +30,7 @@ import com.example.csi_dmce.database.AttendanceWrapper
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.utils.Helpers
+import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -98,7 +99,9 @@ class EventViewActivity: AppCompatActivity() {
 
         ivEventPoster = findViewById(R.id.image_view_event_poster)
 
-        val eventPosterUrl = eventObject.poster_url ?: runBlocking { EventWrapper.getPosterUrl(eventId, eventObject.poster_extension!!) }
+        val eventPosterUrl = runBlocking {
+            EventWrapper.getPosterUrl(eventObject.eventId!!, eventObject.poster_extension!!)
+        }
 
         Glide.with(this)
             .setDefaultRequestOptions(RequestOptions())
@@ -134,6 +137,7 @@ class EventViewActivity: AppCompatActivity() {
             btnEventUpdate.visibility = View.VISIBLE
             btnEventUpdate.setOnClickListener {
                 val intent = Intent(this, EventUpsertActivity::class.java)
+                intent.putExtra("update_event", Gson().toJson(eventObject))
                 startActivityForResult(intent, REQUEST_CODE_EVENT_UPDATE)
             }
 

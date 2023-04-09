@@ -4,32 +4,40 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class EventUpsertActivity: AppCompatActivity() {
     private val REQUEST_CODE_IMAGE_UPSERT: Int = 101
     private var imageUri: Uri? = null
 
+    private var oldEventObject: Event? = null
+
     private lateinit var eventDate: Date
 
     private lateinit var upsertButton: Button
+    private lateinit var cancelButton: Button
 
     private lateinit var etEventTitle: EditText
     private lateinit var etEventDescription: EditText
@@ -42,6 +50,12 @@ class EventUpsertActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_upsert)
+
+        cancelButton = findViewById(R.id.button_event_upsert_cancel)
+        cancelButton.setOnClickListener {
+            setResult(Activity.RESULT_OK)
+            finish()
+        }
 
         val isAddIntent: Boolean = intent.getBooleanExtra("is_add_intent", false)
 
@@ -94,15 +108,36 @@ class EventUpsertActivity: AppCompatActivity() {
 
         upsertButton = findViewById(R.id.button_event_upsert)
         upsertButton.text = if (isAddIntent) "Add" else "Update"
+        if (!isAddIntent) {
+            oldEventObject = Gson()
+                .fromJson(intent.getStringExtra("update_event"), Event::class.java)
+
+            etEventTitle.setText(oldEventObject.title)
+            etEventDescription.setText(oldEventObject.description)
+            etEventDateTime.setText(
+                Helpers.eventUpsertDateTimeFormat.format(
+                    Helpers.generateDateFromUnixTimestamp(oldEventObject.datetime!!)
+                )
+            )
+            etEventSpeaker.setText(oldEventObject.speaker)
+            etEventVenue.setText(oldEventObject.venue)
+            etEventPrerequisites.setText(oldEventObject.prerequisites)
+
+            val eventPosterUrl = runBlocking { EventWrapper.getPosterUrl(oldEventObject.eventId!!, oldEventObject.poster_extension.toString()) }
+            Glide.with(this)
+                .setDefaultRequestOptions(RequestOptions())
+                .load(eventPosterUrl)
+                .into(ivEventPoster)
+        }
 
         upsertButton.setOnClickListener {
             if (isAddIntent) {
-                upsertButton.text = "Add"
                 runBlocking { addCsiEvent() }
             } else {
                 // Hopefully an update event
-                upsertButton.text = "Update"
-                updateCsiEvent()
+                oldEventObject?.let {
+                    updateCsiEvent(it)
+                }
             }
         }
 
@@ -135,7 +170,9 @@ class EventUpsertActivity: AppCompatActivity() {
             venue = etEventVenue.text.toString(),
             speaker = etEventSpeaker.text.toString(),
             uuid = Helpers.generateEventUuid(),
-            datetime = Helpers.generateUnixTimestampFromDate(Date()),
+            datetime = Helpers.generateUnixTimestampFromDate(
+                Helpers.eventUpsertDateTimeFormat.parse(etEventDateTime.text.toString())!!
+            ),
             description = etEventDescription.text.toString(),
         )
 
@@ -146,5 +183,33 @@ class EventUpsertActivity: AppCompatActivity() {
         finish()
     }
 
-    private fun updateCsiEvent() {}
+    private suspend fun updateCsiEvent(oldEventObject: Event) {
+        var newEventObject: Event = oldEventObject.copy()
+
+        newEventObject.title = etEventTitle.text.toString()
+        newEventObject.description = etEventDescription.text.toString()
+        newEventObject.datetime = Helpers.generateUnixTimestampFromDate(
+            Helpers.eventUpsertDateTimeFormat.parse(
+                etEventDateTime.text.toString()
+            )!!
+        )
+        newEventObject.speaker = etEventSpeaker.text.toString()
+        newEventObject.venue = etEventVenue.text.toString()
+        newEventObject.prerequisites = etEventPrerequisites.text.toString()
+
+        // If the date hasn't changed, then the ID will be same and we don't need to do any Firestore
+        // stuff. Otherwise...
+        if (oldEventObject.datetime != newEventObject.datetime) {
+            if (imageUri == null) {
+                // No new poster, just move the old one to the new path.
+                EventWrapper.moveEventStorage(oldEventObject.eventId!!, newEventObject.eventId!!, oldEventObject.poster_extension!!)
+                // Delete the old firebase storage path
+                runBlocking { EventWrapper.deleteEventStorage(oldEventObject.eventId!!) }
+                // Add new event object
+                runBlocking { EventWrapper.addEvent(newEventObject)  }
+            } else {
+                runBlocking { EventWrapper.addEvent(newEventObject, imageUri) }
+            }
+        }
+    }
 }

@@ -152,6 +152,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_event_upsert_cancel"
                     android:layout_marginTop="25dp"
                     app:cornerRadius="0dp"
                     android:layout_width="150dp"

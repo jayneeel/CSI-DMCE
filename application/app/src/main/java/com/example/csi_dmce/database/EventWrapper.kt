@@ -1,20 +1,15 @@
 package com.example.csi_dmce.database
 
-import android.annotation.SuppressLint
 import android.net.Uri
-import android.util.Log
-import com.google.firebase.firestore.*
-import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
-import java.util.Date
-import com.example.csi_dmce.R
-
 import com.example.csi_dmce.utils.Helpers
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.runBlocking
-import java.util.UUID
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import java.io.File
 
 data class Event (
     @DocumentId
@@ -25,6 +20,7 @@ data class Event (
     var datetime    : Long?         = null,
     var description : String?       = null,
     var poster_extension  : String? = null,
+    var prerequisites: String? = null,
     var poster_url  : String? = null,
     var speaker     : String?       = null,
     var attendees   : MutableList<String>? = null
@@ -137,5 +133,26 @@ class EventWrapper {
                 .await()
                 .toString()
         }
+
+        suspend fun deleteEventStorage(eventId: String) {
+            val eventRef = storageRef.child(eventId)
+            val eventDocs = eventRef.listAll().await().items
+            for (doc in eventDocs) {
+                doc.delete().await()
+            }
+            eventRef.delete().await()
+        }
+
+        // TODO: Extend this to other files
+        suspend fun moveEventStorage(oldEventId: String, newEventId: String, posterExtension: String) {
+            val oldEventRef = storageRef.child("${oldEventId}/poster.${posterExtension}")
+            val newEventRef = storageRef.child("${newEventId}/poster.${posterExtension}")
+
+            val localFile = withContext(Dispatchers.IO) {
+                File.createTempFile("poster", posterExtension)
+            }
+
+            oldEventRef.getFile(localFile).await()
+            newEventRef.putFile(Uri.fromFile(localFile)).await()
     }
 }
