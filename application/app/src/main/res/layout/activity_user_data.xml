@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user.UserDataActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_alignParentStart="true"
+                    android:text="Users In\nDMCE"
+                    android:textColor="@color/black"
+                    android:textStyle="italic"
+                    android:onClick="expenseRequestScreen"
+                    android:layout_centerVertical="true"
+                    android:textSize="40dp"
+                    android:fontFamily="@font/lato"
+                    android:textFontWeight="800"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/user_dmce"
+                    android:onClick="lodgeComplaintScreen"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#0D1542"
+                app:cardCornerRadius="30dp"
+                android:layout_marginTop="30dp"
+                android:onClick="userListScreen"
+                app:cardElevation="10dp"
+                android:outlineAmbientShadowColor="@color/black">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Registered Users"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/lato"
+                        android:textSize="30dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/users_regs"
+                        android:layout_alignParentEnd="true"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#0D1542"
+                app:cardCornerRadius="30dp"
+                android:onClick="complaintScreen"
+                android:layout_marginVertical="20dp"
+                app:cardElevation="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User Complaint"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/lato"
+                        android:textSize="30dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/user_complaints"
+                        android:layout_alignParentEnd="true"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#0D1542"
+                app:cardCornerRadius="30dp"
+                android:layout_marginVertical="10dp"
+                android:onClick="expenseApprovalScreen"
+                app:cardElevation="10dp"
+                android:outlineAmbientShadowColor="@color/black">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Approve Expenses"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/lato"
+                        android:textSize="30dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/users_expense"
+                        android:layout_alignParentEnd="true"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+</RelativeLayout>

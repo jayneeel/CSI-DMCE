@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="40dp"
+    app:cardElevation="20dp"
+    android:layout_margin="10dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/studentDetailsLayout">
+
+       <com.makeramen.roundedimageview.RoundedImageView
+           android:layout_width="100dp"
+           android:layout_height="100dp"
+           android:src="@drawable/jk_pic"
+           android:id="@+id/profile_img"
+           android:layout_margin="40dp"
+           app:riv_corner_radius="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="2021DSCO002"
+            android:fontFamily="@font/lato"
+            android:id="@+id/student_id"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@+id/profile_img"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Jayneel Kanungo"
+            android:id="@+id/student_name"
+            android:layout_below="@+id/student_id"
+            android:fontFamily="@font/lato"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@+id/profile_img"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Comps"
+            android:fontFamily="@font/lato"
+            android:layout_marginTop="10dp"
+            android:id="@+id/student_dept"
+            android:layout_below="@+id/student_name"
+            android:layout_centerHorizontal="true"
+            android:layout_toEndOf="@+id/profile_img"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_dept"
+            android:padding="40dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sub_text"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/lato"
+                    android:text="Subject : "/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/complaint_sub"
+                    android:layout_toEndOf="@id/sub_text"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/lato"
+                    android:text="Payment not received"/>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/complaint_desc"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/lato"
+                android:textStyle="bold"
+                android:text="Description of the problem :"/>
+
+            <TextView
+                android:id="@+id/complaint_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/lato"
+                android:gravity="start"
+                android:text="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reply_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#0A0630"
+                android:paddingHorizontal="50dp"
+                android:layout_gravity="center"
+                android:paddingVertical="10dp"
+                android:fontFamily="@font/lato"
+                android:text="Reply"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                app:cornerRadius="28dp">
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

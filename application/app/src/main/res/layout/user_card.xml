@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="30dp"
+    android:layout_margin="10dp"
+    app:cardElevation="20dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_profile_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/jk_pic"
+            app:riv_corner_radius="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021DSCO002"
+            android:textStyle="bold"
+            android:id="@+id/user_student_id"
+            android:layout_toRightOf="@+id/user_profile_img"
+            android:fontFamily="@font/lato"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jayneel Kanungo"
+            android:id="@+id/user_student_name"
+            android:layout_toEndOf="@+id/user_profile_img"
+            android:layout_marginVertical="10dp"
+            android:layout_below="@id/user_student_id"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comp Department"
+            android:layout_below="@+id/user_student_name"
+            android:id="@+id/user_dept"
+            android:layout_toEndOf="@+id/user_profile_img"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

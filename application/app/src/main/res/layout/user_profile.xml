@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_profile_img"
+            android:layout_width="170dp"
+            android:layout_height="140dp"
+            android:src="@drawable/jk_pic"
+            android:layout_marginVertical="25dp"
+            android:adjustViewBounds="true"
+            app:riv_corner_radius="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato"
+            android:text="Jayneel Kanungo"
+            android:textSize="30dp"
+            android:textFontWeight="800"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato"
+            android:layout_marginVertical="5dp"
+            android:text="2021DSCO002"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato"
+            android:text=" CSI Member"
+            android:drawableLeft="@drawable/csi_member_star"
+            android:textSize="20dp"
+            android:textFontWeight="800"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:id="@+id/student_dept_lbl"
+                android:text="Department : "
+                android:textSize="20dp"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:text="Computer Engineering"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/student_dept_lbl"
+                android:textSize="20dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:id="@+id/student_year_lbl"
+                android:text="Academic Year : "
+                android:textSize="20dp"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:text="TE"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/student_year_lbl"
+                android:textSize="20dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:id="@+id/student_div_lbl"
+                android:text="Division : "
+                android:textSize="20dp"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:text="A"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/student_div_lbl"
+                android:textSize="20dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:id="@+id/student_gender_lbl"
+                android:text="Gender : "
+                android:textSize="20dp"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:text="Male"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/student_gender_lbl"
+                android:textSize="20dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:id="@+id/student_email_lbl"
+                android:text="Email : "
+                android:textSize="20dp"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:text="cm.a.74.jayneel.kanungo@gmail.com"
+                android:layout_toRightOf="@+id/student_email_lbl"
+                android:layout_marginLeft="10dp"
+                android:textSize="18dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:id="@+id/student_phno_lbl"
+                android:text="Mobile Number : "
+                android:textSize="20dp"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:text="+91 9082642479"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/student_phno_lbl"
+                android:textSize="20dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:id="@+id/student_rollno_lbl"
+                android:text="Roll Number : "
+                android:textSize="20dp"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="800"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lato"
+                android:text="73"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/student_rollno_lbl"
+                android:textSize="20dp"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
