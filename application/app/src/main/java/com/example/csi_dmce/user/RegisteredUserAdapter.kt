@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.csi_admin.R
+import com.example.csi_dmce.R
 import com.example.csi_admin.complaint.Complaint
 
 class RegisteredUserAdapter(private val registeredUsersList : ArrayList<RegisteredUsers>): RecyclerView.Adapter<RegisteredUserAdapter.MyViewHolder>() {

@@ -32,7 +32,7 @@ class AdminViewQR : AppCompatActivity() {
         val eventID = "CSCT-1678280388"
         //val eventID = intent.getStringExtra("event_ID")
 
-        val event_uuid = runBlocking {EventWrapper.getEventUUID(eventID).toString() }
+        val event_uuid = runBlocking {EventWrapper.getEventUuid(eventID).toString() }
 
         image_bg1 = GenerateQRHelper.generateQr("FIRST_" + event_uuid, Pair(512,512))
         first_qr.setImageBitmap(image_bg1)

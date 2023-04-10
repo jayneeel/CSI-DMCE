@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.csi_admin.user.UserDataActivity
+import com.example.csi_dmce.R
 
 class AdminHomepage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

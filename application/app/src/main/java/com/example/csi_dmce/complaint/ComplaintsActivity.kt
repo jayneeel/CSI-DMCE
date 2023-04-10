@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.csi_admin.R
 import com.google.firebase.firestore.*
+import com.example.csi_dmce.R
 
 class ComplaintsActivity : AppCompatActivity() {
     lateinit var recycler: RecyclerView

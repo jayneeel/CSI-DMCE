@@ -24,6 +24,7 @@ data class Event (
     var prerequisites: String? = null,
     var poster_url  : String? = null,
     var speaker     : String?       = null,
+    var registrants   : MutableList<String>? = null,
     var attendees   : MutableList<String>? = null
 )
 

@@ -12,7 +12,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.csi_admin.R
+import com.example.csi_dmce.R
 
 
 class ComplaintAdapter(private val complaintList : ArrayList<Complaint>): RecyclerView.Adapter<ComplaintAdapter.MyViewHolder>() {
