@@ -57,11 +57,9 @@ class EventListActivity: AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_LOOP_TO_LIST && resultCode == Activity.RESULT_OK) {
-            finish()
+        finish()
 
-            val intent = Intent(applicationContext, EventListActivity::class.java)
-            startActivity(intent)
-        }
+        val intent = Intent(applicationContext, EventListActivity::class.java)
+        startActivity(intent)
     }
 }

@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -32,7 +33,7 @@ class EventUpsertActivity: AppCompatActivity() {
     private val REQUEST_CODE_IMAGE_UPSERT: Int = 101
     private var imageUri: Uri? = null
 
-    private var oldEventObject: Event? = null
+    private lateinit var oldEventObject: Event
 
     private lateinit var eventDate: Date
 
@@ -136,7 +137,7 @@ class EventUpsertActivity: AppCompatActivity() {
             } else {
                 // Hopefully an update event
                 oldEventObject?.let {
-                    updateCsiEvent(it)
+                    runBlocking { updateCsiEvent(it) }
                 }
             }
         }
@@ -196,20 +197,28 @@ class EventUpsertActivity: AppCompatActivity() {
         newEventObject.speaker = etEventSpeaker.text.toString()
         newEventObject.venue = etEventVenue.text.toString()
         newEventObject.prerequisites = etEventPrerequisites.text.toString()
+        newEventObject.eventId = Helpers.createEventId(newEventObject.title!!, newEventObject.datetime!!)
 
         // If the date hasn't changed, then the ID will be same and we don't need to do any Firestore
         // stuff. Otherwise...
-        if (oldEventObject.datetime != newEventObject.datetime) {
+        if (oldEventObject.eventId != newEventObject.eventId) {
             if (imageUri == null) {
                 // No new poster, just move the old one to the new path.
-                EventWrapper.moveEventStorage(oldEventObject.eventId!!, newEventObject.eventId!!, oldEventObject.poster_extension!!)
-                // Delete the old firebase storage path
-                runBlocking { EventWrapper.deleteEventStorage(oldEventObject.eventId!!) }
-                // Add new event object
-                runBlocking { EventWrapper.addEvent(newEventObject)  }
+                runBlocking {
+                    EventWrapper.moveEventStorage(oldEventObject.eventId!!, newEventObject.eventId!!, oldEventObject.poster_extension!!)
+                    EventWrapper.deleteEventStorage(oldEventObject.eventId!!)
+                    EventWrapper.addEvent(newEventObject)
+                }
             } else {
+                // New poster. Delete old one and insert new event.
+                EventWrapper.deleteEventStorage(oldEventObject.eventId!!)
                 runBlocking { EventWrapper.addEvent(newEventObject, imageUri) }
             }
+        } else {
+            runBlocking { EventWrapper.addEvent(newEventObject, imageUri) }
         }
+
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 }

@@ -1,6 +1,7 @@
 package com.example.csi_dmce.database
 
 import android.net.Uri
+import android.util.Log
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
@@ -118,7 +119,7 @@ class EventWrapper {
                 .await()
                 .toObject(Event::class.java)
 
-            if (eventObject != null ){
+            if (eventObject != null) {
                 return eventObject.uuid!!
             }
 
@@ -136,15 +137,24 @@ class EventWrapper {
 
         suspend fun deleteEventStorage(eventId: String) {
             val eventRef = storageRef.child(eventId)
+            Log.d("UPDATE_FLOW_DEL_REF", eventRef.toString())
             val eventDocs = eventRef.listAll().await().items
+            Log.d("UPDATE_FLOW_DEL_LIST", eventDocs.toString())
             for (doc in eventDocs) {
-                doc.delete().await()
+                Log.d("UPDATE_FLOW_DELDOC", doc.toString())
+                Log.d("UPDATE_FLOW_DELDOC_PATH", doc.path.toString())
+                doc.delete()
             }
-            eventRef.delete().await()
+            eventRef.delete()
+            Log.d("UPDATE_FLOW_DEL_DONE", "DELETED")
         }
 
         // TODO: Extend this to other files
-        suspend fun moveEventStorage(oldEventId: String, newEventId: String, posterExtension: String) {
+        suspend fun moveEventStorage(
+            oldEventId: String,
+            newEventId: String,
+            posterExtension: String
+        ) {
             val oldEventRef = storageRef.child("${oldEventId}/poster.${posterExtension}")
             val newEventRef = storageRef.child("${newEventId}/poster.${posterExtension}")
 
@@ -152,7 +162,12 @@ class EventWrapper {
                 File.createTempFile("poster", posterExtension)
             }
 
+            Log.d("UPDATE_FLOW_OLDEVENTREF", oldEventRef.toString())
+            Log.d("UPDATE_FLOW_NEWEVENTREF", newEventRef.toString())
+            Log.d("UPDATE_FLOW_TEMPFILE", localFile.absolutePath.toString())
+
             oldEventRef.getFile(localFile).await()
             newEventRef.putFile(Uri.fromFile(localFile)).await()
+        }
     }
 }

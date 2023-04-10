@@ -222,11 +222,11 @@ class EventViewActivity: AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_EVENT_UPDATE && resultCode == RESULT_OK && data != null && data.data != null) {
-            finish()
-
-            val intent = Intent(applicationContext, EventViewActivity::class.java)
-            startActivity(intent)
-        }
+        intent.putExtra("REFRESH", true)
+        finish()
+//        if (requestCode == REQUEST_CODE_EVENT_UPDATE && resultCode == RESULT_OK && data != null && data.data != null) {
+//            val intent = Intent(applicationContext, EventViewActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 }
