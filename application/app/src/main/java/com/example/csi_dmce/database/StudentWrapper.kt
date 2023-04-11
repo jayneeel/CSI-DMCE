@@ -16,6 +16,7 @@ data class Student(
     val division        : String?         = null,
     val email           : String?         = null,
     var email_id_verified: Boolean?       = null,
+    var is_admin        : Boolean?        = null,
     val name            : String?         = null,
     val phone_number    : Long?           = null,
     val roll_number     : Int?            = null,

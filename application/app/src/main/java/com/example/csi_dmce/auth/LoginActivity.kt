@@ -36,12 +36,17 @@ class LoginActivity: AppCompatActivity() {
         btnLogin.setOnClickListener {
             val email: String = etLoginEmail.text.toString()
             val passwordHash: String = Helpers.getSha256Hash(etLoginPassword.text.toString())
+
             runBlocking {
                 StudentAuthWrapper.checkStudentCredentials(email, passwordHash) {
                     it?.let {
                         runBlocking {
                             Log.d("DB_AUTH", "YEAH RUNNING")
-                            CsiAuthWrapper.setAuthToken(student = it, ctx = applicationContext)
+                            if (it.is_admin == true) {
+                                CsiAuthWrapper.setAuthToken(student = it, ctx = applicationContext, role=CSIRole.ADMIN)
+                            } else {
+                                CsiAuthWrapper.setAuthToken(student = it, ctx = applicationContext)
+                            }
 
                             val sharedPref = getSharedPreferences(
                                 "csi_shared_prefs", Context.MODE_PRIVATE)

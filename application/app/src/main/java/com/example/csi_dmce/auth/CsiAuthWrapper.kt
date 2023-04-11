@@ -37,7 +37,7 @@ class CsiAuthWrapper {
                 .sign(algorithm)
         }
 
-        suspend fun setAuthToken(ctx: Context, student: Student, role: CSIRole = CSIRole.ADMIN): Boolean {
+        suspend fun setAuthToken(ctx: Context, student: Student, role: CSIRole = CSIRole.USER): Boolean {
             val token: String = generateAuthToken(student, role)
             return getCsiSharedPrefs(ctx)
                 .edit()
