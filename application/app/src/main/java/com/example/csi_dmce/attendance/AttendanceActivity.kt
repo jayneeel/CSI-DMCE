@@ -12,10 +12,8 @@ class AttendanceActivity: AppCompatActivity() {
 
         runBlocking {
             val studentID:String = intent.getStringExtra("student_id").toString()
-            //where to get the eventID from?
-            // val eventId : String = intent.getStringExtra("event_id").toString()
+            val eventId : String = intent.getStringExtra("event_id").toString()
 
-            val eventId: String = "DCF-1004207400"
             val eventUUID: String =  runBlocking  { EventWrapper.getEventUuid(eventId)!!}
 
             //when scan button is clicked

@@ -67,6 +67,17 @@ class CsiAuthWrapper {
             return tokenRoleToCsiRole(decodedToken.getClaim("role").asString())
         }
 
+        fun getStudentId(ctx: Context): String {
+            val token = getCsiSharedPrefs(ctx)
+                .getString("auth_token", null)
+
+            val decodedToken = JWT.decode(token)
+
+            return decodedToken
+                .getClaim("student_id")
+                .asString()
+                .replace("\"", "")
+        }
 
         fun isAuthenticated(ctx: Context): Boolean {
             return getCsiSharedPrefs(ctx).getString("auth_token", null) != null

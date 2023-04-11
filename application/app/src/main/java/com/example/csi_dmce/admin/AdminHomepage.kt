@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.csi_admin.user.UserDataActivity
 import com.example.csi_dmce.R
+import com.example.csi_dmce.events.EventListActivity
 
 class AdminHomepage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +15,7 @@ class AdminHomepage : AppCompatActivity() {
     }
 
     fun eventScreen(view: View) {
-        val intent = Intent(this,EventsDataActivity::class.java)
+        val intent = Intent(this, EventListActivity::class.java)
         startActivity(intent)
     }
 

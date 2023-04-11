@@ -24,6 +24,7 @@ import androidx.core.graphics.BlendModeCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
+import com.example.csi_dmce.attendance.AdminViewQR
 import com.example.csi_dmce.attendance.AttendanceActivity
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.AttendanceWrapper
@@ -122,12 +123,19 @@ class EventViewActivity: AppCompatActivity() {
         btnEventAttendance = findViewById(R.id.button_event_attendance)
         val currentDateTime = Date()
         if (currentDateTime < eventDateTime) {
-            btnEventAttendance.isClickable = false
-            btnEventAttendance.setBackgroundColor(Color.parseColor("#808080"))
+//            btnEventAttendance.isClickable = false
+//            btnEventAttendance.setBackgroundColor(Color.parseColor("#808080"))
         } else {
             btnEventAttendance.setOnClickListener {
                 // TODO: Add attendance activity here.
-                val intent = Intent(applicationContext, AttendanceActivity::class.java)
+                val intent = if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
+                    Intent(applicationContext, AdminViewQR::class.java)
+                } else {
+                    Intent(applicationContext, AttendanceActivity::class.java)
+                    intent.putExtra("student_id", CsiAuthWrapper.getStudentId(this))
+                    intent.putExtra("event_id", eventObject.eventId)
+                }
+
                 startActivity(intent)
             }
         }

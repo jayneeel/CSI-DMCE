@@ -16,11 +16,11 @@ data class Student(
     val division        : String?         = null,
     val email           : String?         = null,
     var email_id_verified: Boolean?       = null,
-    var is_admin        : Boolean?        = null,
     val name            : String?         = null,
     val phone_number    : Long?           = null,
     val roll_number     : Int?            = null,
     var events          : MutableList<String?>?  = null,
+    val is_superuser: Boolean? = null,
 )
 
 class StudentWrapper {
@@ -50,6 +50,7 @@ class StudentWrapper {
          */
         suspend fun getStudent(studentId: String): Student? {
             val studentDocument = getStudentDocument(studentCollectionRef, studentId).get().await()
+            Log.d("STUDENT", studentDocument.reference.path.toString())
             return studentDocument.toObject(Student::class.java)!!
         }
 

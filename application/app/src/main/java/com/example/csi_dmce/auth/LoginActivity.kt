@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.csi_admin.AdminHomepage
 import com.example.csi_dmce.MainActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.forgotpassword.ForgotPasswordActivity
@@ -41,8 +42,7 @@ class LoginActivity: AppCompatActivity() {
                 StudentAuthWrapper.checkStudentCredentials(email, passwordHash) {
                     it?.let {
                         runBlocking {
-                            Log.d("DB_AUTH", "YEAH RUNNING")
-                            if (it.is_admin == true) {
+                            if (it.email == "csicattdmce@gmail.com") {
                                 CsiAuthWrapper.setAuthToken(student = it, ctx = applicationContext, role=CSIRole.ADMIN)
                             } else {
                                 CsiAuthWrapper.setAuthToken(student = it, ctx = applicationContext)
@@ -54,7 +54,12 @@ class LoginActivity: AppCompatActivity() {
                                 sharedPref.edit().putBoolean("firstTime", false).apply()
                             }
 
-                            val mIntent = Intent(applicationContext, Dashboard::class.java)
+                            val mIntent: Intent = if (CsiAuthWrapper.getRoleFromToken(applicationContext) == CSIRole.ADMIN) {
+                                Intent(applicationContext, AdminHomepage::class.java)
+                            } else {
+                                Intent(applicationContext, Dashboard::class.java)
+                            }
+
                             finishAffinity()
                             startActivity(mIntent)
                         }

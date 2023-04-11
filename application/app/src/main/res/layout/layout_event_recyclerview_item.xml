@@ -38,13 +38,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
                 android:fontFamily="@font/lato"
                 android:text="Event Title"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 app:layout_constraintStart_toEndOf="@+id/image_view_rv_event_poster"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_rv_event_date" />
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -52,7 +51,7 @@
                 android:layout_width="225dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="48dp"
+                android:layout_marginBottom="24dp"
                 android:fontFamily="@font/lato"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam facilisis, lectus ut molestie pretium, dui ligula rhoncus nunc, id dignissim nulla ex quis magna. Donec eget odio id massa lobortis posuere molestie ac purus. Maecenas tincidunt velit dolor, at iaculis velit volutpat ac. Donec at ullamcorper nibh. Nulla ipsum justo, dapibus nec lacinia at, congue a neque. Nulla diam magna, ornare et convallis interdum, elementum id metus. Proin bibendum tincidunt faucibus. Donec quis turpis in tellus accumsan vehicula. Nunc a lorem vestibulum, porttitor erat vitae, pretium ex."
                 android:textColor="@color/black"
@@ -60,7 +59,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/constraint_layout_event_container"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/image_view_rv_event_poster" />
+                app:layout_constraintStart_toEndOf="@+id/image_view_rv_event_poster"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_rv_event_title"
+                app:layout_constraintVertical_bias="1.0" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/text_view_rv_event_date"

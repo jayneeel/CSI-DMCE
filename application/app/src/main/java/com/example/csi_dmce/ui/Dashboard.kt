@@ -7,8 +7,10 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.events.EventListActivity
 import com.example.csi_dmce.profile.Profile
+import kotlinx.coroutines.runBlocking
 
 
 class Dashboard: AppCompatActivity() {
@@ -19,8 +21,6 @@ class Dashboard: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
-        Log.d("CSI-UI", "Launching Dashboard")
 
         btnProfile = findViewById(R.id.btn_dashboard_profile)
         btnProfile.setOnClickListener {
