@@ -163,12 +163,26 @@ class EventWrapper {
                 File.createTempFile("poster", posterExtension)
             }
 
-            Log.d("UPDATE_FLOW_OLDEVENTREF", oldEventRef.toString())
-            Log.d("UPDATE_FLOW_NEWEVENTREF", newEventRef.toString())
-            Log.d("UPDATE_FLOW_TEMPFILE", localFile.absolutePath.toString())
-
             oldEventRef.getFile(localFile).await()
             newEventRef.putFile(Uri.fromFile(localFile)).await()
+        }
+
+        suspend fun registerStudent(eventObject: Event, studentId: String) {
+            if (eventObject.registrants == null) {
+                eventObject.registrants = mutableListOf(studentId)
+            } else {
+                eventObject.registrants!!.add(studentId)
+            }
+
+            Log.d("EVENT", eventObject.toString())
+
+            updateEvent(eventObject, eventObject)
+        }
+
+        suspend fun unregisterStudent(eventObject: Event, studentId: String) {
+            eventObject.registrants?.remove(studentId)
+            Log.d("EVENT", eventObject.toString())
+            updateEvent(eventObject, eventObject)
         }
     }
 }

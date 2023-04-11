@@ -170,6 +170,7 @@ class EventUpsertActivity: AppCompatActivity() {
             title = etEventTitle.text.toString(),
             venue = etEventVenue.text.toString(),
             speaker = etEventSpeaker.text.toString(),
+            prerequisites = etEventPrerequisites.text.toString(),
             uuid = Helpers.generateEventUuid(),
             datetime = Helpers.generateUnixTimestampFromDate(
                 Helpers.eventUpsertDateTimeFormat.parse(etEventDateTime.text.toString())!!

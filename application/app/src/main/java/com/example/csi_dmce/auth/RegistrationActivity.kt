@@ -35,9 +35,6 @@ class RegistrationActivity: AppCompatActivity() {
         etEmail = findViewById(R.id.edit_text_register_email)
         etPassword = findViewById(R.id.edit_text_register_password)
         etStudentId = findViewById(R.id.edit_text_register_student_id)
-        etEmail.setText("amitkulkarni2028@gmail.com")
-        etStudentId.setText("2018FHCO106")
-        etPassword.setText("root")
 
         btnRegister = findViewById(R.id.button_register)
         btnRegister.setOnClickListener {

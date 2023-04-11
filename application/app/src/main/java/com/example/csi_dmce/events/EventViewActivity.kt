@@ -211,11 +211,10 @@ class EventViewActivity: AppCompatActivity() {
                         stateRegistered = false
                     }
 
-
                     if (!stateRegistered) {
-                        // TODO: Insert attendee into the database
+                        runBlocking { EventWrapper.unregisterStudent(eventObject, CsiAuthWrapper.getStudentId(applicationContext)) }
                     } else {
-                        // TODO: Remove attendee from the database.
+                        runBlocking { EventWrapper.registerStudent(eventObject, CsiAuthWrapper.getStudentId(applicationContext)) }
                     }
 
 
