@@ -29,7 +29,7 @@ class AdminViewQR : AppCompatActivity() {
         first_qr = findViewById(R.id.first_qr_code)
         second_qr = findViewById(R.id.second_qr_code)
 
-        val eventId = intent.getStringExtra("event_ID")!!
+        val eventId = intent.getStringExtra("event_id")!!
 
         val eventUuid = runBlocking {EventWrapper.getEventUuid(eventId).toString() }
 

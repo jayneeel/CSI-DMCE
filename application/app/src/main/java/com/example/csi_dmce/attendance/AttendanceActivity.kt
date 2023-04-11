@@ -20,6 +20,7 @@ class AttendanceActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("ATTENDANCE", "HERE NOW")
 
         studentId = intent.getStringExtra("student_id")!!
         eventId = intent.getStringExtra("event_id")!!
@@ -32,6 +33,7 @@ class AttendanceActivity: AppCompatActivity() {
             putBoolean("KEY_DISABLE_AUTO_ORIENTATION", true)
             apply()
         }
+        Log.d("ATTENDANCE_SCAN", studentId)
 
         val options = ScanOptions()
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
@@ -48,6 +50,7 @@ class AttendanceActivity: AppCompatActivity() {
     ) { result ->
         if (result.contents == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+            finish()
         } else {
             Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG)
                 .show()

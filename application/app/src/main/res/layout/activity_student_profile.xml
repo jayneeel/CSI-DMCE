@@ -17,13 +17,14 @@
            android:padding="20dp">
 
            <ImageView
+               android:src="@drawable/jk_pic"
                android:id="@+id/profile_image"
                android:layout_width="100dp"
                android:layout_height="100dp"
                android:layout_centerVertical="true" />
 
            <TextView
-               android:id="@+id/fullname_field"
+               android:id="@+id/text_view_profile_name"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_centerVertical="true"
@@ -37,10 +38,10 @@
                android:textSize="20sp" />
 
            <TextView
-               android:id="@+id/username_field"
+               android:id="@+id/text_view_profile_student_id"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_below="@id/fullname_field"
+               android:layout_below="@id/text_view_profile_name"
                android:layout_marginLeft="10dp"
                android:layout_toRightOf="@+id/profile_image"
                android:includeFontPadding="false"
@@ -144,6 +145,7 @@
                android:background="@color/white"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/edit_text_profile_name"
                    android:drawablePadding="30dp"
                    android:text="Vedant Prabhu"
                    android:background="@color/white"
@@ -154,17 +156,16 @@
            </com.google.android.material.textfield.TextInputLayout>
 
            <com.google.android.material.textfield.TextInputLayout
-               android:hint="Your Password"
+               android:hint="Class"
                android:layout_margin="5sp"
                android:background="@color/white"
                android:id="@+id/phass"
-               app:passwordToggleEnabled="true"
                android:layout_height="wrap_content"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/edit_text_student_class"
+                   android:text="CO-TE-B"
                    android:drawablePadding="30dp"
-                   android:text="Password"
-                   android:inputType="textPassword"
                    android:background="@color/white"
                    android:layout_height="wrap_content"
                    android:fontFamily="@font/lato"
@@ -178,6 +179,7 @@
                android:layout_height="wrap_content"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/edit_text_profile_studentid"
                    android:drawablePadding="30dp"
                    android:text="2021DSC002"
                    android:background="@color/white"
@@ -194,6 +196,7 @@
                android:layout_height="wrap_content"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/edit_text_profile_mobile"
                    android:drawablePadding="30dp"
                    android:text="+91 8787654732"
                    android:background="@color/white"

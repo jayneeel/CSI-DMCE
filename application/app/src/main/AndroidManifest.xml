@@ -88,8 +88,6 @@
         </activity>
         <activity android:name=".auth.RegistrationActivity" />
         <activity android:name=".auth.SetPasswordActivity" />
-        <activity android:name=".attendance.AttendanceActivity" />
-<!--        <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>-->
         <activity android:name=".events.EventListActivity"/>
         <activity android:name=".events.EventUpsertActivity"/>
         <activity android:name=".events.EventQRGenerationActivity"/>
@@ -103,6 +101,10 @@
         <activity android:name="com.example.csi_admin.expense.ExpenseApproval"/>
         <activity android:name="com.example.csi_admin.expense.ExpenseRequest"/>
         <activity android:name="com.example.csi_dmce.attendance.CsvGeneration"/>
+        <activity android:name=".attendance.AttendanceActivity"/>
+        <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>
+        <activity android:name=".profile.Profile"/>
+        <activity android:name=".attendance.AdminViewQR"/>
 
 
         <meta-data

@@ -5,55 +5,47 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi_dmce.R
+import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.profile.ProfileEvents
 import com.example.csi_dmce.profile.ProfileEventsAdapter
-
-private  lateinit var newRecyclerView: RecyclerView
-private  lateinit var newArrayList: ArrayList<ProfileEvents>
-lateinit var title_Heading : ArrayList<String>
-lateinit var Description : ArrayList<String>
+import kotlinx.coroutines.runBlocking
 
 class Profile: AppCompatActivity() {
+    private lateinit var tvProfileName: TextView
+    private lateinit var tvProfileStudentId: TextView
+    private lateinit var etProfileName: EditText
+    private lateinit var etStudentId: EditText
+    private lateinit var etStudentClass: EditText
+    private lateinit var etStudentContact: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
-        val profile_button = findViewById<Button>(R.id.button_profile)
-        profile_button.setOnClickListener(View.OnClickListener {  val i = Intent(this,edit_profile::class.java)
-            startActivity(i) })
-        val name = findViewById<TextView>(R.id.name_view)
-        val branch = findViewById<TextView>(R.id.branch_view)
-        val roll = findViewById<TextView>(R.id.rollno_view)
-        val email = findViewById<TextView>(R.id.email_view)
-        val password = findViewById<TextView>(R.id.password_view)
-        val name_view = intent.getStringExtra("name 1801")
-        val branch_view = intent.getStringExtra("branch 1801")
-        val roll_view = intent.getStringExtra("roll 1801")
-        val email_view = intent.getStringExtra("email 1801")
-        val password_view = intent.getStringExtra("passsword 1801")
-        name.setText(name_view)
-        branch.setText(branch_view)
-        roll.setText(roll_view)
-        email.setText(email_view)
-        password.setText(password_view)
-        title_Heading = arrayListOf(
-        )
-        Description = arrayListOf(
-        )
-        newRecyclerView = findViewById(R.id.recyclerview)
-        newRecyclerView.layoutManager = LinearLayoutManager(this)
-        newRecyclerView.setHasFixedSize(true)
-        newArrayList = arrayListOf<ProfileEvents>()
-        getUserdata()
-    }
-    private fun getUserdata(){
-        for (i in title_Heading.indices){
-            val Profile_Events = ProfileEvents(title_Heading[i], Description[i])
-            newArrayList.add(Profile_Events)
-        }
-        newRecyclerView.adapter = ProfileEventsAdapter(newArrayList)
+        setContentView(R.layout.activity_student_profile)
+
+        val studentObject = runBlocking { StudentWrapper.getStudent(CsiAuthWrapper.getStudentId(applicationContext))}
+
+        tvProfileName = findViewById(R.id.text_view_profile_name)
+        tvProfileName.setText(studentObject?.name)
+
+        tvProfileStudentId = findViewById(R.id.text_view_profile_student_id)
+        tvProfileStudentId.setText(studentObject?.student_id)
+
+        etProfileName = findViewById(R.id.edit_text_profile_name)
+        etProfileName.setText(studentObject?.name)
+
+        etStudentId = findViewById(R.id.edit_text_profile_studentid)
+        etStudentId.setText(studentObject?.student_id)
+
+        etStudentClass = findViewById(R.id.edit_text_student_class)
+        etStudentClass.setText(studentObject?.department + "-" + studentObject?.academic_year + "-" + studentObject?.division)
+
+        etStudentContact = findViewById(R.id.edit_text_profile_mobile)
+        etStudentContact.setText(studentObject?.phone_number.toString())
     }
 }

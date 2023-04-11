@@ -27,7 +27,6 @@ import com.example.csi_dmce.R
 import com.example.csi_dmce.attendance.AdminViewQR
 import com.example.csi_dmce.attendance.AttendanceActivity
 import com.example.csi_dmce.auth.CsiAuthWrapper
-import com.example.csi_dmce.database.AttendanceWrapper
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.utils.Helpers
@@ -122,22 +121,23 @@ class EventViewActivity: AppCompatActivity() {
 
         btnEventAttendance = findViewById(R.id.button_event_attendance)
         val currentDateTime = Date()
-        if (currentDateTime < eventDateTime) {
+        if (currentDateTime > eventDateTime) {
 //            btnEventAttendance.isClickable = false
 //            btnEventAttendance.setBackgroundColor(Color.parseColor("#808080"))
         } else {
             btnEventAttendance.setOnClickListener {
+                Log.d("ATTENDANCE", "CLICKED")
                 // TODO: Add attendance activity here.
-                val intent = if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
+                val sIntent = if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
                     Intent(applicationContext, AdminViewQR::class.java)
-                    intent.putExtra("event_id", eventObject.eventId)
+                        .putExtra("event_id", eventObject.eventId)
                 } else {
                     Intent(applicationContext, AttendanceActivity::class.java)
-                    intent.putExtra("student_id", CsiAuthWrapper.getStudentId(this))
-                    intent.putExtra("event_id", eventObject.eventId)
+                        .putExtra("student_id", CsiAuthWrapper.getStudentId(this))
+                        .putExtra("event_id", eventObject.eventId)
                 }
 
-                startActivity(intent)
+                startActivity(sIntent)
             }
         }
 
