@@ -8,22 +8,21 @@ import java.util.*
 
 class ExpensesCSV {
     companion object {
-        fun writeExpensesData(ctx: Context, expenseID: String) {
+        fun writeExpensesData(ctx: Context) {
             // The data that will be written to the CSV file.
             val csvData: MutableList<List<String>> = mutableListOf()
 
-            val expenseObject: Expenses = runBlocking { ExpensesWrapper.getExpensesObject(expenseID)!! }
-
-            val expenseData: List<String> = listOf(
+            val expenseObjects: List<Expenses> = runBlocking { ExpensesWrapper.getExpensesObjects()!! }
+            for (expenseObject in expenseObjects) {
+                val expenseData: List<String> = listOf(
                     expenseObject.associated_event!!,
                     expenseObject.date_of_event!!,
                     expenseObject.description_of_event!!,
                     expenseObject.total_cost!!,
                     expenseObject.upi_id!!
                 )
-
-            csvData.add(expenseData)
-
+                csvData.add(expenseData)
+            }
 
             val csvHeader: List<String> = listOf(
                 "Event",

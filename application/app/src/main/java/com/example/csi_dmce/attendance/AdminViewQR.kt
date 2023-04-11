@@ -29,15 +29,14 @@ class AdminViewQR : AppCompatActivity() {
         first_qr = findViewById(R.id.first_qr_code)
         second_qr = findViewById(R.id.second_qr_code)
 
-        val eventID = "CSCT-1678280388"
-        //val eventID = intent.getStringExtra("event_ID")
+        val eventId = intent.getStringExtra("event_ID")!!
 
-        val event_uuid = runBlocking {EventWrapper.getEventUuid(eventID).toString() }
+        val eventUuid = runBlocking {EventWrapper.getEventUuid(eventId).toString() }
 
-        image_bg1 = GenerateQRHelper.generateQr("FIRST_" + event_uuid, Pair(512,512))
+        image_bg1 = GenerateQRHelper.generateQr("FIRST_" + eventUuid, Pair(512,512))
         first_qr.setImageBitmap(image_bg1)
 
-        image_bg2 = GenerateQRHelper.generateQr("SECOND_" + event_uuid, Pair(512,512))
+        image_bg2 = GenerateQRHelper.generateQr("SECOND_" + eventUuid, Pair(512,512))
         second_qr.setImageBitmap(image_bg2)
 
         first_qr.setOnClickListener {

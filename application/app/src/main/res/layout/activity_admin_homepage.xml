@@ -1,109 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminHomepage">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="30dp"
-        android:gravity="center">
 
-        <RelativeLayout
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/lato"
+        android:text="Hello\nAdmin"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textFontWeight="800"
+        android:textSize="40dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/admin_homepage_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView6"
+        android:layout_width="210dp"
+        android:layout_height="200dp"
+        android:layout_marginVertical="30dp"
+        android:backgroundTint="#0D1542"
+        android:onClick="eventScreen"
+        android:outlineAmbientShadowColor="@color/black"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="Hello\nAdmin"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textStyle="italic"
-                android:textSize="40dp"
                 android:fontFamily="@font/lato"
-                android:textFontWeight="800"/>
-
+                android:text="Events Data"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/admin_homepage_pic"
-                android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/admin_homepage_planner" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView5"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginVertical="20dp"
+        android:backgroundTint="#0D1542"
+        android:onClick="userDataScreen"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_admin_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#0D1542"
-            app:cardCornerRadius="30dp"
-            android:onClick="eventScreen"
-            android:layout_marginVertical="30dp"
-            app:cardElevation="10dp"
-            android:outlineAmbientShadowColor="@color/black">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="30dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Events Data"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/lato"
-                    android:textSize="30dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/admin_homepage_planner"
-                    android:layout_alignParentEnd="true"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                android:fontFamily="@font/lato"
+                android:text="User Data"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
 
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#0D1542"
-            app:cardCornerRadius="30dp"
-            android:onClick="userDataScreen"
-            android:layout_marginVertical="20dp"
-            app:cardElevation="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="30dp"
-                android:orientation="vertical">
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/admin_homepage_userdb" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User Data"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/lato"
-                    android:textSize="30dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/admin_homepage_userdb"
-                    android:layout_alignParentEnd="true"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_admin_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/csi_primary_accent"
+        android:scaleType="center"
+        android:src="@drawable/ic_exit"
+        app:fabCustomSize="80dp"
+        app:iconSize="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

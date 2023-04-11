@@ -9,6 +9,7 @@ import kotlinx.coroutines.tasks.await
 
 data class Expenses(
     @DocumentId
+    var expenseId                  :String?    =null,
     var associated_event           :String?    =null,
     var date_of_event              :String?    =null,
     var description_of_event       :String?    =null,
@@ -24,12 +25,15 @@ class ExpensesWrapper {
             return expenseCollectionRef.document(expenseID)
         }
 
-        suspend fun getExpensesObject(expenseID: String): Expenses? {
+        suspend fun getExpensesObjects(): List<Expenses>? {
+            val expenseObjects = mutableListOf<Expenses>()
+
             val expenseDocuments = expenseCollectionRef.get().await()
             for(expenseDocument in expenseDocuments){
-                return expenseDocument.toObject(Expenses::class.java)
+                expenseObjects.add(expenseDocument.toObject(Expenses::class.java))
             }
-            return null
+
+            return expenseObjects
         }
     }
 }

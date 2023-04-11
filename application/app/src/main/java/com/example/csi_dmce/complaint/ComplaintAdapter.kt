@@ -21,6 +21,7 @@ class ComplaintAdapter(private val complaintList : ArrayList<Complaint>): Recycl
         val desc : TextView = itemView.findViewById(R.id.complaint_text)
         val subject : TextView = itemView.findViewById(R.id.complaint_sub)
         val replyBtn : Button = itemView.findViewById(R.id.reply_btn)
+        val btnDecline : Button = itemView.findViewById(R.id.dialog_decline_btn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

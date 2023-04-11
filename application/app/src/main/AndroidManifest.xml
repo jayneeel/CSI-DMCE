@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -100,6 +102,7 @@
         <activity android:name="com.example.csi_admin.expense.ApprovalExpenseActivity"/>
         <activity android:name="com.example.csi_admin.expense.ExpenseApproval"/>
         <activity android:name="com.example.csi_admin.expense.ExpenseRequest"/>
+        <activity android:name="com.example.csi_dmce.attendance.CsvGeneration"/>
 
 
         <meta-data

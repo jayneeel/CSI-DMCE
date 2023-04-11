@@ -1,5 +1,4 @@
 package com.example.csi_dmce.attendance
-import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -22,9 +21,9 @@ class CsvGeneration: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.csv_generation)
 
-        attendanceCard = findViewById(R.id.cardView3)
-        expenseCard = findViewById(R.id.cardView)
-        registrantCard = findViewById(R.id.cardView2)
+        attendanceCard = findViewById(R.id.card_view_attendance_report)
+        expenseCard = findViewById(R.id.card_view_expenses_report)
+        registrantCard = findViewById(R.id.card_view_registrations_report)
 
         val popupView = layoutInflater.inflate(R.layout.csv_popup, null)
         val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -42,13 +41,10 @@ class CsvGeneration: AppCompatActivity() {
                 val eventForCsv = editText.text.toString()
                 AttendanceExportService.writeAttendanceData(ctx, eventForCsv)
             }
-
-
         }
 
         expenseCard.setOnClickListener{
-            val expenseID = editText.text.toString()
-            ExpensesCSV.writeExpensesData(ctx, expenseID)
+            ExpensesCSV.writeExpensesData(ctx)
         }
 
         registrantCard.setOnClickListener{

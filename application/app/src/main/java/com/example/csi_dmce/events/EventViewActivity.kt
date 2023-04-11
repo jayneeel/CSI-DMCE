@@ -130,6 +130,7 @@ class EventViewActivity: AppCompatActivity() {
                 // TODO: Add attendance activity here.
                 val intent = if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
                     Intent(applicationContext, AdminViewQR::class.java)
+                    intent.putExtra("event_id", eventObject.eventId)
                 } else {
                     Intent(applicationContext, AttendanceActivity::class.java)
                     intent.putExtra("student_id", CsiAuthWrapper.getStudentId(this))
