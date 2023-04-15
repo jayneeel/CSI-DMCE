@@ -1,6 +1,6 @@
 package com.example.csi_dmce.database
 
-import android.content.Context
+import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentId
@@ -21,8 +21,7 @@ data class Student(
     val phone_number        : Long?                     = null,
     val roll_number         : Int?                      = null,
     var events              : MutableList<String?>?     = null,
-    val is_superuser        : Boolean?                  = null,
-    val avatar_extension    : String?                   = null,
+    var avatar_extension    : String?                   = null,
 )
 
 class StudentWrapper {
@@ -106,6 +105,23 @@ class StudentWrapper {
         /*
         Storage stuff below this
          */
+
+        suspend fun putStudentAvatar(studentObject: Student, imageUri: Uri) {
+            var avatarExtension = imageUri.lastPathSegment.toString()
+            avatarExtension = avatarExtension.substring(avatarExtension.lastIndexOf(".") + 1)
+
+            val studentId = studentObject.student_id!!
+
+            storageRef
+                .child("${studentId}/avatar.${avatarExtension}")
+                .putFile(imageUri)
+                .await()
+
+            studentObject.avatar_extension = avatarExtension
+
+            StudentWrapper.updateStudent(studentObject, studentObject)
+        }
+
         fun getStudentAvatarUrl(studentId: String, avatarExtension: String, callback: (String?) -> Unit) {
             storageRef
                 .child("${studentId}/avatar.${avatarExtension}")

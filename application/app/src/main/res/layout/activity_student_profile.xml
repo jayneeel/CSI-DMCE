@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusableInTouchMode="true"
     tools:context=".profile.student_profile">
 
    <LinearLayout
@@ -12,6 +13,7 @@
        android:orientation="vertical">
 
        <RelativeLayout
+           android:background="@color/csi_primary_accent"
            android:layout_width="match_parent"
            android:layout_height="250dp"
            android:padding="20dp">
@@ -24,6 +26,17 @@
                android:layout_marginTop="50dp"
                android:src="@drawable/avatar" />
 
+           <com.google.android.material.floatingactionbutton.FloatingActionButton
+               android:id="@+id/fab_profile_avatar_update"
+               android:visibility="gone"
+               app:fabCustomSize="35dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="110dp"
+               android:backgroundTint="@color/white"
+               app:tint="@color/csi_primary_accent"
+               android:src="@drawable/ic_generic_add"
+               android:layout_marginLeft="60dp"/>
 
            <TextView
                android:id="@+id/text_view_profile_name"
@@ -31,24 +44,26 @@
                android:layout_height="wrap_content"
                android:layout_centerVertical="true"
                android:text="Vedant Prabhu"
-               android:textColor="#000"
+               android:textColor="@color/white"
                android:layout_marginLeft="20dp"
                android:fontFamily="@font/lato"
                android:includeFontPadding="false"
                android:textStyle="bold"
                android:layout_toRightOf="@+id/image_view_user_avatar"
-               android:textSize="20sp" />
+               android:textSize="32sp" />
 
            <TextView
                android:id="@+id/text_view_profile_student_id"
+               android:textColor="@color/grey"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
                android:layout_below="@id/text_view_profile_name"
                android:layout_marginLeft="20dp"
                android:layout_toRightOf="@+id/image_view_user_avatar"
                android:includeFontPadding="false"
                android:text="Ved@123"
-               android:textSize="14sp" />
+               android:textSize="16sp" />
        </RelativeLayout>
 
 <!--       <LinearLayout-->
@@ -140,97 +155,113 @@
            android:padding="20dp">
 
            <com.google.android.material.textfield.TextInputLayout
-               android:clickable="false"
                android:hint="Full Name"
-               android:id="@+id/full_name_profile"
+               android:id="@+id/input_layout_profile_name"
+               app:boxStrokeWidth="0dp"
                android:layout_height="wrap_content"
                android:layout_margin="5sp"
                android:background="@color/white"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
+                   style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+                   android:clickable="false"
+                   android:focusable="false"
+                   android:cursorVisible="false"
+                   android:focusableInTouchMode="false"
                    android:id="@+id/edit_text_profile_name"
                    android:drawablePadding="30dp"
                    android:text="Vedant Prabhu"
-                   android:background="@color/white"
                    android:layout_height="wrap_content"
                    android:fontFamily="@font/lato"
-                   android:editable="false"
                    android:layout_width="match_parent" />
            </com.google.android.material.textfield.TextInputLayout>
 
            <com.google.android.material.textfield.TextInputLayout
-               android:clickable="false"
+               android:id="@+id/input_layout_profile_class"
                android:hint="Class"
                android:layout_margin="5sp"
-               android:background="@color/white"
-               android:id="@+id/phass"
+               app:boxStrokeWidth="0dp"
                android:layout_height="wrap_content"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
                    android:id="@+id/edit_text_student_class"
+                   android:clickable="false"
+                   android:focusable="false"
+                   android:focusableInTouchMode="false"
+                   android:cursorVisible="false"
                    android:text="CO-TE-B"
                    android:drawablePadding="30dp"
-                   android:background="@color/white"
                    android:layout_height="wrap_content"
                    android:fontFamily="@font/lato"
                    android:layout_width="match_parent" />
            </com.google.android.material.textfield.TextInputLayout>
 
            <com.google.android.material.textfield.TextInputLayout
-               android:clickable="false"
                android:hint="Student ID"
                android:layout_margin="5sp"
-               android:id="@+id/email_name_profile"
+               android:id="@+id/input_layout_profile_studentid"
+               app:boxStrokeWidth="0dp"
                android:layout_height="wrap_content"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
                    android:id="@+id/edit_text_profile_studentid"
+                   android:clickable="false"
+                   android:focusableInTouchMode="false"
+                   android:focusable="false"
+                   android:cursorVisible="false"
                    android:drawablePadding="30dp"
                    android:text="2021DSC002"
-                   android:background="@color/white"
                    android:fontFamily="@font/lato"
                    android:layout_height="wrap_content"
                    android:layout_width="match_parent" />
            </com.google.android.material.textfield.TextInputLayout>
 
            <com.google.android.material.textfield.TextInputLayout
-               android:clickable="false"
                android:hint="Email Address"
                android:layout_margin="5sp"
-               android:id="@+id/email"
+               android:id="@+id/input_layout_profile_email"
                android:fontFamily="@font/lato"
+               app:boxStrokeWidth="0dp"
                android:layout_height="wrap_content"
                android:layout_width="match_parent">
 
                <com.google.android.material.textfield.TextInputEditText
                    android:id="@+id/edit_text_profile_email"
                    android:inputType="textEmailAddress"
+                   android:clickable="false"
+                   android:focusable="false"
+                   android:focusableInTouchMode="false"
+                   android:cursorVisible="false"
                    android:drawablePadding="30dp"
                    android:text="user@domain.com"
-                   android:background="@color/white"
                    android:layout_height="wrap_content"
                    android:layout_width="match_parent" />
 
            </com.google.android.material.textfield.TextInputLayout>
 
            <com.google.android.material.textfield.TextInputLayout
-               android:clickable="false"
                android:hint="Contact"
                android:layout_margin="5sp"
-               android:id="@+id/phno"
+               app:boxStrokeWidth="0dp"
+               android:id="@+id/input_layout_profile_contact"
                android:fontFamily="@font/lato"
                android:layout_height="wrap_content"
                android:layout_width="match_parent">
                <com.google.android.material.textfield.TextInputEditText
                    android:id="@+id/edit_text_profile_mobile"
                    android:drawablePadding="30dp"
+                   android:clickable="false"
+                   android:focusable="false"
+                   android:focusableInTouchMode="false"
+                   android:cursorVisible="false"
                    android:text="+91 8787654732"
-                   android:background="@color/white"
                    android:layout_height="wrap_content"
                    android:layout_width="match_parent" />
            </com.google.android.material.textfield.TextInputLayout>
 
            <Button
+               android:textAllCaps="true"
+               android:id="@+id/button_profile_update"
                android:background="#fece2f"
                android:layout_height="wrap_content"
                android:layout_marginTop="30dp"
