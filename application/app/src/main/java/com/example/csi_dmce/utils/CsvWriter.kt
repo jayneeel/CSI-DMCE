@@ -2,12 +2,14 @@ package com.example.csi_dmce.utils
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import java.io.*
@@ -15,7 +17,7 @@ import java.io.*
 class CsvWriter {
     companion object {
         @RequiresApi(Build.VERSION_CODES.R)
-        fun writeCsv(ctx: Context, headerData: List<String>, csvData: List<List<String>>) {
+        fun writeCsv(ctx: Context, headerData: List<String>, csvData: List<List<String>>): Uri {
             val fileObject =  File(Environment.getExternalStorageDirectory(), "attendance.csv")
             Log.d("CSV_WRITER", fileObject.absolutePath)
             if (fileObject.exists()) {
@@ -37,6 +39,8 @@ class CsvWriter {
 
             csvPrinter.flush()
             csvPrinter.close()
+
+            return fileObject.toUri()
         }
     }
 }

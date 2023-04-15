@@ -1,4 +1,6 @@
 package com.example.csi_dmce.attendance
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -8,10 +10,9 @@ import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.csi_dmce.R
+import java.io.File
 
 class CsvGeneration: AppCompatActivity() {
-
-    val ctx = this
 
     private lateinit var attendanceCard : CardView
     private lateinit var expenseCard : CardView
@@ -39,12 +40,13 @@ class CsvGeneration: AppCompatActivity() {
 
             submitButton.setOnClickListener {
                 val eventForCsv = editText.text.toString()
-                AttendanceExportService.writeAttendanceData(ctx, eventForCsv)
+                val csvUri = AttendanceExportService.writeAttendanceData(this, eventForCsv)
+                openExcelSheet(csvUri)
             }
         }
 
         expenseCard.setOnClickListener{
-            ExpensesCSV.writeExpensesData(ctx)
+            val csvUri = ExpensesCSV.writeExpensesData(this)
         }
 
         registrantCard.setOnClickListener{
@@ -53,10 +55,17 @@ class CsvGeneration: AppCompatActivity() {
 
             submitButton.setOnClickListener {
                 val eventForCsv = editText.text.toString()
-                RegistrantsCsv.writeRegistrantsData(ctx, eventForCsv)
+                RegistrantsCsv.writeRegistrantsData(this, eventForCsv)
             }
         }
+    }
 
-
+    private fun openExcelSheet(fileUri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(fileUri, "application/vnd.ms-excel")
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        if (intent.resolveActivity(applicationContext.packageManager) != null) {
+            startActivity(intent)
+        }
     }
 }
