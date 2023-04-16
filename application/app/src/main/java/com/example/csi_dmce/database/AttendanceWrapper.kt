@@ -16,8 +16,6 @@ data class Attendance(
 )
 
 data class AttendanceSubDocument(
-    @DocumentId
-    var event_id: String?       = null,
     var first: Boolean?         = false,
     var second: Boolean?        = false,
 )
@@ -43,7 +41,7 @@ class AttendanceWrapper {
         suspend fun createAttendanceDocument(studentID: String, eventUUID: String) {
             Log.d("ATTEN_DOC", "${studentID}-${eventUUID}")
 
-            val attendanceDoc = AttendanceSubDocument(event_id = eventUUID, first = false, second = false)
+            val attendanceDoc = AttendanceSubDocument(first = false, second = false)
 
             attendanceCollectionRef.document(studentID).set(mapOf("dummy" to false)).await()
             attendanceCollectionRef.document(studentID).collection("events").document(eventUUID).set(attendanceDoc).await()
