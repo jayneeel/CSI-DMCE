@@ -1,6 +1,7 @@
 package com.example.csi_dmce.dashboard
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,18 +16,27 @@ import com.example.csi_dmce.dashboard.EventAdapter
 import com.example.csiappdashboard.EventDataClass
 import com.google.firebase.firestore.*
 import com.example.csi_dmce.R
+import com.example.csi_dmce.auth.CSIRole
+import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.database.Event
+import com.example.csi_dmce.database.EventWrapper
+import com.example.csi_dmce.events.EventUpsertActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.runBlocking
 
 class EventFragment : Fragment() {
-lateinit var eventSearchRecycler: RecyclerView
-private lateinit var myAdapter: EventAdapter
-private lateinit var filterBtn : CircleButton
-private lateinit var eventArrayList : ArrayList<EventDataClass>
-private lateinit var db : FirebaseFirestore
+    lateinit var eventSearchRecycler: RecyclerView
+    private lateinit var myAdapter: EventAdapter
+    private lateinit var filterBtn : CircleButton
+    private lateinit var eventArrayList : ArrayList<EventDataClass>
+    private lateinit var db : FirebaseFirestore
 
+    private val REQUEST_CODE_LOOP_TO_LIST: Int = 100
+
+    private lateinit var btnEventAdd: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     @SuppressLint("MissingInflatedId")
@@ -35,46 +45,38 @@ private lateinit var db : FirebaseFirestore
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_event, container, false)
-        eventSearchRecycler = view.findViewById(R.id.eventSearchRecyclerView)
-        filterBtn = view.findViewById(R.id.filter_Btn)
-        filterBtn.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(view.context, filterBtn)
-            popupMenu.menuInflater.inflate(R.menu.filter_menu, popupMenu.menu)
-            popupMenu.show()
+        val view = inflater.inflate(R.layout.layout_event_recyclerview, container, false)
+//        eventSearchRecycler = view.findViewById(R.id.eventSearchRecyclerView)
+//        filterBtn = view.findViewById(R.id.filter_Btn)
+//        filterBtn.setOnClickListener {
+//            val popupMenu: PopupMenu = PopupMenu(view.context, filterBtn)
+//            popupMenu.menuInflater.inflate(R.menu.filter_menu, popupMenu.menu)
+//            popupMenu.show()
+//        }
+        val userRole: CSIRole = CsiAuthWrapper.getRoleFromToken(view.context)
+
+        Log.d("EVENTS", userRole.isAdmin().toString())
+
+        btnEventAdd = view.findViewById(R.id.fab_admin_event_add)
+        btnEventAdd.setOnClickListener {
+            val intent = Intent(view.context, EventUpsertActivity::class.java)
+            intent.putExtra("is_add_intent", true)
+            startActivityForResult(intent, REQUEST_CODE_LOOP_TO_LIST)
         }
 
+        if (!userRole.isAdmin()) {
+            btnEventAdd.hide()
+        }
 
+        val events: List<Event> = runBlocking { EventWrapper.getEvents() }
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_events_list)
+        val layoutManager = LinearLayoutManager(view.context)
+        recyclerView.layoutManager = layoutManager
 
-
-            eventSearchRecycler.layoutManager= LinearLayoutManager(view.context)
-        eventSearchRecycler.setHasFixedSize(true)
-        eventArrayList = arrayListOf()
-        myAdapter = EventAdapter(eventArrayList)
-        eventSearchRecycler.adapter = myAdapter
-        EventChangerListener()
+        val adapter = com.example.csi_dmce.EventAdapter(events)
+        recyclerView.adapter = adapter
 
         return view
     }
-
-    private fun EventChangerListener() {
-        db = FirebaseFirestore.getInstance()
-        db.collection("events").addSnapshotListener(object : EventListener<QuerySnapshot> {
-            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                if (error !=null){
-                    Log.e("Firestore Error",error.message.toString())
-                    return
-                }
-                for ( dc: DocumentChange in value?.documentChanges!!){
-                    if (dc.type == DocumentChange.Type.ADDED){
-                        eventArrayList.add(dc.document.toObject(EventDataClass::class.java))
-                    }
-                }
-                myAdapter.notifyDataSetChanged()
-            }
-        })
-    }
-
-
 }

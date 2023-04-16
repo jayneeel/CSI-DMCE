@@ -52,8 +52,6 @@ class AttendanceActivity: AppCompatActivity() {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
             finish()
         } else {
-            Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG)
-                .show()
 
             val qrContents = result.contents
             val eventUUID: String =  runBlocking  { EventWrapper.getEventUuid(eventId)!!}

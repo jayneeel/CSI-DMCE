@@ -52,8 +52,6 @@ class scanQrActivity : AppCompatActivity() {
         if (result.contents == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG)
-                .show()
             qrContent = result.contents
             val intent = Intent(applicationContext, Attendance::class.java)
             intent.putExtra("QR_contents", qrContent )

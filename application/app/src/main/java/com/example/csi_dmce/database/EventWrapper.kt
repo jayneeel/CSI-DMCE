@@ -168,13 +168,13 @@ class EventWrapper {
         }
 
         suspend fun registerStudent(eventObject: Event, studentId: String) {
+            AttendanceWrapper.createAttendanceDocument(studentId, eventObject.uuid!!)
+
             if (eventObject.registrants == null) {
                 eventObject.registrants = mutableListOf(studentId)
             } else {
                 eventObject.registrants!!.add(studentId)
             }
-
-            Log.d("EVENT", eventObject.toString())
 
             updateEvent(eventObject, eventObject)
         }

@@ -121,7 +121,7 @@ class EventViewActivity: AppCompatActivity() {
 
         btnEventAttendance = findViewById(R.id.button_event_attendance)
         val currentDateTime = Date()
-        if (currentDateTime > eventDateTime) {
+        if (false) {
 //            btnEventAttendance.isClickable = false
 //            btnEventAttendance.setBackgroundColor(Color.parseColor("#808080"))
         } else {
