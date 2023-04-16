@@ -205,7 +205,7 @@ class Profile: AppCompatActivity() {
         }
 
         updatedStudentObject.email = etStudentEmail.text.toString()
-        updatedStudentObject.phone_number = etStudentContact.text.toString().toLong()
+        updatedStudentObject.phone_number = if (etStudentContact.text.isNullOrEmpty()) null else etStudentContact.text.toString().toLong()
 
         if (imageUri != null) {
             // Update profile pic
