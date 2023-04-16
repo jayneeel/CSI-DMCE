@@ -57,7 +57,7 @@ class DashMainActivity : AppCompatActivity() {
 
 
         val navHeaderName: TextView = navHeaderView.findViewById(R.id.nav_header_name)
-        navHeaderName.setText(studentObject.name)
+        navHeaderName.setText(studentObject.name?: "User")
 
 
 
