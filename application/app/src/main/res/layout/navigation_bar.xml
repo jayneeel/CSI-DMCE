@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbars"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_height="60dp"
+        android:backgroundTint="#0D1542"
+        app:navigationIcon="@drawable/ic_round_menu_24"
+        app:title="CSI-DMCE"
+        android:foregroundTint="@color/white"
+        app:titleTextColor="@color/white"
+        android:background="?attr/colorPrimary"
+        app:navigationContentDescription="Drawer"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"/>
+
+</RelativeLayout>

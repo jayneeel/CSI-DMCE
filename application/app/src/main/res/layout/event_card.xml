@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="60sp"
+    android:layout_margin="20dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/image_curve"
+            android:id="@+id/event_img"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            android:foreground="@drawable/ic_launcher_foreground" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Code-A-Thon"
+            android:id="@+id/title"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginVertical="10dp"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10/2/2023"
+            android:id="@+id/date"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginVertical="10dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

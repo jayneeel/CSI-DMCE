@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/nav_expenses_claim"
+        android:icon="@drawable/ic_round_monetization_on_24"
+        android:iconTint="#0D1542"
+        android:title="Expenses Claim"
+        />
+
+    <item
+        android:id="@+id/nav_past_events"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:iconTint="#0D1542"
+        android:title="Past Events"/>
+
+    <item
+        android:id="@+id/nav_starred_events"
+        android:icon="@drawable/ic_baseline_star_rate_24"
+        android:iconTint="#0D1542"
+        android:title="Starred Events"/>
+
+    <item
+        android:id="@+id/nav_about_us"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        android:iconTint="#0D1542"
+        android:title="About Us"/>
+
+</menu>

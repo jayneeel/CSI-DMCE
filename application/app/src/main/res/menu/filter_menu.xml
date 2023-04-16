@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/newestEvents"
+        android:title="Newest First"/>
+    <item
+        android:id="@+id/ascendingEvents"
+        android:title="Oldest First"/>
+    <item
+        android:id="@+id/descendingEvents"
+        android:title="Upcoming First"/>
+</menu>
