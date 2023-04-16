@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.csi_admin.AdminHomepage
 import com.example.csi_dmce.auth.CSIRole
 import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.dashboard.DashMainActivity
 import com.example.csi_dmce.events.EventListActivity
 import com.example.csi_dmce.events.EventQRGenerationActivity
 import com.example.csi_dmce.events.EventUpsertActivity
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             if (CsiAuthWrapper.getRoleFromToken(applicationContext) == CSIRole.ADMIN) {
                 Intent(applicationContext, AdminHomepage::class.java)
             } else {
-                Intent(applicationContext, Dashboard::class.java)
+                Intent(applicationContext, DashMainActivity::class.java)
             }
         } else {
             Intent(this, WelcomeActivity::class.java)

@@ -105,6 +105,8 @@
         <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>
         <activity android:name=".profile.Profile"/>
         <activity android:name=".attendance.AdminViewQR"/>
+        <activity android:name=".dashboard.DashMainActivity"/>
+
 
 
         <meta-data

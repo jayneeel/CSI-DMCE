@@ -9,14 +9,13 @@
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
         android:layout_height="60dp"
-        android:backgroundTint="#0D1542"
         app:navigationIcon="@drawable/ic_round_menu_24"
+        app:titleMarginStart="10dp"
         app:title="CSI-DMCE"
         android:foregroundTint="@color/white"
         app:titleTextColor="@color/white"
-        android:background="?attr/colorPrimary"
+        android:background="@color/csi_primary_accent"
         app:navigationContentDescription="Drawer"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"/>
+        android:minHeight="?attr/actionBarSize"/>
 
 </RelativeLayout>

@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
-class MainActivity : AppCompatActivity() {
+class DashMainActivity : AppCompatActivity() {
     lateinit var bottomNavBar : BottomNavigationView
     lateinit var toggle: ActionBarDrawerToggle
 
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView : NavigationView = findViewById(R.id.nav_view)
+        navView.itemIconTintList = null
 
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)

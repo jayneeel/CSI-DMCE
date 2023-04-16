@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,16 +16,24 @@ import com.example.csi_dmce.dashboard.EventAdapter
 import com.example.csiappdashboard.EventDataClass
 import com.google.firebase.firestore.*
 import com.example.csi_dmce.R
+import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.database.Student
+import com.example.csi_dmce.database.StudentWrapper
+import kotlinx.coroutines.runBlocking
 
 
 class DashboardFragment : Fragment() {
-lateinit var eventRecycler : RecyclerView
-lateinit var toolbar: Toolbar
-private lateinit var eventArrayList : ArrayList<EventDataClass>
-private lateinit var myAdapter: EventAdapter
-lateinit var imageSlider: ImageSlider
-private lateinit var db : FirebaseFirestore
-val imageList = ArrayList<SlideModel>()
+    lateinit var eventRecycler : RecyclerView
+    lateinit var toolbar: Toolbar
+    private lateinit var eventArrayList : ArrayList<EventDataClass>
+    private lateinit var myAdapter: EventAdapter
+    lateinit var imageSlider: ImageSlider
+    private lateinit var db : FirebaseFirestore
+    val imageList = ArrayList<SlideModel>()
+
+    private lateinit var studentObject: Student
+
+    private lateinit var tvDashWelcome: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +42,19 @@ val imageList = ArrayList<SlideModel>()
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_dashboard, container, false)
         eventRecycler = view.findViewById(R.id.recyclerview)
-//        toolbar = view.findViewById(R.id.navBar)
+
+        studentObject = runBlocking {
+            StudentWrapper.getStudent(CsiAuthWrapper.getStudentId(view.context))!!
+        }
+
+        val studentName = if (studentObject.name != null) {
+           studentObject.name!!.split(" ")[0]
+        } else {
+            "User"
+        }
+
+        tvDashWelcome = view.findViewById(R.id.text_view_dashboard_welcome)
+        tvDashWelcome.setText("Welcome ${studentName}")
 
         eventRecycler.layoutManager= LinearLayoutManager(view.context)
         eventRecycler.setHasFixedSize(true)
@@ -42,9 +63,6 @@ val imageList = ArrayList<SlideModel>()
         myAdapter = EventAdapter(eventArrayList)
         eventRecycler.adapter = myAdapter
         EventChangerListener()
-
-
-
 
         imageSlider = view.findViewById(R.id.imageSlider)
         imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F1.jpg?alt=media&token=1b98937c-cf2c-4011-882a-c7985bb759fd", title = "Ideobition"))
@@ -73,6 +91,4 @@ val imageList = ArrayList<SlideModel>()
 
         })
     }
-
-
 }
