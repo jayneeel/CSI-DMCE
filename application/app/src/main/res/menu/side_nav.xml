@@ -22,10 +22,10 @@
         android:title="Starred Events"/>
 
     <item
-        android:id="@+id/nav_about_us"
+        android:id="@+id/nav_complaint"
         android:icon="@drawable/ic_baseline_menu_book_24"
         android:iconTint="#0D1542"
-        android:title="About Us"/>
+        android:title="Lodge a complaint"/>
 
     <item
         android:id="@+id/nav_logout"
