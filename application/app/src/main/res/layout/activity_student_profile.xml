@@ -24,7 +24,9 @@
                android:layout_height="100dp"
                android:layout_centerVertical="true"
                android:layout_marginTop="50dp"
-               android:src="@drawable/avatar" />
+               app:civ_border_width="2dp"
+               app:civ_border_color="@color/white"
+               android:src="@drawable/ic_baseline_person_24" />
 
            <com.google.android.material.floatingactionbutton.FloatingActionButton
                android:id="@+id/fab_profile_avatar_update"

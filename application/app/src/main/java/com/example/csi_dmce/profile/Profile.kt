@@ -8,12 +8,10 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
@@ -59,33 +57,6 @@ class Profile: AppCompatActivity() {
 
         studentObject = runBlocking { StudentWrapper.getStudent(CsiAuthWrapper.getStudentId(applicationContext)) }!!
 
-        ilStudentClass = findViewById(R.id.input_layout_profile_class)
-        ilStudentContact = findViewById(R.id.input_layout_profile_contact)
-        ilStudentEmail = findViewById(R.id.input_layout_profile_email)
-        ilStudentId = findViewById(R.id.input_layout_profile_studentid)
-        ilStudentName = findViewById(R.id.input_layout_profile_name)
-
-        tvProfileName = findViewById(R.id.text_view_profile_name)
-        tvProfileName.setText(studentObject?.name)
-
-        tvProfileStudentId = findViewById(R.id.text_view_profile_student_id)
-        tvProfileStudentId.setText(studentObject?.student_id)
-
-        etProfileName = findViewById(R.id.edit_text_profile_name)
-        etProfileName.setText(studentObject?.name)
-
-        etStudentId = findViewById(R.id.edit_text_profile_studentid)
-        etStudentId.setText(studentObject?.student_id)
-
-        etStudentClass = findViewById(R.id.edit_text_student_class)
-        etStudentClass.setText(studentObject?.department + "-" + studentObject?.academic_year + "-" + studentObject?.division)
-
-        etStudentEmail = findViewById(R.id.edit_text_profile_email)
-        etStudentEmail.setText(studentObject?.email)
-
-        etStudentContact = findViewById(R.id.edit_text_profile_mobile)
-        etStudentContact.setText(studentObject?.phone_number.toString())
-
         ivStudentAvatar = findViewById(R.id.image_view_user_avatar)
         var avatarExists: Boolean = false
 
@@ -122,6 +93,34 @@ class Profile: AppCompatActivity() {
             }
         }
 
+
+        ilStudentClass = findViewById(R.id.input_layout_profile_class)
+        ilStudentContact = findViewById(R.id.input_layout_profile_contact)
+        ilStudentEmail = findViewById(R.id.input_layout_profile_email)
+        ilStudentId = findViewById(R.id.input_layout_profile_studentid)
+        ilStudentName = findViewById(R.id.input_layout_profile_name)
+
+        tvProfileName = findViewById(R.id.text_view_profile_name)
+        tvProfileName.setText(studentObject?.name)
+
+        tvProfileStudentId = findViewById(R.id.text_view_profile_student_id)
+        tvProfileStudentId.setText(studentObject?.student_id)
+
+        etProfileName = findViewById(R.id.edit_text_profile_name)
+        etProfileName.setText(studentObject?.name)
+
+        etStudentId = findViewById(R.id.edit_text_profile_studentid)
+        etStudentId.setText(studentObject?.student_id)
+
+        etStudentClass = findViewById(R.id.edit_text_student_class)
+        etStudentClass.setText(studentObject?.department + "-" + studentObject?.academic_year + "-" + studentObject?.division)
+
+        etStudentEmail = findViewById(R.id.edit_text_profile_email)
+        etStudentEmail.setText(studentObject?.email)
+
+        etStudentContact = findViewById(R.id.edit_text_profile_mobile)
+        etStudentContact.setText(studentObject?.phone_number.toString())
+
         fabAvatarUpdate = findViewById(R.id.fab_profile_avatar_update)
         fabAvatarUpdate.setOnClickListener {
             val intent = Intent()
@@ -132,6 +131,10 @@ class Profile: AppCompatActivity() {
 
         btnUpdate = findViewById(R.id.button_profile_update)
         btnUpdate.setOnClickListener {
+            if (isEditing) {
+                updateProfile()
+            }
+
             etProfileName.clearFocus()
             etStudentClass.clearFocus()
             etStudentId.clearFocus()
@@ -171,6 +174,8 @@ class Profile: AppCompatActivity() {
             } else {
                 "Confirm update"
             }
+
+            isEditing = !isEditing
         }
     }
 
@@ -182,5 +187,33 @@ class Profile: AppCompatActivity() {
 
             runBlocking { StudentWrapper.putStudentAvatar(studentObject, imageUri!!) }
         }
+    }
+
+    fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+    private fun updateProfile() {
+        val updatedStudentObject = studentObject.copy()
+        updatedStudentObject.name = etProfileName.text.toString()
+        updatedStudentObject.department = etStudentClass.text.split("-")[0]
+        updatedStudentObject.academic_year = etStudentClass.text.split("-")[1]
+        updatedStudentObject.division = etStudentClass.text.split("-")[2]
+        updatedStudentObject.student_id = etStudentId.text.toString()
+
+        if (!etStudentEmail.text.isValidEmail()) {
+            Toast.makeText(this, "Invalid Email!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        updatedStudentObject.email = etStudentEmail.text.toString()
+        updatedStudentObject.phone_number = etStudentContact.text.toString().toLong()
+
+        if (imageUri != null) {
+            // Update profile pic
+            updatedStudentObject.avatar_extension =  runBlocking {
+                StudentWrapper.putStudentAvatar(updatedStudentObject, imageUri!!)
+            }
+        }
+
+        runBlocking { StudentWrapper.updateStudent(studentObject, updatedStudentObject) }
     }
 }

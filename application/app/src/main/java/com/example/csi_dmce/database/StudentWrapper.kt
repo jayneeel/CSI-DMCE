@@ -12,13 +12,13 @@ import kotlinx.coroutines.tasks.await
 data class Student(
     @DocumentId
     var student_id          : String?                   = null,
-    val academic_year       : String?                   = null,
-    val department          : String?                   = null,
-    val division            : String?                   = null,
-    val email               : String?                   = null,
+    var academic_year       : String?                   = null,
+    var department          : String?                   = null,
+    var division            : String?                   = null,
+    var email               : String?                   = null,
     var email_id_verified   : Boolean?                  = null,
-    val name                : String?                   = null,
-    val phone_number        : Long?                     = null,
+    var name                : String?                   = null,
+    var phone_number        : Long?                     = null,
     val roll_number         : Int?                      = null,
     var events              : MutableList<String?>?     = null,
     var avatar_extension    : String?                   = null,
@@ -106,7 +106,7 @@ class StudentWrapper {
         Storage stuff below this
          */
 
-        suspend fun putStudentAvatar(studentObject: Student, imageUri: Uri) {
+        suspend fun putStudentAvatar(studentObject: Student, imageUri: Uri): String {
             var avatarExtension = imageUri.lastPathSegment.toString()
             avatarExtension = avatarExtension.substring(avatarExtension.lastIndexOf(".") + 1)
 
@@ -117,9 +117,7 @@ class StudentWrapper {
                 .putFile(imageUri)
                 .await()
 
-            studentObject.avatar_extension = avatarExtension
-
-            StudentWrapper.updateStudent(studentObject, studentObject)
+            return avatarExtension
         }
 
         fun getStudentAvatarUrl(studentId: String, avatarExtension: String, callback: (String?) -> Unit) {

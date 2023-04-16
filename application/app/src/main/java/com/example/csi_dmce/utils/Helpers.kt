@@ -1,5 +1,6 @@
 package com.example.csi_dmce.utils
 
+import android.util.Patterns
 import com.google.firebase.firestore.ServerTimestamp
 import kotlinx.serialization.descriptors.PrimitiveKind
 import java.math.BigInteger
@@ -24,6 +25,12 @@ class Helpers {
         // For the RecyclerView
         val rvEventDateFormat = SimpleDateFormat("MMM dd")
 
+        // Regular expressions
+        val profileClassRegex: Regex = """\w{2}-\w{2}-\w{2}""".toRegex()
+        val profileStudentidRegex: Regex = """\d{4}\w{4}\d{3}""".toRegex()
+
+        // Helper functions below this point
+
         /**
          * Returns a SHA-256 Hash of a given string.
          *
@@ -33,6 +40,7 @@ class Helpers {
         fun getSha256Hash(plaintext: String): String {
             val shaInstancce = MessageDigest.getInstance("SHA-256")
             val bigInt = BigInteger(1, shaInstancce.digest(plaintext.toByteArray(Charsets.UTF_8)))
+
             return String.format("%032x", bigInt)
         }
 
