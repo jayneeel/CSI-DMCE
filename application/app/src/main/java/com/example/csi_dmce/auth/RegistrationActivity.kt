@@ -36,11 +36,14 @@ class RegistrationActivity: AppCompatActivity() {
         etPassword = findViewById(R.id.edit_text_register_password)
         etStudentId = findViewById(R.id.edit_text_register_student_id)
 
+        var accountExists: Boolean = false
+
         btnRegister = findViewById(R.id.button_register)
         btnRegister.setOnClickListener {
             runBlocking {
                 if (StudentWrapper.getStudentByEmail(etEmail.text.toString()) != null) {
                     Toast.makeText(applicationContext, "Account already exists", Toast.LENGTH_SHORT).show()
+                    accountExists = true
                     return@runBlocking
                 } else {
                     val newStudentAuth =  StudentAuth(
@@ -75,6 +78,10 @@ class RegistrationActivity: AppCompatActivity() {
                     finishAffinity()
                     startActivity(intent)
                 }
+            }
+
+            if (accountExists) {
+                return@setOnClickListener
             }
 
             runBlocking {
