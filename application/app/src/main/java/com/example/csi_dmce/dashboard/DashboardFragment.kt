@@ -17,6 +17,7 @@ import com.example.csiappdashboard.EventDataClass
 import com.google.firebase.firestore.*
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
+import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
 import kotlinx.coroutines.runBlocking
@@ -25,7 +26,7 @@ import kotlinx.coroutines.runBlocking
 class DashboardFragment : Fragment() {
     lateinit var eventRecycler : RecyclerView
     lateinit var toolbar: Toolbar
-    private lateinit var eventArrayList : ArrayList<EventDataClass>
+    private lateinit var eventArrayList : ArrayList<Event>
     private lateinit var myAdapter: EventAdapter
     lateinit var imageSlider: ImageSlider
     private lateinit var db : FirebaseFirestore
@@ -83,7 +84,7 @@ class DashboardFragment : Fragment() {
                 }
                 for ( dc: DocumentChange in value?.documentChanges!!){
                     if (dc.type == DocumentChange.Type.ADDED){
-                        eventArrayList.add(dc.document.toObject(EventDataClass::class.java))
+                        eventArrayList.add(dc.document.toObject(Event::class.java))
                     }
                 }
                 myAdapter.notifyDataSetChanged()
