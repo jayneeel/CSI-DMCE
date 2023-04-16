@@ -23,9 +23,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bNav"
-        app:itemTextColor="@color/black"
+        app:itemTextColor="@color/white"
         app:menu="@menu/b_nav"
-        app:itemIconTint="#0D1542"
+        android:background="@color/csi_primary_accent"
+        app:itemIconTint="@color/white"
         app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
         app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
         android:layout_alignParentBottom="true"/>

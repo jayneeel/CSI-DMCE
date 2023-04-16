@@ -13,6 +13,7 @@ import com.example.csi_admin.AdminHomepage
 import com.example.csi_dmce.MainActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.forgotpassword.ForgotPasswordActivity
+import com.example.csi_dmce.dashboard.DashMainActivity
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.ui.Dashboard
 import com.example.csi_dmce.utils.Helpers
@@ -57,7 +58,7 @@ class LoginActivity: AppCompatActivity() {
                             val mIntent: Intent = if (CsiAuthWrapper.getRoleFromToken(applicationContext) == CSIRole.ADMIN) {
                                 Intent(applicationContext, AdminHomepage::class.java)
                             } else {
-                                Intent(applicationContext, Dashboard::class.java)
+                                Intent(applicationContext, DashMainActivity::class.java)
                             }
 
                             finishAffinity()

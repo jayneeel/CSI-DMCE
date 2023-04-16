@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
+import com.example.csi_dmce.dashboard.DashMainActivity
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.ui.Dashboard
@@ -69,7 +70,7 @@ class OTPVerificationActivity: AppCompatActivity() {
             }
 
             val intent: Intent = when(verificationKind) {
-                EmailKind.EMAIL_VERIFICATION -> Intent(applicationContext, Dashboard::class.java)
+                EmailKind.EMAIL_VERIFICATION -> Intent(applicationContext, DashMainActivity::class.java)
                 EmailKind.RESET_PASSWORD_VERIFICATION -> Intent(applicationContext, SetPasswordActivity::class.java)
             }
             finishAffinity()
