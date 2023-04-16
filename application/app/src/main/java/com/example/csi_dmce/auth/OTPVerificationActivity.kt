@@ -65,7 +65,6 @@ class OTPVerificationActivity: AppCompatActivity() {
             }
 
             if (!otpIsCorrect) {
-                Toast.makeText(applicationContext, "The given OTP is incorrect!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -73,6 +72,7 @@ class OTPVerificationActivity: AppCompatActivity() {
                 EmailKind.EMAIL_VERIFICATION -> Intent(applicationContext, Dashboard::class.java)
                 EmailKind.RESET_PASSWORD_VERIFICATION -> Intent(applicationContext, SetPasswordActivity::class.java)
             }
+            finishAffinity()
             intent.putExtra("email_id", emailId)
             startActivity(intent)
         }

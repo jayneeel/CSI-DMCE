@@ -88,13 +88,13 @@ class Helpers {
             return otp.toString()
         }
 
-        fun getAcademicYear(admission_year: Int): String {
+        fun getAcademicYear(admission_year: Int): String? {
             return when (Calendar.getInstance().get(Calendar.YEAR) - admission_year) {
                 4 -> "BE"
                 3 -> "TE"
                 2 -> "SE"
                 1 -> "FE"
-                else -> "UNKNOWN"
+                else -> null
             }
         }
 

@@ -101,25 +101,25 @@ class Profile: AppCompatActivity() {
         ilStudentName = findViewById(R.id.input_layout_profile_name)
 
         tvProfileName = findViewById(R.id.text_view_profile_name)
-        tvProfileName.setText(studentObject?.name)
+        tvProfileName.setText(studentObject.name ?: "User")
 
         tvProfileStudentId = findViewById(R.id.text_view_profile_student_id)
-        tvProfileStudentId.setText(studentObject?.student_id)
+        tvProfileStudentId.setText(studentObject.student_id)
 
         etProfileName = findViewById(R.id.edit_text_profile_name)
-        etProfileName.setText(studentObject?.name)
+        etProfileName.setText(studentObject.name ?: "User")
 
         etStudentId = findViewById(R.id.edit_text_profile_studentid)
-        etStudentId.setText(studentObject?.student_id)
+        etStudentId.setText(studentObject.student_id)
 
         etStudentClass = findViewById(R.id.edit_text_student_class)
-        etStudentClass.setText(studentObject?.department + "-" + studentObject?.academic_year + "-" + studentObject?.division)
+        etStudentClass.setText((studentObject.department ?: "DEPT") + "-" + (studentObject.academic_year ?: "YEAR") + "-" + (studentObject.division ?: "A/B"))
 
         etStudentEmail = findViewById(R.id.edit_text_profile_email)
         etStudentEmail.setText(studentObject?.email)
 
         etStudentContact = findViewById(R.id.edit_text_profile_mobile)
-        etStudentContact.setText(studentObject?.phone_number.toString())
+        etStudentContact.setText(if (studentObject.phone_number == null) "" else studentObject.phone_number.toString())
 
         fabAvatarUpdate = findViewById(R.id.fab_profile_avatar_update)
         fabAvatarUpdate.setOnClickListener {

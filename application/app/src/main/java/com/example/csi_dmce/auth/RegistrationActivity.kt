@@ -55,7 +55,8 @@ class RegistrationActivity: AppCompatActivity() {
                         academic_year = Helpers.getAcademicYear(etStudentId.text.toString().slice(0..3).toInt()),
                         department = etStudentId.text.toString().slice(6..7),
                         email = etEmail.text.toString(),
-                        email_id_verified = false
+                        email_id_verified = false,
+                        avatar_extension = "png"
                     )
 
                     runBlocking {
