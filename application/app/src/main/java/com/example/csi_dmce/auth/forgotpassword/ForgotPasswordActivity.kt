@@ -26,8 +26,9 @@ class ForgotPasswordActivity: AppCompatActivity() {
                 intent.putExtra("email_id", emailVerificationViewModel.emailId.value)
                 intent.putExtra("verification_kind", "password_reset_verification")
                 startActivity(intent)
+            } else {
+                Toast.makeText(applicationContext, "Your Email ID isn't correct.", Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(applicationContext, "Your Email ID isn't correct.", Toast.LENGTH_SHORT).show()
         })
     }
 }

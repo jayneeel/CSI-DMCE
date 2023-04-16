@@ -1,5 +1,6 @@
 package com.example.csi_dmce.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -7,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.database.StudentAuthWrapper
+import com.example.csi_dmce.ui.Dashboard
+import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csi_dmce.utils.Helpers
 import kotlinx.coroutines.runBlocking
 
@@ -33,6 +36,13 @@ class SetPasswordActivity: AppCompatActivity() {
                 runBlocking {
                     StudentAuthWrapper.setPasswordWrapper(emailId, newPassword)
                 }
+
+                Toast.makeText(this, "Password changed successfully!", Toast.LENGTH_SHORT).show()
+
+                val dIntent = Intent(this, WelcomeActivity::class.java)
+                finishAffinity()
+                startActivity(dIntent)
+
             } else {
                 Toast.makeText(applicationContext,"Passwords don't match!", Toast.LENGTH_SHORT).show()
             }
