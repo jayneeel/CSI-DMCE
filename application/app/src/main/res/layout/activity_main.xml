@@ -20,13 +20,14 @@
         android:id="@+id/frameL"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bNav"
+        android:background="@color/csi_primary_accent"
         app:itemTextColor="@color/white"
         app:menu="@menu/b_nav"
-        android:background="@color/csi_primary_accent"
-        app:itemIconTint="@color/white"
+        app:itemIconTint="@color/bottom_nav_csi_background_item"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
         app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
         android:layout_alignParentBottom="true"/>
