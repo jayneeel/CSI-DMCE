@@ -4,10 +4,11 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbars"
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
+        android:theme="@style/ToolbarColoredBackArrow"
         android:layout_height="60dp"
         app:navigationIcon="@drawable/ic_round_menu_24"
         app:titleMarginStart="10dp"

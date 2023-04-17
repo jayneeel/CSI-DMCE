@@ -15,4 +15,8 @@
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/white</item>
     </style>
+
+    <style name="ToolbarColoredBackArrow" parent="Theme.CSIDMCE">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
 </resources>
