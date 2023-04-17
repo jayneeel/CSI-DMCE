@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_admin.complaint.ComplaintLodge
+import com.example.csi_admin.expense.ExpenseRequest
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
@@ -71,7 +72,10 @@ class DashMainActivity : AppCompatActivity() {
 
 
             when(it.itemId){
-                R.id.nav_expenses_claim -> Toast.makeText(this,"Expense Claim",Toast.LENGTH_LONG).show()
+                R.id.nav_expenses_claim -> {
+                    val eIntent = Intent(this, ExpenseRequest::class.java)
+                    startActivity(eIntent)
+                }
                 R.id.nav_starred_events -> Toast.makeText(this,"Starred Events",Toast.LENGTH_LONG).show()
                 R.id.nav_past_events -> Toast.makeText(this,"Past Events",Toast.LENGTH_LONG).show()
                 R.id.nav_complaint -> {
