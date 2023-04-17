@@ -7,7 +7,7 @@
   <path
       android:pathData="M177.41,-528.69a414.49,300.5 88.61,1 0,20.18 828.73a414.49,300.5 88.61,1 0,-20.18 -828.73z">
     <aapt:attr name="android:fillColor">
-      <gradient 
+      <gradient
           android:centerX="204.91"
           android:centerY="-145.31"
           android:gradientRadius="439.42"
