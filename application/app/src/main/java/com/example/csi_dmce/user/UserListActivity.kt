@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.csi_dmce.R
 import com.example.csi_admin.complaint.Complaint
 import com.example.csi_admin.complaint.ComplaintAdapter
+import com.example.csi_dmce.database.Student
 import com.google.firebase.firestore.*
 
 class UserListActivity : AppCompatActivity() {
     lateinit var recycler: RecyclerView
-    private lateinit var usersArrayList: ArrayList<RegisteredUsers>
+    private lateinit var usersArrayList: ArrayList<Student>
     private lateinit var myAdapter: RegisteredUserAdapter
     private lateinit var db : FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +42,7 @@ class UserListActivity : AppCompatActivity() {
                 }
                 for ( dc: DocumentChange in value?.documentChanges!!){
                     if (dc.type == DocumentChange.Type.ADDED){
-                        usersArrayList.add(dc.document.toObject(RegisteredUsers::class.java))
+                        usersArrayList.add(dc.document.toObject(Student::class.java))
                     }
                 }
                 myAdapter.notifyDataSetChanged()

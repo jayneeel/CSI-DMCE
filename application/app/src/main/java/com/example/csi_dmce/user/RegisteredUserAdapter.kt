@@ -4,17 +4,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
 import com.example.csi_admin.complaint.Complaint
+import com.example.csi_dmce.database.Student
+import com.example.csi_dmce.database.StudentWrapper
+import kotlinx.coroutines.runBlocking
 
-class RegisteredUserAdapter(private val registeredUsersList : ArrayList<RegisteredUsers>): RecyclerView.Adapter<RegisteredUserAdapter.MyViewHolder>() {
+class RegisteredUserAdapter(private val registeredUsersList : ArrayList<Student>): RecyclerView.Adapter<RegisteredUserAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val student_name : TextView = itemView.findViewById(R.id.user_student_name)
         val student_dept : TextView = itemView.findViewById(R.id.user_dept)
         val student_id : TextView = itemView.findViewById(R.id.user_student_id)
-
+        val student_avatar : ImageView = itemView.findViewById(R.id.user_profile_img)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,9 +29,19 @@ class RegisteredUserAdapter(private val registeredUsersList : ArrayList<Register
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val user : RegisteredUsers = registeredUsersList[position]
+        val user : Student = registeredUsersList[position]
         holder.student_dept.text = user.department
         holder.student_name.text = user.name
+
+        runBlocking {
+            StudentWrapper.getStudentAvatarUrl(user.student_id!!, user.avatar_extension!!){
+                Glide.with(holder.student_avatar.context)
+                    .setDefaultRequestOptions(RequestOptions())
+                    .load(it?: R.drawable.ic_baseline_person_black_24)
+                    .into(holder.student_avatar)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
