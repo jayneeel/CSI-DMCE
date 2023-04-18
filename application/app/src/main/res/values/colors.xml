@@ -16,4 +16,11 @@
     <color name="blue">#0066FF</color>
     <color name="csi_fg_text">#3A3A3A</color>
     <color name="csi_primary_accent">#0A0630</color>
+
+    <color name="custom_primary">#0D1542</color>
+    <color name="custom_secondary">#FF8F00</color>
+    <color name="custom_secondary_light">#FFD299</color>
+    <color name="custom_background">#FFF</color>
+    <color name="custom_text_primary">#060906</color>
+    <color name="custom_text_secondary">#464747</color>
 </resources>
