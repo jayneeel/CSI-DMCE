@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 .apply()
 
             if (CsiAuthWrapper.getRoleFromToken(applicationContext) == CSIRole.ADMIN) {
-                Intent(applicationContext, AdminHomepage::class.java)
+                Intent(applicationContext, DashMainActivity::class.java)
             } else {
                 Intent(applicationContext, DashMainActivity::class.java)
             }

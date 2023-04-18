@@ -60,6 +60,14 @@ class DashMainActivity : AppCompatActivity() {
         val navHeaderName: TextView = navHeaderView.findViewById(R.id.nav_header_name)
         navHeaderName.setText(studentObject.name?: "User")
 
+        val navHeaderDesignation: TextView = navHeaderView.findViewById(R.id.text_view_csi_designation)
+        navHeaderDesignation.setText(
+            if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()) {
+                "CSI Admin"
+            } else {
+                "CSI Member"
+            }
+        )
 
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
