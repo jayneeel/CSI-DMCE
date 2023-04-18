@@ -2,15 +2,12 @@ package com.example.csi_dmce.events
 
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,8 +16,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
@@ -162,7 +157,7 @@ class EventViewActivity: AppCompatActivity() {
                 val tvDeleteEventTitle = dialog.findViewById<TextView>(R.id.text_view_event_delete_title)
                 tvDeleteEventTitle.setText(eventObject.title)
 
-                val btnDeletePositive = dialog.findViewById<Button>(R.id.button_delete_positive)
+                val btnDeletePositive = dialog.findViewById<Button>(R.id.button_export_positive)
                 btnDeletePositive.setOnClickListener {
                     if (etDeleteEventName.text.toString() != eventObject.title) {
                         Toast.makeText(this, "Please enter the event's title", Toast.LENGTH_SHORT).show()
@@ -177,7 +172,7 @@ class EventViewActivity: AppCompatActivity() {
                     finish()
                 }
 
-                val btnDeleteNegative = dialog.findViewById<Button>(R.id.button_delete_negative)
+                val btnDeleteNegative = dialog.findViewById<Button>(R.id.button_export_negative)
                 btnDeleteNegative.setOnClickListener {
                     dialog.dismiss()
                 }

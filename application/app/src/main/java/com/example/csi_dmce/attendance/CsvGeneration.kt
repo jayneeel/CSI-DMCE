@@ -1,5 +1,8 @@
 package com.example.csi_dmce.attendance
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -8,13 +11,22 @@ import android.os.StrictMode
 import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupWindow
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.csi_dmce.R
+import com.example.csi_dmce.csv.EventSpinnerAdapter
+import com.example.csi_dmce.database.Event
+import com.example.csi_dmce.database.EventWrapper
+import kotlinx.coroutines.runBlocking
 import java.lang.reflect.Method
 
 class CsvGeneration: AppCompatActivity() {
@@ -23,9 +35,20 @@ class CsvGeneration: AppCompatActivity() {
     private lateinit var expenseCard : CardView
     private lateinit var registrantCard : CardView
 
+    private lateinit var btnDialogPositive: Button
+    private lateinit var btnDialogNegative: Button
+
+    private lateinit var selectedEvent: Event
+
+    private lateinit var events: List<Event>
+
+    private lateinit var spinnerEventNames: Spinner
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.csv_generation)
+
+        events = runBlocking { EventWrapper.getEvents() }
 
         val packageName = packageName
         val pm = packageManager
@@ -46,39 +69,56 @@ class CsvGeneration: AppCompatActivity() {
         expenseCard = findViewById(R.id.card_view_expenses_report)
         registrantCard = findViewById(R.id.card_view_registrations_report)
 
-        val popupView = layoutInflater.inflate(R.layout.csv_popup, null)
-        val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val dialog = Dialog(this, R.style.Theme_CSIDMCE)
+        dialog.setContentView(R.layout.component_csv_attendance_popup)
+        dialog.setCancelable(true)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        popupWindow.isOutsideTouchable = true
-        popupWindow.isFocusable = true
+        btnDialogNegative = dialog.findViewById(R.id.button_export_negative)
+        btnDialogPositive = dialog.findViewById(R.id.button_export_positive)
+        spinnerEventNames = dialog.findViewById(R.id.spinner_event_name)
 
-        val editText = popupView.findViewById<EditText>(R.id.eventID)
-        val submitButton = popupView.findViewById<Button>(R.id.submit_button)
+        constructSpinner()
 
         attendanceCard.setOnClickListener {
-            popupWindow.showAtLocation(attendanceCard, Gravity.CENTER, 0, 0)
+            dialog.show()
 
-            submitButton.setOnClickListener {
-                val eventForCsv = editText.text.toString()
-                val csvUri = AttendanceExportService.writeAttendanceData(this, eventForCsv)
+            btnDialogPositive.setOnClickListener {
+                val csvUri = AttendanceExportService.writeAttendanceData(this, selectedEvent.eventId!!)
+                dialog.dismiss()
                 openExcelSheet(csvUri)
+            }
+
+            btnDialogNegative.setOnClickListener {
+                dialog.dismiss()
             }
         }
 
         expenseCard.setOnClickListener{
-            val csvUri = ExpensesExportService.writeExpensesData(this)
-            Log.d("CSV", csvUri.toString())
-            openExcelSheet(csvUri)
+            dialog.show()
+
+            btnDialogPositive.setOnClickListener {
+                val csvUri = ExpensesExportService.writeExpensesData(this)
+                dialog.dismiss()
+                openExcelSheet(csvUri)
+            }
+
+            btnDialogNegative.setOnClickListener {
+                dialog.dismiss()
+            }
         }
 
         registrantCard.setOnClickListener{
-            popupWindow.showAtLocation(registrantCard, Gravity.CENTER, 0, 0)
+            dialog.show()
 
-
-            submitButton.setOnClickListener {
-                val eventForCsv = editText.text.toString()
-                val csvUri = RegistrationExportService.writeRegistrantsData(this, eventForCsv)
+            btnDialogPositive.setOnClickListener {
+                val csvUri = RegistrationExportService.writeRegistrantsData(this, selectedEvent.eventId!!)
+                dialog.dismiss()
                 openExcelSheet(csvUri)
+            }
+
+            btnDialogNegative.setOnClickListener {
+                dialog.dismiss()
             }
         }
     }
@@ -97,5 +137,20 @@ class CsvGeneration: AppCompatActivity() {
             }
         }
         startActivity(chooser)
+    }
+
+    private fun constructSpinner() {
+        val adapter = EventSpinnerAdapter(this, events)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerEventNames.adapter = adapter
+
+        spinnerEventNames.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedEvent = parent.getItemAtPosition(position) as Event
+                Log.d("SELECTED", selectedEvent.toString())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 }
