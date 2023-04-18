@@ -1,7 +1,5 @@
 package com.example.csi_dmce.attendance
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -68,7 +66,7 @@ class CsvGeneration: AppCompatActivity() {
         }
 
         expenseCard.setOnClickListener{
-            val csvUri = ExpensesCSV.writeExpensesData(this)
+            val csvUri = ExpensesExportService.writeExpensesData(this)
             Log.d("CSV", csvUri.toString())
             openExcelSheet(csvUri)
         }
@@ -79,7 +77,7 @@ class CsvGeneration: AppCompatActivity() {
 
             submitButton.setOnClickListener {
                 val eventForCsv = editText.text.toString()
-                val csvUri = RegistrantsCsv.writeRegistrantsData(this, eventForCsv)
+                val csvUri = RegistrationExportService.writeRegistrantsData(this, eventForCsv)
                 openExcelSheet(csvUri)
             }
         }

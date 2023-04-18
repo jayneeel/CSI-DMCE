@@ -10,7 +10,7 @@ import com.example.csi_dmce.utils.CsvWriter
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-class RegistrantsCsv {
+class RegistrationExportService {
     companion object {
         fun writeRegistrantsData(ctx: Context, eventId: String): Uri {
             // The data that will be written to the CSV file.

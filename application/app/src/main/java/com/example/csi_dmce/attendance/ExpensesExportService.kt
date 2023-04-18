@@ -7,7 +7,7 @@ import com.example.csi_dmce.utils.CsvWriter
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-class ExpensesCSV {
+class ExpensesExportService {
     companion object {
         fun writeExpensesData(ctx: Context): Uri {
             // The data that will be written to the CSV file.
