@@ -97,8 +97,7 @@ class ExpenseRequest : AppCompatActivity() {
         db.collection("expenses").add(map)
             .addOnSuccessListener {
                 Toast.makeText(this,"Request Sent Successfully", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ExpenseApproval::class.java)
-                startActivity(intent)
+                finish()
             }
             .addOnFailureListener{
                 Toast.makeText(this,"Error $it", Toast.LENGTH_SHORT).show()

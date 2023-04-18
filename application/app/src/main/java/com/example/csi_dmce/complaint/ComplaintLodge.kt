@@ -38,8 +38,7 @@ class ComplaintLodge : AppCompatActivity() {
         db.collection("complaints").add(map)
             .addOnSuccessListener {
                 Toast.makeText(this,"Complaint Lodged Successfully",Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ComplaintsActivity::class.java)
-                startActivity(intent)
+                finish()
             }
             .addOnFailureListener{
                 Toast.makeText(this,"Error $it",Toast.LENGTH_SHORT).show()
