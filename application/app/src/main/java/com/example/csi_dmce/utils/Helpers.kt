@@ -25,6 +25,8 @@ class Helpers {
         // For the RecyclerView
         val rvEventDateFormat = SimpleDateFormat("MMM dd")
 
+        val expenseDateFormat = SimpleDateFormat("dd/MM/yyyy")
+
         // Regular expressions
         val profileClassRegex: Regex = """\w{2}-\w{2}-\w{2}""".toRegex()
         val profileStudentidRegex: Regex = """\d{4}\w{4}\d{3}""".toRegex()

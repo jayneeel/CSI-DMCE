@@ -1,10 +1,12 @@
 package com.example.csi_dmce.database
 
+import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import java.util.Date
 
 data class Expense(
     @DocumentId
@@ -13,15 +15,35 @@ data class Expense(
     var associated_event           :String?    =null,
     var date_of_event              :Long?      =null,
     var cost                       :String?    =null,
-    var upi_id                     :String?    =null
+    var upi_id                     :String?    =null,
+    var approval_status            :String?    =null,
 )
+
+enum class ApprovalStatus(val status: String) {
+    Pending("pending"),
+    Rejected("rejected"),
+    Approved("approved")
+}
 
 class ExpensesWrapper {
     companion object{
         private val expenseCollectionRef = FirebaseFirestore.getInstance().collection("expenses")
 
-        private fun getExpensesDocument(expenseCollectionRef: CollectionReference, expenseID: String): DocumentReference {
+        private fun getExpensesDocument(expenseID: String): DocumentReference {
             return expenseCollectionRef.document(expenseID)
+        }
+
+        private suspend fun setExpensesDocument(expenseObject: Expense) {
+            val expenseId: String = expenseObject.expenseId ?: {
+                expenseObject.student_id + "-" + Helpers.generateUnixTimestampFromDate(Date()).toString()
+            }.toString()
+
+            expenseObject.expenseId = expenseId
+
+            expenseCollectionRef
+                .document(expenseId)
+                .set(expenseObject)
+                .await()
         }
 
         suspend fun getExpensesObjects(): List<Expense> {
@@ -33,6 +55,11 @@ class ExpensesWrapper {
             }
 
             return expenseObjects
+        }
+
+        suspend fun setApprovalStatus(expenseObject: Expense, approvalStatus: ApprovalStatus) {
+            expenseObject.approval_status = approvalStatus.status
+            setExpensesDocument(expenseObject)
         }
     }
 }

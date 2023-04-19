@@ -16,7 +16,7 @@ import kotlinx.coroutines.runBlocking
 class RegisteredUserAdapter(private val registeredUsersList : ArrayList<Student>): RecyclerView.Adapter<RegisteredUserAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val student_name : TextView = itemView.findViewById(R.id.user_student_name)
-        val student_dept : TextView = itemView.findViewById(R.id.user_dept)
+        val student_dept : TextView = itemView.findViewById(R.id.button_expense_expanded_deny)
         val student_id : TextView = itemView.findViewById(R.id.user_student_id)
         val student_avatar : ImageView = itemView.findViewById(R.id.image_view_expense_rcv_avatar)
     }

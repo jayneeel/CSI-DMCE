@@ -13,7 +13,7 @@
         android:id="@+id/studentDetailsLayout">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/profile_img"
+            android:id="@+id/imageview_expense_expanded_user_avatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="30dp"
@@ -28,22 +28,22 @@
             android:textStyle="bold"
             android:text="2021DSCO002"
             android:fontFamily="@font/lato"
-            android:id="@+id/student_id"
+            android:id="@+id/text_view_expense_expanded_student_name"
             android:layout_marginTop="30dp"
             android:textColor="@color/black"
-            android:layout_toEndOf="@+id/profile_img"/>
+            android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="Jayneel Kanungo"
-            android:id="@+id/student_name"
-            android:layout_below="@+id/student_id"
+            android:id="@+id/text_view_expense_expanded_student_id"
+            android:layout_below="@+id/text_view_expense_expanded_student_name"
             android:fontFamily="@font/lato"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:layout_toEndOf="@+id/profile_img"/>
+            android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -53,9 +53,9 @@
             android:fontFamily="@font/lato"
             android:layout_marginTop="10dp"
             android:id="@+id/student_dept"
-            android:layout_below="@+id/student_name"
+            android:layout_below="@+id/text_view_expense_expanded_student_id"
             android:layout_centerHorizontal="true"
-            android:layout_toEndOf="@+id/profile_img"/>
+            android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                 />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/dialog_reply_btn"
+                    android:id="@+id/button_expense_expanded_approve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

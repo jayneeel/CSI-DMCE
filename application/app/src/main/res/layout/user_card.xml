@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="Comp Department"
             android:layout_below="@+id/user_student_name"
-            android:id="@+id/user_dept"
+            android:id="@+id/button_expense_expanded_deny"
             android:layout_toEndOf="@+id/image_view_expense_rcv_avatar"
             android:fontFamily="@font/lato"
             android:textColor="@color/black"

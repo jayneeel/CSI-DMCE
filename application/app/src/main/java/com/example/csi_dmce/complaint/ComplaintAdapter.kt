@@ -19,7 +19,7 @@ class ComplaintAdapter(private val complaintList : ArrayList<Complaint>): Recycl
 
     public class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val desc : TextView = itemView.findViewById(R.id.complaint_text)
-        val subject : TextView = itemView.findViewById(R.id.complaint_sub)
+        val subject : TextView = itemView.findViewById(R.id.text_view_expense_expanded_event_name)
         val replyBtn : Button = itemView.findViewById(R.id.reply_btn)
     }
 

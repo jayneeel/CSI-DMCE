@@ -17,7 +17,7 @@
            android:layout_width="100dp"
            android:layout_height="100dp"
            android:src="@drawable/jk_pic"
-           android:id="@+id/profile_img"
+           android:id="@+id/imageview_expense_expanded_user_avatar"
            android:layout_margin="40dp"
            app:riv_corner_radius="20dp"/>
 
@@ -28,22 +28,22 @@
             android:textStyle="bold"
             android:text="2021DSCO002"
             android:fontFamily="@font/lato"
-            android:id="@+id/student_id"
+            android:id="@+id/text_view_expense_expanded_student_name"
             android:layout_marginTop="50dp"
             android:textColor="@color/black"
-            android:layout_toEndOf="@+id/profile_img"/>
+            android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="Jayneel Kanungo"
-            android:id="@+id/student_name"
-            android:layout_below="@+id/student_id"
+            android:id="@+id/text_view_expense_expanded_student_id"
+            android:layout_below="@+id/text_view_expense_expanded_student_name"
             android:fontFamily="@font/lato"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:layout_toEndOf="@+id/profile_img"/>
+            android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,9 +53,9 @@
             android:fontFamily="@font/lato"
             android:layout_marginTop="10dp"
             android:id="@+id/student_dept"
-            android:layout_below="@+id/student_name"
+            android:layout_below="@+id/text_view_expense_expanded_student_id"
             android:layout_centerHorizontal="true"
-            android:layout_toEndOf="@+id/profile_img"/>
+            android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sub_text"
+                    android:id="@+id/expense_expanded_event_name"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -80,8 +80,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/complaint_sub"
-                    android:layout_toEndOf="@id/sub_text"
+                    android:id="@+id/text_view_expense_expanded_event_name"
+                    android:layout_toEndOf="@id/expense_expanded_event_name"
                     android:textSize="17dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/lato"
