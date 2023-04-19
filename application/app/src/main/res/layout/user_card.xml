@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/user_profile_img"
+            android:id="@+id/image_view_expense_rcv_avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="20dp"
@@ -28,7 +28,7 @@
             android:text="2021DSCO002"
             android:textStyle="bold"
             android:id="@+id/user_student_id"
-            android:layout_toRightOf="@+id/user_profile_img"
+            android:layout_toRightOf="@+id/image_view_expense_rcv_avatar"
             android:fontFamily="@font/lato"
             android:layout_marginTop="30dp"
             android:textColor="@color/black"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="Jayneel Kanungo"
             android:id="@+id/user_student_name"
-            android:layout_toEndOf="@+id/user_profile_img"
+            android:layout_toEndOf="@+id/image_view_expense_rcv_avatar"
             android:layout_marginVertical="10dp"
             android:layout_below="@id/user_student_id"
             android:fontFamily="@font/lato"
@@ -52,7 +52,7 @@
             android:text="Comp Department"
             android:layout_below="@+id/user_student_name"
             android:id="@+id/user_dept"
-            android:layout_toEndOf="@+id/user_profile_img"
+            android:layout_toEndOf="@+id/image_view_expense_rcv_avatar"
             android:fontFamily="@font/lato"
             android:textColor="@color/black"
             android:textSize="18dp"/>

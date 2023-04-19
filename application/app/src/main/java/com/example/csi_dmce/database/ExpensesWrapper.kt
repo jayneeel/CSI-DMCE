@@ -4,16 +4,15 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
 
-data class Expenses(
+data class Expense(
     @DocumentId
     var expenseId                  :String?    =null,
+    var student_id                 :String?    =null,
     var associated_event           :String?    =null,
-    var date_of_event              :String?    =null,
-    var description_of_event       :String?    =null,
-    var total_cost                 :String?    =null,
+    var date_of_event              :Long?      =null,
+    var cost                       :String?    =null,
     var upi_id                     :String?    =null
 )
 
@@ -25,12 +24,12 @@ class ExpensesWrapper {
             return expenseCollectionRef.document(expenseID)
         }
 
-        suspend fun getExpensesObjects(): List<Expenses>? {
-            val expenseObjects = mutableListOf<Expenses>()
+        suspend fun getExpensesObjects(): List<Expense> {
+            val expenseObjects = mutableListOf<Expense>()
 
             val expenseDocuments = expenseCollectionRef.get().await()
             for(expenseDocument in expenseDocuments){
-                expenseObjects.add(expenseDocument.toObject(Expenses::class.java))
+                expenseObjects.add(expenseDocument.toObject(Expense::class.java))
             }
 
             return expenseObjects

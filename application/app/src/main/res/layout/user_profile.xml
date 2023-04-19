@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/user_profile_img"
+            android:id="@+id/image_view_expense_rcv_avatar"
             android:layout_width="170dp"
             android:layout_height="140dp"
             android:src="@drawable/jk_pic"

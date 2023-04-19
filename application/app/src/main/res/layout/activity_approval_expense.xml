@@ -41,6 +41,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/search_area"
-        android:id="@+id/approvalRecyclerView"/>
+        android:id="@+id/recyclerview_approval"/>
 
 </RelativeLayout>

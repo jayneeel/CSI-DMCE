@@ -13,14 +13,15 @@ class ExpensesExportService {
             // The data that will be written to the CSV file.
             val csvData: MutableList<List<String>> = mutableListOf()
 
-            val expenseObjects: List<Expenses> =
+            val expenseObjects: List<Expense> =
                 runBlocking { ExpensesWrapper.getExpensesObjects()!! }
+
             for (expenseObject in expenseObjects) {
                 val expenseData: List<String> = listOf(
                     expenseObject.associated_event!!,
-                    expenseObject.date_of_event!!,
-                    expenseObject.description_of_event!!,
-                    expenseObject.total_cost!!,
+                    // TODO: [IMP] Change date format
+                    expenseObject.date_of_event.toString(),
+                    expenseObject.cost!!,
                     expenseObject.upi_id!!
                 )
                 csvData.add(expenseData)

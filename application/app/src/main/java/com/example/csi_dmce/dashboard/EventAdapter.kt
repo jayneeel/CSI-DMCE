@@ -40,10 +40,6 @@ class EventAdapter(private val eventList: ArrayList<Event>): RecyclerView.Adapte
 
         val eventPosterUrl = runBlocking { EventWrapper.getPosterUrl(event.eventId!!, event.poster_extension!!) }
 
-        Glide.with(holder.ivEventPoster.context)
-            .setDefaultRequestOptions(RequestOptions())
-            .load(eventPosterUrl)
-            .into(holder.ivEventPoster)
     }
 
     private fun getDateString(datetime: Long?): CharSequence? {
