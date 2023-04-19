@@ -57,7 +57,7 @@ class DashboardFragment : Fragment() {
         tvDashWelcome = view.findViewById(R.id.text_view_dashboard_welcome)
         tvDashWelcome.setText("Welcome ${studentName}")
 
-        eventRecycler.layoutManager= LinearLayoutManager(view.context)
+        eventRecycler.layoutManager= LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, true)
         eventRecycler.setHasFixedSize(true)
         eventArrayList = arrayListOf()
 

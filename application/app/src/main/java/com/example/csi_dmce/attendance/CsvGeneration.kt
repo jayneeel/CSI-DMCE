@@ -95,17 +95,8 @@ class CsvGeneration: AppCompatActivity() {
         }
 
         expenseCard.setOnClickListener{
-            dialog.show()
-
-            btnDialogPositive.setOnClickListener {
-                val csvUri = ExpensesExportService.writeExpensesData(this)
-                dialog.dismiss()
-                openExcelSheet(csvUri)
-            }
-
-            btnDialogNegative.setOnClickListener {
-                dialog.dismiss()
-            }
+            val csvUri = ExpensesExportService.writeExpensesData(this)
+            openExcelSheet(csvUri)
         }
 
         registrantCard.setOnClickListener{
