@@ -3,6 +3,7 @@ package com.example.csi_dmce.dashboard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,8 +14,12 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_admin.complaint.ComplaintLodge
+import com.example.csi_admin.complaint.ComplaintsActivity
+import com.example.csi_admin.expense.ApprovalExpenseActivity
 import com.example.csi_admin.expense.ExpenseRequest
+import com.example.csi_admin.user.UserListActivity
 import com.example.csi_dmce.R
+import com.example.csi_dmce.attendance.CsvGeneration
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
@@ -28,7 +33,7 @@ import kotlinx.coroutines.runBlocking
 class DashMainActivity : AppCompatActivity() {
     lateinit var bottomNavBar : BottomNavigationView
     lateinit var toggle: ActionBarDrawerToggle
-    lateinit var studentObject: Student
+    private lateinit var studentObject: Student
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +46,14 @@ class DashMainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView : NavigationView = findViewById(R.id.nav_view)
-        navView.itemIconTintList = null
-
         val navHeaderView = navView.getHeaderView(0)
+
+        if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()) {
+            navView.menu.clear()
+            navView.inflateMenu(R.menu.admin_side_nav)
+        }
+
+        navView.itemIconTintList = null
 
         val navHeaderImage: ImageView = navHeaderView.findViewById(R.id.nav_header_image)
 
@@ -76,29 +86,60 @@ class DashMainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        navView.setNavigationItemSelectedListener {
 
-
-            when(it.itemId){
-                R.id.nav_expenses_claim -> {
-                    val eIntent = Intent(this, ExpenseRequest::class.java)
-                    startActivity(eIntent)
+        if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()) {
+            navView.setNavigationItemSelectedListener {
+                when(it.itemId){
+                    R.id.nav_item_admin_approve_expenses -> {
+                        val eIntent = Intent(this, ApprovalExpenseActivity::class.java)
+                        startActivity(eIntent)
+                    }
+                    R.id.nav_item_admin_registered_users -> {
+                        val rIntent = Intent(this, UserListActivity::class.java)
+                        startActivity(rIntent)
+                    }
+                    R.id.nav_item_admin_user_complaints -> {
+                        val cIntent = Intent(this, ComplaintsActivity::class.java)
+                        startActivity(cIntent)
+                    }
+                    R.id.nav_item_admin_export_sheets -> {
+                        val cIntent = Intent(this, CsvGeneration::class.java)
+                        startActivity(cIntent)
+                    }
+                    R.id.nav_item_admin_logout ->  {
+                        CsiAuthWrapper.deleteAuthToken(applicationContext)
+                        val intent = Intent(applicationContext, WelcomeActivity::class.java)
+                        finishAffinity()
+                        startActivity(intent)
+                    }
                 }
-                R.id.nav_starred_events -> Toast.makeText(this,"Starred Events",Toast.LENGTH_LONG).show()
-                R.id.nav_past_events -> Toast.makeText(this,"Past Events",Toast.LENGTH_LONG).show()
-                R.id.nav_complaint -> {
-                    val cIntent = Intent(this, ComplaintLodge::class.java)
-                    startActivity(cIntent)
-                }
-                R.id.nav_logout ->  {
-                    CsiAuthWrapper.deleteAuthToken(applicationContext)
-                    val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                    finishAffinity()
-                    startActivity(intent)
-                }
+                true
             }
-            true
+
+            } else {
+                navView.setNavigationItemSelectedListener {
+                    when(it.itemId){
+                        R.id.nav_expenses_claim -> {
+                            val eIntent = Intent(this, ExpenseRequest::class.java)
+                            startActivity(eIntent)
+                        }
+                        R.id.nav_starred_events -> Toast.makeText(this,"Starred Events",Toast.LENGTH_LONG).show()
+                        R.id.nav_past_events -> Toast.makeText(this,"Past Events",Toast.LENGTH_LONG).show()
+                        R.id.nav_complaint -> {
+                            val cIntent = Intent(this, ComplaintLodge::class.java)
+                            startActivity(cIntent)
+                        }
+                        R.id.nav_logout ->  {
+                            CsiAuthWrapper.deleteAuthToken(applicationContext)
+                            val intent = Intent(applicationContext, WelcomeActivity::class.java)
+                            finishAffinity()
+                            startActivity(intent)
+                        }
+                    }
+                    true
+                }
         }
+
 
         loadFragment(DashboardFragment())
         bottomNavBar = findViewById(R.id.bNav)

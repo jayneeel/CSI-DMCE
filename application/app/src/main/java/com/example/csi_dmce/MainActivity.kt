@@ -37,11 +37,7 @@ class MainActivity : AppCompatActivity() {
                 .putString("csi_role", role.role)
                 .apply()
 
-            if (CsiAuthWrapper.getRoleFromToken(applicationContext) == CSIRole.ADMIN) {
-                Intent(applicationContext, DashMainActivity::class.java)
-            } else {
-                Intent(applicationContext, DashMainActivity::class.java)
-            }
+            Intent(applicationContext, DashMainActivity::class.java)
         } else {
             if (sharedPrefs.getBoolean("firstTime", true)) {
                 sharedPrefs
