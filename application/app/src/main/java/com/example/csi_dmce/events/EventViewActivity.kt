@@ -54,6 +54,10 @@ class EventViewActivity: AppCompatActivity() {
 
     private var stateRegistered: Boolean = false
 
+    private lateinit var favDbInstance: FavoriteDatabase
+
+    private lateinit var btnFavorite: ImageButton
+
     /**
      * 1. When the activity starts, pop up the card.
      * 2. When clicked on 'View more details', take me to the event details page.
@@ -68,7 +72,9 @@ class EventViewActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_event)
 
-         val eventId: String = intent.getStringExtra("event_id").toString()
+        favDbInstance = FavDbWrappers.returnFavDbInstance(applicationContext)
+
+        val eventId: String = intent.getStringExtra("event_id").toString()
 
         val eventObject: Event = runBlocking { EventWrapper.getEvent(eventId)!! }
 
@@ -221,6 +227,29 @@ class EventViewActivity: AppCompatActivity() {
                 dialog.show()
             }
         }
+
+        var isFavorite: Boolean = favDbInstance
+            .favoriteDao()
+            .getFavorite(eventId)
+
+        btnFavorite = findViewById(R.id.button_favorite_event)
+        if (isFavorite) {
+            btnFavorite.setImageResource(R.drawable.ic_favorite_star_enabled)
+        }
+
+        btnFavorite.setOnClickListener {
+            isFavorite = favDbInstance
+                .favoriteDao()
+                .getFavorite(eventId)
+
+            if (isFavorite) {
+                btnFavorite.setImageResource(R.drawable.ic_favorite_star_disabled)
+                unfavoriteEvent(eventId)
+            } else {
+                btnFavorite.setImageResource(R.drawable.ic_favorite_star_enabled)
+                favoriteEvent(eventId)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -231,5 +260,17 @@ class EventViewActivity: AppCompatActivity() {
 //            val intent = Intent(applicationContext, EventViewActivity::class.java)
 //            startActivity(intent)
 //        }
+    }
+
+    fun favoriteEvent(eventId: String) {
+        favDbInstance
+            .favoriteDao()
+            .setFavorite(Favorite(eventId, true))
+    }
+
+    fun unfavoriteEvent(eventId: String) {
+        favDbInstance
+            .favoriteDao()
+            .unsetFavorite(Favorite(eventId, false))
     }
 }

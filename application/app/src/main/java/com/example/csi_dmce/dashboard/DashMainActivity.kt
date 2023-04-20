@@ -23,6 +23,7 @@ import com.example.csi_dmce.attendance.CsvGeneration
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
+import com.example.csi_dmce.events.EventListActivity
 import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csiappdashboard.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -123,7 +124,11 @@ class DashMainActivity : AppCompatActivity() {
                             val eIntent = Intent(this, ExpenseRequest::class.java)
                             startActivity(eIntent)
                         }
-                        R.id.nav_starred_events -> Toast.makeText(this,"Starred Events",Toast.LENGTH_LONG).show()
+                        R.id.nav_starred_events -> {
+                            val favEventIntent = Intent(this, EventListActivity::class.java)
+                            favEventIntent.putExtra("filter_favorites", true)
+                            startActivity(favEventIntent)
+                        }
                         R.id.nav_past_events -> Toast.makeText(this,"Past Events",Toast.LENGTH_LONG).show()
                         R.id.nav_complaint -> {
                             val cIntent = Intent(this, ComplaintLodge::class.java)

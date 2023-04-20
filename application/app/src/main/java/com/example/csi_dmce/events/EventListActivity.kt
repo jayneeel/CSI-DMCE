@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +47,15 @@ class EventListActivity: AppCompatActivity() {
            btnEventAdd.hide()
         }
 
-        val events: List<Event> = runBlocking { EventWrapper.getEvents() }
+        var events: List<Event> = runBlocking { EventWrapper.getEvents() }
+
+        if (intent.getBooleanExtra("filter_favorites", false)) {
+            events = filterFavorites(events)
+            if (events.isEmpty()) {
+                findViewById<TextView>(R.id.text_view_no_favorites)
+                    .visibility = View.VISIBLE
+            }
+        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_events_list)
         val layoutManager = LinearLayoutManager(this)
@@ -61,5 +71,20 @@ class EventListActivity: AppCompatActivity() {
 
         val intent = Intent(applicationContext, EventListActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun filterFavorites(events: List<Event>): List<Event> {
+        val filteredEvents: MutableList<Event> = mutableListOf()
+
+        val favDbInstance = FavDbWrappers.returnFavDbInstance(applicationContext)
+        val favEvents: List<String> = favDbInstance.favoriteDao().getAllFavorites()
+
+        for (favEvent in favEvents) {
+            filteredEvents.add(
+                events.filter { it.eventId == favEvent }[0]
+            )
+        }
+
+        return filteredEvents.toList()
     }
 }
