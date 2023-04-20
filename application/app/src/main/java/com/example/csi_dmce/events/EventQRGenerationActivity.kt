@@ -18,13 +18,14 @@ class EventQRGenerationActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_qr_generation)
 
+        val eventUuid = intent.getStringExtra("event_uuid")
+
         firstQr = findViewById(R.id.image_view_first_qr)
         secondQr = findViewById(R.id.image_view_second_qr)
 
-
         val qrDimensions: Pair<Int, Int> = calculateQrDimensions()
 
-       val firstQrBmp: Bitmap = GenerateQRHelper.generateQr("FIRST_b932cc11-e621-4397-b686-446772f07d3e", qrDimensions)
+        val firstQrBmp: Bitmap = GenerateQRHelper.generateQr("FIRST_b932cc11-e621-4397-b686-446772f07d3e", qrDimensions)
         val secondQrBmp: Bitmap = GenerateQRHelper.generateQr("SECOND_645d5389-7530-4514-a185-9a86abb50fc8", qrDimensions)
 
         firstQr.setImageBitmap(firstQrBmp)

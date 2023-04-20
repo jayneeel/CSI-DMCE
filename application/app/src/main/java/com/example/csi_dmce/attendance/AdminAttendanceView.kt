@@ -23,7 +23,7 @@ class AdminAttendanceView : AppCompatActivity() {
 
         view_qr = findViewById(R.id.view_qr)
         view_qr.setOnClickListener {
-            val intent = Intent(this, AdminViewQR::class.java)
+            val intent = Intent(this, AdminQrViewActivity::class.java)
             startActivity(intent)
         }
     }

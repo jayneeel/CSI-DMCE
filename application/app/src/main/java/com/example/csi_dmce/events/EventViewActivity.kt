@@ -19,7 +19,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
-import com.example.csi_dmce.attendance.AdminViewQR
+import com.example.csi_dmce.attendance.AdminQrViewActivity
 import com.example.csi_dmce.attendance.AttendanceActivity
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Event
@@ -124,8 +124,8 @@ class EventViewActivity: AppCompatActivity() {
                 Log.d("ATTENDANCE", "CLICKED")
                 // TODO: Add attendance activity here.
                 val sIntent = if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
-                    Intent(applicationContext, AdminViewQR::class.java)
-                        .putExtra("event_id", eventObject.eventId)
+                    Intent(applicationContext, AdminQrViewActivity::class.java)
+                        .putExtra("event_uuid", eventObject.uuid)
                 } else {
                     Intent(applicationContext, AttendanceActivity::class.java)
                         .putExtra("student_id", CsiAuthWrapper.getStudentId(this))

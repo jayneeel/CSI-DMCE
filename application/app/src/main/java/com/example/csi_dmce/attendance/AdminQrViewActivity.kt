@@ -15,36 +15,34 @@ import com.example.csi_dmce.utils.GenerateQRHelper
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
-class AdminViewQR : AppCompatActivity() {
+class AdminQrViewActivity : AppCompatActivity() {
 
-    private lateinit var first_qr : ImageButton
-    private lateinit var second_qr : ImageButton
-    private lateinit var image_bg1 : Bitmap
-    private lateinit var image_bg2 : Bitmap
+    private lateinit var imgBtnFirstQr : ImageButton
+    private lateinit var imgBtnSecondQr : ImageButton
+    private lateinit var bmpQr1 : Bitmap
+    private lateinit var bmpQr2 : Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_view_qr)
 
-        first_qr = findViewById(R.id.first_qr_code)
-        second_qr = findViewById(R.id.second_qr_code)
+        imgBtnFirstQr = findViewById(R.id.first_qr_code)
+        imgBtnSecondQr = findViewById(R.id.second_qr_code)
 
-        val eventId = intent.getStringExtra("event_id")!!
+        val eventUuid = intent.getStringExtra("event_uuid")
 
-        val eventUuid = runBlocking {EventWrapper.getEventUuid(eventId).toString() }
+        bmpQr1 = GenerateQRHelper.generateQr("FIRST_$eventUuid", Pair(512,512))
+        imgBtnFirstQr.setImageBitmap(bmpQr1)
 
-        image_bg1 = GenerateQRHelper.generateQr("FIRST_" + eventUuid, Pair(512,512))
-        first_qr.setImageBitmap(image_bg1)
+        bmpQr2 = GenerateQRHelper.generateQr("SECOND_$eventUuid", Pair(512,512))
+        imgBtnSecondQr.setImageBitmap(bmpQr2)
 
-        image_bg2 = GenerateQRHelper.generateQr("SECOND_" + eventUuid, Pair(512,512))
-        second_qr.setImageBitmap(image_bg2)
-
-        first_qr.setOnClickListener {
-            downloadToGallery(image_bg1)
+        imgBtnFirstQr.setOnClickListener {
+            downloadToGallery(bmpQr1)
         }
 
-        second_qr.setOnClickListener {
-            downloadToGallery(image_bg2)
+        imgBtnSecondQr.setOnClickListener {
+            downloadToGallery(bmpQr2)
         }
     }
 

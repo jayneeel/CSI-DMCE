@@ -104,7 +104,7 @@
         <activity android:name=".attendance.AttendanceActivity"/>
         <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>
         <activity android:name=".profile.Profile"/>
-        <activity android:name=".attendance.AdminViewQR"/>
+        <activity android:name=".attendance.AdminQrViewActivity"/>
         <activity android:name=".dashboard.DashMainActivity"/>
         <activity android:name=".onboarding.OnboardingMain"/>
 
