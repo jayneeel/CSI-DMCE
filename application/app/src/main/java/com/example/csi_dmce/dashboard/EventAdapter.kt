@@ -1,10 +1,12 @@
 package com.example.csi_dmce.dashboard
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -25,6 +27,7 @@ class EventAdapter(private val eventList: ArrayList<Event>): RecyclerView.Adapte
         val titleEvent : TextView = itemView.findViewById(R.id.title)
         val dateEvent : TextView = itemView.findViewById(R.id.date)
         val ivEventPoster: ImageView = itemView.findViewById(R.id.event_img)
+        var cvUpcomingEvent: CardView = itemView.findViewById(R.id.cardview_upcoming_event)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -40,6 +43,13 @@ class EventAdapter(private val eventList: ArrayList<Event>): RecyclerView.Adapte
 
         val eventPosterUrl = runBlocking { EventWrapper.getPosterUrl(event.eventId!!, event.poster_extension!!) }
 
+        Glide.with(holder.ivEventPoster.context)
+            .setDefaultRequestOptions(RequestOptions())
+            .load(eventPosterUrl)
+            .into(holder.ivEventPoster)
+
+        holder.cvUpcomingEvent.setOnClickListener {
+        }
     }
 
     private fun getDateString(datetime: Long?): CharSequence? {

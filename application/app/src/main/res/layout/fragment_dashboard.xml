@@ -33,9 +33,9 @@
                     android:layout_marginTop="150dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Welcome Jayneel!"
+                    android:textFontWeight="800"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
+                    android:textSize="24sp"/>
 
             </RelativeLayout>
 
@@ -71,11 +71,11 @@
                     android:layout_width="match_parent"
                     android:id="@+id/imageSlider"
                     android:layout_height="300dp"
+                    app:iss_title_background="@color/transparent"
                     app:iss_delay="0"
                     app:iss_period="2500"
                     app:iss_text_align="CENTER"
-                    app:iss_auto_cycle="true"
-                    />
+                    app:iss_auto_cycle="true" />
 
             </androidx.cardview.widget.CardView>
 
