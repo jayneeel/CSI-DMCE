@@ -176,7 +176,7 @@ class EventWrapper {
                 eventObject.registrants!!.add(studentId)
             }
 
-            updateEvent(eventObject, eventObject)
+            addEvent(eventObject)
         }
 
         suspend fun unregisterStudent(eventObject: Event, studentId: String) {

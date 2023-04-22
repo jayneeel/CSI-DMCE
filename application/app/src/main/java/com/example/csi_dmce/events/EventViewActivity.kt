@@ -75,6 +75,7 @@ class EventViewActivity: AppCompatActivity() {
         favDbInstance = FavDbWrappers.returnFavDbInstance(applicationContext)
 
         val eventId: String = intent.getStringExtra("event_id").toString()
+        val studentId: String = CsiAuthWrapper.getStudentId(this)
 
         val eventObject: Event = runBlocking { EventWrapper.getEvent(eventId)!! }
 
@@ -120,11 +121,12 @@ class EventViewActivity: AppCompatActivity() {
             dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
         }
 
+        stateRegistered = eventObject.registrants?.indexOf(studentId) != -1
+
         btnEventAttendance = findViewById(R.id.button_event_attendance)
-        val currentDateTime = Date()
-        if (false) {
-//            btnEventAttendance.isClickable = false
-//            btnEventAttendance.setBackgroundColor(Color.parseColor("#808080"))
+        if (!stateRegistered) {
+            btnEventAttendance.isClickable = false
+            btnEventAttendance.setBackgroundColor(Color.parseColor("#808080"))
         } else {
             btnEventAttendance.setOnClickListener {
                 Log.d("ATTENDANCE", "CLICKED")
@@ -190,6 +192,17 @@ class EventViewActivity: AppCompatActivity() {
         } else {
             btnEventRegister = findViewById(R.id.button_event_register)
             btnEventRegister.visibility = View.VISIBLE
+            if (stateRegistered) {
+                btnEventRegister.text = "Registered"
+                btnEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.green)));
+                val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_event_check_mark)
+                btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+            } else {
+                btnEventRegister.text = "Register"
+                btnEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.csi_primary_accent)));
+                btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+            }
+
             btnEventRegister.setOnClickListener {
                 val dialog = BottomSheetDialog(this)
                 if (!stateRegistered) {
@@ -205,17 +218,21 @@ class EventViewActivity: AppCompatActivity() {
                         val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_event_check_mark)
                         btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
                         stateRegistered = true
+
+                        btnEventAttendance.isClickable = true
+                        btnEventAttendance.setBackgroundColor(ContextCompat.getColor(this, R.color.csi_primary_accent))
+
+                        runBlocking { EventWrapper.registerStudent(eventObject, CsiAuthWrapper.getStudentId(applicationContext)) }
                     } else {
                         btnEventRegister.text = "Register"
                         btnEventRegister.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.csi_primary_accent)));
                         btnEventRegister.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                         stateRegistered = false
-                    }
 
-                    if (!stateRegistered) {
+                        btnEventAttendance.isClickable = false
+                        btnEventAttendance.setBackgroundColor(Color.parseColor("#808080"))
+
                         runBlocking { EventWrapper.unregisterStudent(eventObject, CsiAuthWrapper.getStudentId(applicationContext)) }
-                    } else {
-                        runBlocking { EventWrapper.registerStudent(eventObject, CsiAuthWrapper.getStudentId(applicationContext)) }
                     }
 
 
