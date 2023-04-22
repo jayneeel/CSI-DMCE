@@ -42,8 +42,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loremipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra iaculis sapien vitae imperdiet. Quisque quis risus nunc. Cras consequat consectetur dui, sit amet pulvinar dui condimentum et.</string>
-
-
-    >>>>>>> main
+    <string name="zenquotes_daily_quote_url">https://zenquotes.io/</string>
+    <string name="default_quote">Nothing will change if you change nothing</string>
 </resources>
 

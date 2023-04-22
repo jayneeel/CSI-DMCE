@@ -99,17 +99,20 @@
                 android:padding="10dp"
                 app:reverseLayout="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="40dp"
+                android:background="@color/csi_primary_accent"
                 android:fontFamily="@font/montserrat"
+                android:gravity="center"
                 android:text="Quote of the Day"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/text_view_quote_of_the_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
