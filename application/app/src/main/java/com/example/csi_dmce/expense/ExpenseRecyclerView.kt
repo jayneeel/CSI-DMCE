@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,15 +17,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
+import com.example.csi_dmce.database.ApprovalStatus
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.database.Expense
+import com.example.csi_dmce.database.ExpensesWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
 import kotlinx.coroutines.runBlocking
 
 class ExpenseAdapter(private val expenseList : ArrayList<Expense>): RecyclerView.Adapter<ExpenseAdapter.MyViewHolder>() {
+    var userAvatarUrl: String? = null
 
     public class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var cvExpenseCard: CardView = itemView.findViewById(R.id.card_view_expense_approval)
@@ -36,6 +40,7 @@ class ExpenseAdapter(private val expenseList : ArrayList<Expense>): RecyclerView
         val ivUserAvatar: ImageView = itemView.findViewById(R.id.image_view_expense_rcv_avatar)
 
         val btnExpenseDetails: Button = itemView.findViewById(R.id.button_expense_view_details)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -71,6 +76,8 @@ class ExpenseAdapter(private val expenseList : ArrayList<Expense>): RecyclerView
                     .setDefaultRequestOptions(RequestOptions())
                     .load(it ?: R.drawable.ic_baseline_person_black_24)
                     .into(holder.ivUserAvatar)
+
+                userAvatarUrl = it
             }
         }
     }
@@ -82,15 +89,16 @@ class ExpenseAdapter(private val expenseList : ArrayList<Expense>): RecyclerView
     fun showDetailsDialog(ctx: Context, expenseObject: Expense, studentObject: Student) {
         val detailsDialog = Dialog(ctx)
         detailsDialog.setContentView(R.layout.expense_expanded_card)
+        detailsDialog.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
         detailsDialog.setCancelable(true)
         detailsDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val tvStudentName: TextView =
-            detailsDialog.findViewById(R.id.text_view_expense_expanded_student_id)
+            detailsDialog.findViewById(R.id.text_view_expense_expanded_student_name)
         tvStudentName.text = studentObject.name
 
         val tvStudentId: TextView =
-            detailsDialog.findViewById(R.id.text_view_expense_expanded_student_name)
+            detailsDialog.findViewById(R.id.text_view_expense_expanded_student_id)
         tvStudentId.text = studentObject.student_id
 
         val tvAssociatedEvent: TextView =
@@ -107,6 +115,39 @@ class ExpenseAdapter(private val expenseList : ArrayList<Expense>): RecyclerView
 
         val tvUpiId: TextView = detailsDialog.findViewById(R.id.text_view_expense_expanded_upi_id)
         tvUpiId.text = expenseObject.upi_id
+
+        val ivUserAvatar: ImageView = detailsDialog.findViewById(R.id.imageview_expense_expanded_user_avatar)
+        Glide.with(ivUserAvatar.context)
+            .setDefaultRequestOptions(RequestOptions())
+            .load(userAvatarUrl ?: R.drawable.ic_baseline_person_black_24)
+            .into(ivUserAvatar)
+
+        detailsDialog
+            .findViewById<Button>(R.id.button_dialog_approve_expense)
+            .setOnClickListener {
+                runBlocking {
+                    ExpensesWrapper.setApprovalStatus(expenseObject, ApprovalStatus.Approved)
+                }
+                Toast.makeText(it.context, "Request approved!", Toast.LENGTH_SHORT).show()
+                detailsDialog.dismiss()
+            }
+
+        detailsDialog
+            .findViewById<Button>(R.id.button_dialog_decline_expense)
+            .setOnClickListener {
+                runBlocking {
+                    ExpensesWrapper.setApprovalStatus(expenseObject, ApprovalStatus.Rejected)
+                }
+                Toast.makeText(it.context, "Request rejected!", Toast.LENGTH_SHORT).show()
+                detailsDialog.dismiss()
+            }
+
+        val ivExpenseProof = detailsDialog.findViewById<ImageView>(R.id.image_view_expense_dialog_proof)
+        val expenseProofUrl = runBlocking { ExpensesWrapper.getProofOfExpense(expenseObject) }
+        Glide.with(ivExpenseProof.context)
+            .setDefaultRequestOptions(RequestOptions())
+            .load(expenseProofUrl)
+            .into(ivExpenseProof)
 
         detailsDialog.show()
     }

@@ -8,7 +8,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import java.util.Date
-import kotlin.math.exp
 
 data class Expense(
     @DocumentId
@@ -47,7 +46,7 @@ class ExpensesWrapper {
             expenseObject.expenseId = expenseId
 
             if (imageUri != null) {
-                expenseObject.proof_extension = uploadProofOfExpense(imageUri, expenseId)
+                expenseObject.proof_extension = setProofOfExpense(imageUri, expenseId)
             }
 
             expenseCollectionRef
@@ -72,7 +71,7 @@ class ExpensesWrapper {
             addExpense(expenseObject)
         }
 
-        suspend fun uploadProofOfExpense(imageUri: Uri, expenseId: String): String {
+        suspend fun setProofOfExpense(imageUri: Uri, expenseId: String): String {
             var proofExtension = imageUri.lastPathSegment.toString()
             proofExtension = proofExtension.substring(proofExtension.lastIndexOf(".") + 1)
 
@@ -80,6 +79,11 @@ class ExpensesWrapper {
             imageRef.putFile(imageUri).await()
 
             return proofExtension
+        }
+
+        suspend fun getProofOfExpense(expenseObject: Expense): String {
+            val imageRef = expenseStorageRef.child("${expenseObject.expenseId}/proof.${expenseObject.proof_extension}")
+            return imageRef.downloadUrl.await().toString()
         }
     }
 }
