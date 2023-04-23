@@ -10,15 +10,9 @@ import android.os.Environment
 import android.os.StrictMode
 import android.provider.Settings
 import android.util.Log
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
-import android.widget.PopupWindow
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -76,9 +70,9 @@ class CsvGeneration: AppCompatActivity() {
 
         btnDialogNegative = dialog.findViewById(R.id.button_export_negative)
         btnDialogPositive = dialog.findViewById(R.id.button_export_positive)
-        spinnerEventNames = dialog.findViewById(R.id.spinner_event_name)
+        spinnerEventNames = dialog.findViewById(R.id.spinner_expense_event_name)
 
-        constructSpinner()
+        constructCsvSpinner()
 
         attendanceCard.setOnClickListener {
             dialog.show()
@@ -114,23 +108,7 @@ class CsvGeneration: AppCompatActivity() {
         }
     }
 
-    private fun openExcelSheet(fileUri: Uri) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(fileUri, "text/csv")
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        val chooser = Intent.createChooser(intent, "Open CSV file with...")
-        if (Build.VERSION.SDK_INT >= 24) {
-            try {
-                val m: Method = StrictMode::class.java.getMethod("disableDeathOnFileUriExposure")
-                m.invoke(null)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        startActivity(chooser)
-    }
-
-    private fun constructSpinner() {
+    fun constructCsvSpinner() {
         val adapter = EventSpinnerAdapter(this, events)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerEventNames.adapter = adapter
@@ -142,6 +120,23 @@ class CsvGeneration: AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun openExcelSheet(fileUri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(fileUri, "text/csv")
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val chooser = Intent.createChooser(intent, "Open CSV file with...")
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                val m: Method = StrictMode::class.java.getMethod("disableDeathOnFileUriExposure")
+                m.invoke(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+            }
+            startActivity(chooser)
         }
     }
 }

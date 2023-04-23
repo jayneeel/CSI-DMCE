@@ -54,7 +54,7 @@
 
             <Spinner
                 android:background="@drawable/event_spinner_bg"
-                android:id="@+id/spinner_event_name"
+                android:id="@+id/spinner_expense_event_name"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="30dp"
