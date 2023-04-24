@@ -120,7 +120,11 @@ class StudentWrapper {
             return avatarExtension
         }
 
-        fun getStudentAvatarUrl(studentId: String, avatarExtension: String, callback: (String?) -> Unit) {
+        fun getStudentAvatarUrl(studentId: String, avatarExtension: String?, callback: (String?) -> Unit) {
+            if (avatarExtension == null) {
+                return callback(null)
+            }
+
             storageRef
                 .child("${studentId}/avatar.${avatarExtension}")
                 .downloadUrl

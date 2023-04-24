@@ -12,6 +12,7 @@ data class Complaint(
     var complaintId     :String? = null,
     var student_id      :String? = null,
     var student_name    :String? = null,
+    var avatar_extension: String? = null,
     var subject         :String? = null,
     var description     :String? = null,
     var is_resolved     :Boolean? = null,

@@ -35,6 +35,7 @@ class ComplaintLodge : AppCompatActivity() {
                     Complaint(
                         student_id = intent.getStringExtra("student_id"),
                         student_name = intent.getStringExtra("student_name"),
+                        avatar_extension = intent.getStringExtra("avatar_extension"),
                         subject = etSubject.text.toString(),
                         description = etDescription.text.toString(),
                         is_resolved = false,

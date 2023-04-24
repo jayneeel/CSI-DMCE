@@ -135,6 +135,7 @@ class DashMainActivity : AppCompatActivity() {
                             val cIntent = Intent(this, ComplaintLodge::class.java)
                             cIntent.putExtra("student_id", studentObject.student_id)
                             cIntent.putExtra("student_name", studentObject.name)
+                            cIntent.putExtra("avatar_extension", studentObject.avatar_extension)
                             startActivity(cIntent)
                         }
                         R.id.nav_logout ->  {

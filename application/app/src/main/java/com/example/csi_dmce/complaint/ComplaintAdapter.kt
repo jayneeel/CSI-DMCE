@@ -10,11 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
 import com.example.csi_dmce.database.Complaint
+import com.example.csi_dmce.database.ComplaintWrapper
+import com.example.csi_dmce.database.StudentWrapper
+import kotlinx.coroutines.runBlocking
 
 
 class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerView.Adapter<ComplaintAdapter.MyViewHolder>() {
@@ -47,8 +54,32 @@ class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerVie
             dialog.setContentView(R.layout.complaint_reply_dialog)
             dialog.setCancelable(true)
             dialog.show()
-            dialog.window?.setLayout(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT)
+            dialog.window?.setLayout(LayoutParams.MATCH_PARENT ,LayoutParams.WRAP_CONTENT)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            val etComplaintReply: EditText = dialog.findViewById(R.id.edit_text_complaint_reply)
+
+            dialog
+                .findViewById<Button>(R.id.button_complaint_dialog_cancel)
+                .setOnClickListener { dialog.dismiss() }
+
+            dialog
+                .findViewById<Button>(R.id.button_complaint_dialog_reply)
+                .setOnClickListener {
+                    complaint.reply = etComplaintReply.text.toString()
+                    runBlocking { ComplaintWrapper.addComplaint(complaint)}
+                    Toast.makeText(it.context, "Reply sent successfully!", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+        }
+
+        runBlocking {
+            StudentWrapper.getStudentAvatarUrl(complaint.student_id!!, complaint.avatar_extension) {
+                Glide.with(holder.ivStudentAvatar.context)
+                    .setDefaultRequestOptions(RequestOptions())
+                    .load(it ?: R.drawable.ic_baseline_person_black_24)
+                    .into(holder.ivStudentAvatar)
+            }
         }
     }
 
