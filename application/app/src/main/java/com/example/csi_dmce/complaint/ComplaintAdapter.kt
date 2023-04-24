@@ -10,17 +10,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi_dmce.R
+import com.example.csi_dmce.database.Complaint
 
 
-class ComplaintAdapter(private val complaintList : ArrayList<Complaint>): RecyclerView.Adapter<ComplaintAdapter.MyViewHolder>() {
+class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerView.Adapter<ComplaintAdapter.MyViewHolder>() {
 
     public class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val desc : TextView = itemView.findViewById(R.id.complaint_text)
-        val subject : TextView = itemView.findViewById(R.id.text_view_expense_expanded_event_name)
-        val replyBtn : Button = itemView.findViewById(R.id.reply_btn)
+        val tvDescription : TextView = itemView.findViewById(R.id.complaint_text)
+        val tvSubject : TextView = itemView.findViewById(R.id.text_view_expense_expanded_event_name)
+        val btnReply : Button = itemView.findViewById(R.id.reply_btn)
+
+        val tvStudentName: TextView = itemView.findViewById(R.id.text_view_complaint_user_name)
+        val tvStudentId: TextView = itemView.findViewById(R.id.text_view_complaint_user_student_id)
+        val ivStudentAvatar: ImageView = itemView.findViewById(R.id.imageview_complaint_user_avatar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -30,13 +36,13 @@ class ComplaintAdapter(private val complaintList : ArrayList<Complaint>): Recycl
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val complaint : Complaint = complaintList[position]
-        holder.desc.text = complaint.description
-        holder.subject.text = complaint.subject
+        holder.tvDescription.text = complaint.description
+        holder.tvSubject.text = complaint.subject
+        holder.tvStudentName.text = complaint.student_name
+        holder.tvStudentId.text = complaint.student_id
 
-        holder.replyBtn.setOnClickListener {
-            Log.d("COMPLAINT","CLICKEDDD")
-
-            val dialog = Dialog(holder.replyBtn.context)
+        holder.btnReply.setOnClickListener {
+            val dialog = Dialog(holder.btnReply.context)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.complaint_reply_dialog)
             dialog.setCancelable(true)
@@ -49,6 +55,4 @@ class ComplaintAdapter(private val complaintList : ArrayList<Complaint>): Recycl
     override fun getItemCount(): Int {
         return complaintList.size
     }
-
-
 }

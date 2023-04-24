@@ -116,7 +116,7 @@ class ExpenseAdapter(private val expenseList : ArrayList<Expense>): RecyclerView
         val tvUpiId: TextView = detailsDialog.findViewById(R.id.text_view_expense_expanded_upi_id)
         tvUpiId.text = expenseObject.upi_id
 
-        val ivUserAvatar: ImageView = detailsDialog.findViewById(R.id.imageview_expense_expanded_user_avatar)
+        val ivUserAvatar: ImageView = detailsDialog.findViewById(R.id.imageview_complaint_user_avatar)
         Glide.with(ivUserAvatar.context)
             .setDefaultRequestOptions(RequestOptions())
             .load(userAvatarUrl ?: R.drawable.ic_baseline_person_black_24)

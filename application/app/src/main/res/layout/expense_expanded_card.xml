@@ -21,7 +21,7 @@
             android:id="@+id/studentDetailsLayout">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imageview_expense_expanded_user_avatar"
+                android:id="@+id/imageview_complaint_user_avatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="40dp"
@@ -42,7 +42,7 @@
                 android:layout_below="@+id/text_view_expense_expanded_student_name"
                 android:fontFamily="@font/lato"
                 android:textColor="@color/white"
-                android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
+                android:layout_toEndOf="@+id/imageview_complaint_user_avatar"/>
 
             <TextView
                 android:id="@+id/text_view_expense_expanded_student_name"
@@ -54,7 +54,7 @@
                 android:fontFamily="@font/lato"
                 android:layout_marginTop="50dp"
                 android:textColor="@color/white"
-                android:layout_toEndOf="@+id/imageview_expense_expanded_user_avatar"/>
+                android:layout_toEndOf="@+id/imageview_complaint_user_avatar"/>
 
 
             <LinearLayout

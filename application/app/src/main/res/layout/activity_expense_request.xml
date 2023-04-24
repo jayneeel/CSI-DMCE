@@ -134,7 +134,7 @@
                 android:src="@drawable/ic_launcher_background" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/complaintLodge"
+                android:id="@+id/button_complaint_lodge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

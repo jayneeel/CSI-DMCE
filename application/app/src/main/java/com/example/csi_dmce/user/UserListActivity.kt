@@ -6,8 +6,6 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi_dmce.R
-import com.example.csi_admin.complaint.Complaint
-import com.example.csi_admin.complaint.ComplaintAdapter
 import com.example.csi_dmce.database.Student
 import com.google.firebase.firestore.*
 
