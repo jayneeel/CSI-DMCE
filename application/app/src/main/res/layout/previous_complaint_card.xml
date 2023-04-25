@@ -13,13 +13,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/studentDetailsLayout">
 
-       <ImageView
-           android:layout_width="100dp"
-           android:layout_height="100dp"
-           android:src="@drawable/jk_pic"
-           android:id="@+id/imageview_complaint_user_avatar"
-           android:layout_margin="40dp"
-           app:riv_corner_radius="20dp"/>
+        <ImageView
+            android:id="@+id/imageview_complaint_user_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/jk_pic"
+            app:riv_corner_radius="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,6 +33,7 @@
             android:fontFamily="@font/lato"
             android:textFontWeight="800"
             android:layout_marginTop="60dp"
+            android:layout_marginStart="-10dp"
             android:textColor="@color/black"
             android:layout_toEndOf="@+id/imageview_complaint_user_avatar"/>
 
@@ -37,7 +41,8 @@
             android:id="@+id/text_view_complaint_user_student_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:layout_marginStart="-10dp"
+            android:textSize="20dp"
             android:text="2021DSCO002"
             android:fontFamily="@font/lato"
             android:layout_below="@id/text_view_complaint_user_name"
@@ -91,7 +96,7 @@
                 android:text="Description of the problem :"/>
 
             <TextView
-                android:id="@+id/text_view_complaint_reply"
+                android:id="@+id/text_view_complaint_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -101,23 +106,26 @@
                 android:textColor="@color/black"
                 android:textSize="16dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reply_btn"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="#0A0630"
-                android:paddingHorizontal="50dp"
-                android:layout_gravity="center"
-                android:paddingVertical="10dp"
-                android:fontFamily="@font/lato"
-                android:text="Reply"
-                android:textAllCaps="false"
-                android:textAlignment="center"
-                android:textColor="@color/white"
                 android:textSize="18dp"
-                app:cornerRadius="28dp">
-            </com.google.android.material.button.MaterialButton>
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/lato"
+                android:textStyle="bold"
+                android:text="Reply: "/>
+
+            <TextView
+                android:id="@+id/text_view_complaint_reply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/lato"
+                android:gravity="start"
+                android:text="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
         </LinearLayout>
 

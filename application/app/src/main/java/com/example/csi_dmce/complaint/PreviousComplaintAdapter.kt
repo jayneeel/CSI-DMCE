@@ -1,4 +1,4 @@
-package com.example.csi_admin.complaint
+package com.example.csi_dmce.complaint
 
 import android.app.ActionBar.LayoutParams
 import android.app.Dialog
@@ -23,12 +23,11 @@ import com.example.csi_dmce.database.StudentWrapper
 import kotlinx.coroutines.runBlocking
 
 
-class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerView.Adapter<ComplaintAdapter.MyViewHolder>() {
-
+class PreviousComplaintAdapter(private val complaintList : List<Complaint>): RecyclerView.Adapter<PreviousComplaintAdapter.MyViewHolder>() {
     public class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val tvDescription : TextView = itemView.findViewById(R.id.text_view_complaint_reply)
+        val tvDescription : TextView = itemView.findViewById(R.id.text_view_complaint_description)
         val tvSubject : TextView = itemView.findViewById(R.id.text_view_expense_expanded_event_name)
-        val btnReply : Button = itemView.findViewById(R.id.reply_btn)
+        val tvReply : TextView = itemView.findViewById(R.id.text_view_complaint_reply)
 
         val tvStudentName: TextView = itemView.findViewById(R.id.text_view_complaint_user_name)
         val tvStudentId: TextView = itemView.findViewById(R.id.text_view_complaint_user_student_id)
@@ -46,31 +45,7 @@ class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerVie
         holder.tvSubject.text = complaint.subject
         holder.tvStudentName.text = complaint.student_name
         holder.tvStudentId.text = complaint.student_id
-
-        holder.btnReply.setOnClickListener {
-            val dialog = Dialog(holder.btnReply.context)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(R.layout.complaint_reply_dialog)
-            dialog.setCancelable(true)
-            dialog.show()
-            dialog.window?.setLayout(LayoutParams.MATCH_PARENT ,LayoutParams.WRAP_CONTENT)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-            val etComplaintReply: EditText = dialog.findViewById(R.id.edit_text_complaint_reply)
-
-            dialog
-                .findViewById<Button>(R.id.button_complaint_dialog_cancel)
-                .setOnClickListener { dialog.dismiss() }
-
-            dialog
-                .findViewById<Button>(R.id.button_complaint_dialog_reply)
-                .setOnClickListener {
-                    complaint.reply = etComplaintReply.text.toString()
-                    runBlocking { ComplaintWrapper.addComplaint(complaint)}
-                    Toast.makeText(it.context, "Reply sent successfully!", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
-                }
-        }
+        holder.tvReply.text = complaint.reply ?: "No reply received yet."
 
         runBlocking {
             StudentWrapper.getStudentAvatarUrl(complaint.student_id!!, complaint.avatar_extension) {

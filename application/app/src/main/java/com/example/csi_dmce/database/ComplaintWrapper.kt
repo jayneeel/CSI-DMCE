@@ -43,12 +43,22 @@ class ComplaintWrapper {
                 .await()
         }
 
-        suspend fun getComplaintObjects(): List<Complaint> {
+        suspend fun getComplaintObjects(studentId: String? = null): List<Complaint> {
             val complaintObjects = mutableListOf<Complaint>()
 
             val complaintDocuments = complaintCollectionRef.get().await()
-            for(complainDocument in complaintDocuments){
-                complaintObjects.add(complainDocument.toObject(Complaint::class.java))
+
+            if (studentId != null) {
+                for(complainDocument in complaintDocuments){
+                    val complaintObject = complainDocument.toObject(Complaint::class.java)
+                    if (complaintObject.student_id == studentId) {
+                        complaintObjects.add(complaintObject)
+                    }
+                }
+            } else {
+                for(complainDocument in complaintDocuments){
+                    complaintObjects.add(complainDocument.toObject(Complaint::class.java))
+                }
             }
 
             return complaintObjects
