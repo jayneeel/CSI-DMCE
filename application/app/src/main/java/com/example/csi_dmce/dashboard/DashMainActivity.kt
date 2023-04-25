@@ -130,7 +130,6 @@ class DashMainActivity : AppCompatActivity() {
                             favEventIntent.putExtra("filter_favorites", true)
                             startActivity(favEventIntent)
                         }
-                        R.id.nav_past_events -> Toast.makeText(this,"Past Events",Toast.LENGTH_LONG).show()
                         R.id.nav_complaint -> {
                             val cIntent = Intent(this, ComplaintLodge::class.java)
                             cIntent.putExtra("student_id", studentObject.student_id)

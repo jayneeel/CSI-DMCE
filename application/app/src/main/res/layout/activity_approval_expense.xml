@@ -21,7 +21,7 @@
             android:layout_weight="9"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:hint="Search Users..."
+            android:hint="Search expenses..."
             android:drawableLeft="@drawable/ic_round_search_24"
             android:drawableTint="#6D6D6D"
             android:fontFamily="@font/lato"

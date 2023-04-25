@@ -13,6 +13,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/studentDetailsLayout">
 
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image_view_complaint_status"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:src="@color/red">
+        </com.makeramen.roundedimageview.RoundedImageView>
+
        <ImageView
            android:layout_width="100dp"
            android:layout_height="100dp"

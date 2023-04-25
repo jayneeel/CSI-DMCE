@@ -10,12 +10,6 @@
         />
 
     <item
-        android:id="@+id/nav_past_events"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:iconTint="#0D1542"
-        android:title="Past Events"/>
-
-    <item
         android:id="@+id/nav_starred_events"
         android:icon="@drawable/ic_baseline_star_rate_24"
         android:iconTint="#0D1542"

@@ -3,6 +3,7 @@ package com.example.csi_admin.complaint
 import android.app.ActionBar.LayoutParams
 import android.app.Dialog
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -30,13 +32,15 @@ class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerVie
         val tvSubject : TextView = itemView.findViewById(R.id.text_view_expense_expanded_event_name)
         val btnReply : Button = itemView.findViewById(R.id.reply_btn)
 
+        val ivComplaintStatus : ImageView = itemView.findViewById(R.id.image_view_complaint_status)
+
         val tvStudentName: TextView = itemView.findViewById(R.id.text_view_complaint_user_name)
         val tvStudentId: TextView = itemView.findViewById(R.id.text_view_complaint_user_student_id)
         val ivStudentAvatar: ImageView = itemView.findViewById(R.id.imageview_complaint_user_avatar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.previous_complaint_card,parent,false);
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.complaint_card,parent,false);
         return MyViewHolder(itemView)
     }
 
@@ -46,6 +50,16 @@ class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerVie
         holder.tvSubject.text = complaint.subject
         holder.tvStudentName.text = complaint.student_name
         holder.tvStudentId.text = complaint.student_id
+
+        holder.ivComplaintStatus.setColorFilter(
+            when(complaint.is_resolved) {
+                true -> ContextCompat.getColor(holder.ivComplaintStatus.context, R.color.green)
+                false -> ContextCompat.getColor(holder.ivComplaintStatus.context, R.color.golden)
+                else -> ContextCompat.getColor(holder.ivComplaintStatus.context, R.color.golden)
+            },
+            PorterDuff.Mode.SRC_IN
+        )
+
 
         holder.btnReply.setOnClickListener {
             val dialog = Dialog(holder.btnReply.context)
@@ -66,6 +80,7 @@ class ComplaintAdapter(private val complaintList : List<Complaint>): RecyclerVie
                 .findViewById<Button>(R.id.button_complaint_dialog_reply)
                 .setOnClickListener {
                     complaint.reply = etComplaintReply.text.toString()
+                    complaint.is_resolved = true
                     runBlocking { ComplaintWrapper.addComplaint(complaint)}
                     Toast.makeText(it.context, "Reply sent successfully!", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()

@@ -142,6 +142,35 @@ class ExpenseAdapter(private val expenseList : ArrayList<Expense>): RecyclerView
                 detailsDialog.dismiss()
             }
 
+        detailsDialog
+            .findViewById<Button>(R.id.button_dialog_decline_expense)
+            .setOnClickListener {
+                runBlocking {
+                    ExpensesWrapper.setApprovalStatus(expenseObject, ApprovalStatus.Rejected)
+                }
+                Toast.makeText(it.context, "Request rejected!", Toast.LENGTH_SHORT).show()
+                detailsDialog.dismiss()
+            }
+
+        detailsDialog
+            .findViewById<ImageView>(R.id.image_view_expense_dialog_proof)
+            .setOnClickListener {
+                val dialog = Dialog(it.context)
+                dialog.setContentView(R.layout.component_image_scale_popup)
+                val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
+
+                Glide.with(it.context)
+                    .setDefaultRequestOptions(RequestOptions())
+                    .load(userAvatarUrl ?: R.drawable.ic_baseline_person_black_24)
+                    .into(ivFullScale)
+
+                dialog.show()
+                dialog.window?.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+
         val ivExpenseProof = detailsDialog.findViewById<ImageView>(R.id.image_view_expense_dialog_proof)
         val expenseProofUrl = runBlocking { ExpensesWrapper.getProofOfExpense(expenseObject) }
         Glide.with(ivExpenseProof.context)
