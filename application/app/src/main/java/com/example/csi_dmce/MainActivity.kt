@@ -19,6 +19,9 @@ import com.example.csi_dmce.onboarding.OnboardingMain
 import com.example.csi_dmce.ui.Dashboard
 import com.example.csi_dmce.ui.WelcomeActivity
 
+// DONOTREMOVE: 
+// 66bcb1f5925de1fc19e22dd0715ef16c33b5bab0c220d7fa5c674363e3f0b6c3d560697253d33a0913bfed43afa802f832540d994e37d8a2506440566dd61b5ad0b22432895bea66c9c1b4257a23d872cf4b7c9f7dc911eb4560d59d1321fc79
+
 class MainActivity : AppCompatActivity() {
     private val SPLASHTIMEOUT: Long = 1000
 
