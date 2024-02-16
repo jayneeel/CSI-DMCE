@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_view_event_container"
+    android:id="@+id/card_view_event_container"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        app:cardElevation="20dp"
+    style="@style/Widget.Material3.CardView.Elevated"
+    app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,10 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:fontFamily="@font/lato"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="Event Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColorHighlight="#DC9999"
+                android:textColorHint="#731515"
+                android:textColorLink="#FF2E2E"
+                android:textSize="25dp"
                 app:layout_constraintStart_toEndOf="@+id/image_view_rv_event_poster"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_rv_event_date" />
 
@@ -54,8 +57,8 @@
                 android:layout_marginBottom="24dp"
                 android:fontFamily="@font/lato"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam facilisis, lectus ut molestie pretium, dui ligula rhoncus nunc, id dignissim nulla ex quis magna. Donec eget odio id massa lobortis posuere molestie ac purus. Maecenas tincidunt velit dolor, at iaculis velit volutpat ac. Donec at ullamcorper nibh. Nulla ipsum justo, dapibus nec lacinia at, congue a neque. Nulla diam magna, ornare et convallis interdum, elementum id metus. Proin bibendum tincidunt faucibus. Donec quis turpis in tellus accumsan vehicula. Nunc a lorem vestibulum, porttitor erat vitae, pretium ex."
-                android:textColor="@color/black"
-                android:textSize="10dp"
+                android:textColor="@color/csi_fg_text"
+                android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/constraint_layout_event_container"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -67,7 +70,7 @@
                 android:id="@+id/text_view_rv_event_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginRight="16dp"
                 android:drawableLeft="@drawable/ic_event_time"
                 android:drawablePadding="5dp"
@@ -76,15 +79,11 @@
                 android:scaleY="0.8"
                 android:text="Mar 27"
                 android:textColor="@color/black"
-                android:textSize="10dp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.771"
-                app:layout_constraintStart_toEndOf="@+id/text_view_rv_event_title"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

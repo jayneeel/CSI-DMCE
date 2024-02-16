@@ -17,7 +17,9 @@ import com.example.csi_dmce.dashboard.DashMainActivity
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.ui.Dashboard
 import com.example.csi_dmce.utils.Helpers
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.runBlocking
+import javax.xml.validation.Validator
 
 
 class LoginActivity: AppCompatActivity() {
@@ -26,6 +28,8 @@ class LoginActivity: AppCompatActivity() {
     private lateinit var tvForgotPassword : TextView
     private lateinit var btnLogin          : Button
     private lateinit var tvNoAccount: TextView
+    private lateinit var tiemail: TextInputLayout
+    private lateinit var tipass: TextInputLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +37,16 @@ class LoginActivity: AppCompatActivity() {
 
         etLoginEmail      = findViewById(R.id.edit_text_login_email)
         etLoginPassword   = findViewById(R.id.edit_text_login_password)
+        tiemail=findViewById(R.id.textInputLayout)
+        tipass=findViewById(R.id.textInputLayout2)
+
+        //validate
+        email()
+        pass()
 
         btnLogin = findViewById(R.id.button_login)
         btnLogin.setOnClickListener {
+            if(Validate()){
             val email: String = etLoginEmail.text.toString()
             val passwordHash: String = Helpers.getSha256Hash(etLoginPassword.text.toString())
 
@@ -71,12 +82,56 @@ class LoginActivity: AppCompatActivity() {
 
             }
         }
+        else{
+                Toast.makeText(applicationContext, "Enter details", Toast.LENGTH_SHORT).show()
+        }}
 
         tvForgotPassword = findViewById(R.id.text_view_forgot_password)
         tvForgotPassword.setOnClickListener{
             val intent = Intent(applicationContext, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun pass() {
+        etLoginPassword.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tipass.helperText=validatepass()
+            }
+        }
+    }
+
+    private fun validatepass(): String? {
+        if (etLoginPassword.text.toString().isEmpty()){
+            return "ENTER PASSWORD"
+        }
+        else return null
+
+    }
+
+    private fun email() {
+        etLoginEmail.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiemail.helperText=validateemail()
+            }
+        }
+    }
+
+    private fun validateemail(): String? {
+        if (etLoginEmail.text.toString().isEmpty()){
+            return "ENTER EMAIL"
+        }
+        else return null
+    }
+
+    private fun Validate(): Boolean {
+        tiemail.helperText=validateemail()
+        tipass.helperText=validatepass()
+
+        val vpass=  tipass.helperText==null
+        val vemail=  tiemail.helperText==null
+
+        return vpass && vemail
     }
 }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -16,6 +17,7 @@ import com.example.csi_dmce.database.StudentAuth
 import com.example.csi_dmce.database.StudentAuthWrapper
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -27,6 +29,10 @@ class RegistrationActivity: AppCompatActivity() {
     private lateinit var etStudentId: EditText
     private lateinit var btnRegister: Button
     private lateinit var tvAccountExists: TextView
+    private lateinit var tiemail: TextInputLayout
+    private lateinit var tipass: TextInputLayout
+    private lateinit var tistudentid: TextInputLayout
+   
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +41,22 @@ class RegistrationActivity: AppCompatActivity() {
         etEmail = findViewById(R.id.edit_text_register_email)
         etPassword = findViewById(R.id.edit_text_register_password)
         etStudentId = findViewById(R.id.edit_text_register_student_id)
+        
+        tiemail=findViewById(R.id.text_input_email_id)
+        tipass=findViewById(R.id.text_input_password)
+        tistudentid=findViewById(R.id.text_input_student_id)
+
 
         var accountExists: Boolean = false
 
+        //validation
+        studentid()
+        email()
+        pass()
+
         btnRegister = findViewById(R.id.button_register)
         btnRegister.setOnClickListener {
+            if(validate()){
             runBlocking {
                 if (StudentWrapper.getStudentByEmail(etEmail.text.toString()) != null) {
                     Toast.makeText(applicationContext, "Account already exists", Toast.LENGTH_SHORT).show()
@@ -104,7 +121,7 @@ class RegistrationActivity: AppCompatActivity() {
             intent.putExtra("email_id", etEmail.text.toString())
             intent.putExtra("verification_kind", "email_verification")
             startActivity(intent)
-        }
+        }}
 
         tvAccountExists = findViewById(R.id.text_view_register_to_login)
         tvAccountExists.setOnClickListener{
@@ -114,4 +131,89 @@ class RegistrationActivity: AppCompatActivity() {
         }
 
     }
+
+    private fun pass() {
+        etPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                tipass.helperText = validatepass()
+            }
+        }
+    }
+
+    private fun validatepass(): String? {
+        if (etPassword.text.toString().isEmpty()) {
+            return "THIS FIELD IS REQUIRED"
+        } else if (etPassword.text.toString().length < 8) {
+            return "PASSWORD TOO SHORT"
+        } else if (!etPassword.text.toString().matches(".*[A-Z].*".toRegex())) {
+            return "MUST CONTAIN 1 UPPER-CASE CHARACTER"
+        } else if (!etPassword.text.toString().matches(".*[a-z].*".toRegex())) {
+            return "MUST CONTAIN 1 LOWER-CASE CHARACTER"
+        } else if (!etPassword.text.toString().matches(".*[@#/&_].*".toRegex())) {
+            return "MUST CONTAIN 1 SPECIAL CHARACTER (@#/&_)"
+        } else if (!etPassword.text.toString().matches(".*[0-9].*".toRegex())) {
+            return "MUST CONTAIN 1 NUMBER CHARACTER"
+        } else return null
+
+    }
+
+    private fun email() {
+        etEmail.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                tiemail.helperText = validateemail()
+            }
+        }
+    }
+
+    private fun validateemail(): String? {
+        val text = etEmail.text.toString()
+        if (etEmail.text.toString().isEmpty()) {
+            return "THIS FIELD IS REQUIRED"
+        } else {
+            if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                return "INVALID EMAIL"
+            } else {
+                return null
+            }
+        }
+    }
+
+    private fun studentid() {
+        etStudentId.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                tistudentid.helperText = validatestdid()
+            }
+        }
+
+    }
+
+    private fun validatestdid(): String? {
+        if (etStudentId.text.toString().isEmpty()) {
+            return "THIS FIELD IS REQUIRED"
+        } else {
+            if (etStudentId.text.toString().length != 11) {
+                return "STUDENT ID TOO SHORT"
+            } else {
+                return null
+            }
+        }
+
+    }
+
+    private fun validate(): Boolean {
+
+        tistudentid.helperText=validatestdid()
+        tipass.helperText=validatepass()
+        tiemail.helperText=validateemail()
+
+        val validemail=tiemail.helperText==null
+        val validpass=tipass.helperText==null
+        val validstd=tistudentid.helperText==null
+
+        return validemail && validpass && validstd
+
+
+    }
+
+
 }
