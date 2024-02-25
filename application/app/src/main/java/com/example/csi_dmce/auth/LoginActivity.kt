@@ -82,9 +82,7 @@ class LoginActivity: AppCompatActivity() {
 
             }
         }
-        else{
-                Toast.makeText(applicationContext, "Enter details", Toast.LENGTH_SHORT).show()
-        }}
+        }
 
         tvForgotPassword = findViewById(R.id.text_view_forgot_password)
         tvForgotPassword.setOnClickListener{

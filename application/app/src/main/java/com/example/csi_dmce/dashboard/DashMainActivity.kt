@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -49,6 +50,15 @@ class DashMainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView : NavigationView = findViewById(R.id.nav_view)
         val navHeaderView = navView.getHeaderView(0)
+        val logout=findViewById<Button>(R.id.logout)
+
+        logout.setOnClickListener {
+            CsiAuthWrapper.deleteAuthToken(applicationContext)
+            val intent = Intent(applicationContext, WelcomeActivity::class.java)
+            finishAffinity()
+            startActivity(intent)
+
+        }
 
         if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()) {
             navView.menu.clear()
@@ -63,7 +73,7 @@ class DashMainActivity : AppCompatActivity() {
             StudentWrapper.getStudentAvatarUrl(studentObject.student_id!!, studentObject.avatar_extension!!) {
                 Glide.with(applicationContext)
                     .setDefaultRequestOptions(RequestOptions())
-                    .load(it?: R.drawable.ic_baseline_person_24)
+                    .load(it?: R.drawable.csi_logo)
                     .into(navHeaderImage)
             }
         }
