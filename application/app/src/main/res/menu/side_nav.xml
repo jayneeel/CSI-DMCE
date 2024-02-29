@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <item
@@ -25,5 +26,6 @@
         android:id="@+id/nav_logout"
         android:icon="@drawable/ic_exit"
         android:iconTint="#0D1542"
-        android:title="Logout"/>
+        android:title="Logout" />
+
 </menu>
