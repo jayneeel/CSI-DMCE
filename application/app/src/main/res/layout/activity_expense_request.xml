@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
+                android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/csi_primary_accent"
                 android:text="Request for Expense Approval"
                 android:textColor="@color/black"
@@ -29,19 +30,18 @@
 
 
             <Spinner
+                android:id="@+id/spinner"
                 android:background="@drawable/event_spinner_bg"
-                android:id="@+id/spinner_expense_event_name"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="40dp">
-            </Spinner>
-
+                android:layout_height="50dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+               android:id="@+id/expensecon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:helperTextTextColor="@color/red"
                 android:hint="Topic of the expense"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
@@ -57,10 +57,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/total_costcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="Total Cost"
+                app:helperTextTextColor="@color/red"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
@@ -77,10 +79,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/datecon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="Date of Expenses"
+                app:helperTextTextColor="@color/red"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
@@ -101,8 +105,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/gpaycon"
                 android:layout_marginTop="10dp"
                 android:hint="GooglePay ID"
+                app:helperTextTextColor="@color/red"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
@@ -131,10 +137,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:onClick="imagePicker"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@drawable/uploadimage" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_complaint_lodge"
+                android:id="@+id/sendexpensereq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -144,7 +150,6 @@
                 android:paddingHorizontal="50dp"
                 android:paddingVertical="10dp"
                 android:text="Send my request"
-                android:onClick="sendExpenseRequest"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
