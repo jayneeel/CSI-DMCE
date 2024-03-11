@@ -3,6 +3,7 @@ package com.example.csi_dmce.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -111,11 +112,15 @@ class LoginActivity: AppCompatActivity() {
     }
 
     private fun validateemail(): String? {
-        if (etLoginEmail.text.toString().isEmpty()){
-            return "ENTER EMAIL"
-        }
-        else return null
-    }
+        val text = etLoginEmail.text.toString()
+        if (etLoginEmail.text.toString().isEmpty()) {
+            return "THIS FIELD IS REQUIRED"
+        } else {
+            if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                return "INVALID EMAIL"
+            } else {
+                return null
+                }}}
 
     private fun Validate(): Boolean {
         tiemail.helperText=validateemail()
