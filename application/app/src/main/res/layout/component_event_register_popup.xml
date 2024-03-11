@@ -10,6 +10,7 @@
     <com.google.android.material.card.MaterialCardView
         android:backgroundTint="@color/white"
         android:layout_width="match_parent"
+        style="@style/Widget.Material3.CardView.Elevated"
         android:layout_height="200dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="40dp"
