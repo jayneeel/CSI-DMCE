@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -196,5 +197,25 @@ class DashMainActivity : AppCompatActivity() {
         transaction.replace(R.id.frameL,fragment)
         transaction.commit()
     }
+
+    override fun onBackPressed() {
+        val exitDialog = AlertDialog.Builder(this)
+        //code to handle back button press
+        exitDialog.setTitle("Alert")
+        exitDialog.setMessage("Are you sure you want to exit?")
+        exitDialog.setIcon(R.drawable.exit_alertdialog_icon24)
+        exitDialog.setPositiveButton("Yes") { dialog, which ->
+            // Perform exit action here
+            finish() // For example, finish the current activity
+        }
+        exitDialog.setNegativeButton("No") { dialog, which ->
+            // Dismiss the dialog or perform any other action
+            dialog.dismiss()
+        }
+        exitDialog.show()
+        // super.onBackPressed() // Call to the superclass method if needed
+
+    }
+
 }
 
