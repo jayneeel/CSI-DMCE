@@ -9,9 +9,9 @@
 
     <item
         android:id="@+id/search"
-        android:icon="@drawable/ic_baseline_search_24"
+        android:icon="@drawable/baseline_assistant_24"
         android:iconTint="#0D1542"
-        android:title="Search"/>
+        android:title="Events"/>
 
     <item
         android:id="@+id/profile"

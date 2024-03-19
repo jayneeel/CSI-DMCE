@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
@@ -20,6 +22,7 @@ import com.example.csi_dmce.database.Expense
 import com.example.csi_dmce.database.ExpensesWrapper
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.runBlocking
 
@@ -29,6 +32,12 @@ class ExpenseRequest : AppCompatActivity() {
     private lateinit var etUpiId : TextInputEditText
     private lateinit var etExpenseTopic : TextInputEditText
     private lateinit var ivCurrentImage : ImageView
+
+    private lateinit var tiTotalCost : TextInputLayout
+    private lateinit var tiExpenseTopic : TextInputLayout
+    private lateinit var tiDatePicker : TextInputLayout
+    private lateinit var tiUpiId : TextInputLayout
+    private lateinit var sendreq: Button
 
     private var imageUri: Uri? = null
 
@@ -45,16 +54,120 @@ class ExpenseRequest : AppCompatActivity() {
 
         events = runBlocking { EventWrapper.getEvents() }
 
-        etDatePicker = findViewById(R.id.date_expense)
-        etDatePicker.setOnClickListener { datePicker() }
+        etTotalCost = findViewById(R.id.total_cost)
+        tiTotalCost=findViewById(R.id.total_costcon)
 
-        etTotalCost = findViewById(R.id.total_cost);
+        tiUpiId=findViewById(R.id.gpaycon)
         etUpiId = findViewById(R.id.googlePay_id)
-        etExpenseTopic = findViewById(R.id.edit_text_expense_topic)
 
-        spinnerEventNames = findViewById(R.id.spinner_expense_event_name)
+        etExpenseTopic = findViewById(R.id.edit_text_expense_topic)
+        tiExpenseTopic=findViewById(R.id.expensecon)
+        spinnerEventNames = findViewById(R.id.spinner)
+
+        etDatePicker=findViewById(R.id.date_expense)
+        tiDatePicker=findViewById(R.id.datecon)
+        sendreq=findViewById(R.id.sendexpensereq)
+
+        //date picker
+        val materialDateBuilder: MaterialDatePicker.Builder<*> = MaterialDatePicker.Builder.datePicker()
+        val materialDatePicker = materialDateBuilder.build()
+        materialDateBuilder.setTitleText("Select Date")
+        etDatePicker.setOnClickListener {
+            if (!materialDatePicker.isAdded){
+                materialDatePicker.show(supportFragmentManager, "MATERIAL_DATE_PICKER")
+                materialDatePicker.addOnPositiveButtonClickListener {
+                    val selectedDateInMillis = it as Long
+                    etDatePicker.setText(materialDatePicker.headerText)
+                }}}
 
         constructExpenseSpinner()
+        expensetopic()
+        totalcost()
+        date()
+        gpay()
+
+        sendreq.setOnClickListener {
+            if(validation()){
+              sendExpenseRequest()
+               // Toast.makeText(this, "JINKLAS BHAVA", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun validation(): Boolean {
+        tiUpiId.helperText=validateupi()
+        tiDatePicker.helperText=validateDATE()
+        tiTotalCost.helperText=validatecost()
+        tiExpenseTopic.helperText=validateexpense()
+
+        val a=tiUpiId.helperText==null
+        val b= tiDatePicker.helperText==null
+        val c=tiTotalCost.helperText==null
+        val d=tiExpenseTopic.helperText==null
+
+        return a && b && c && d
+    }
+
+    private fun gpay() {
+        etUpiId.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiUpiId.helperText=validateupi()
+            }
+        }
+    }
+
+    private fun validateupi(): String? {
+        if (etUpiId.text.toString().isEmpty()){
+            return "Enter Upi ID"
+        }
+        else return null
+
+    }
+
+    private fun date() {
+        etDatePicker.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiDatePicker.helperText=validateDATE()
+            }
+        }
+    }
+
+    private fun validateDATE(): String? {
+        if (etDatePicker.text.toString().isEmpty()){
+            return "Enter Date"
+        }
+        else return null
+
+    }
+
+    private fun totalcost() {
+        etTotalCost.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiTotalCost.helperText=validatecost()
+            }
+        }
+    }
+
+    private fun validatecost(): String? {
+        if (etDatePicker.text.toString().isEmpty()){
+            return "Enter Cost"
+        }
+        else return null
+    }
+
+    private fun expensetopic() {
+        etExpenseTopic.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiExpenseTopic.helperText=validateexpense()
+            }
+        }
+    }
+
+    private fun validateexpense(): String? {
+        if (etExpenseTopic.text.toString().isEmpty()){
+            return "Enter Topic"
+        }
+        else return null
     }
 
 
@@ -74,17 +187,7 @@ class ExpenseRequest : AppCompatActivity() {
         }
     }
 
-    fun datePicker() {
-        val materialDateBuilder: MaterialDatePicker.Builder<*> = MaterialDatePicker.Builder.datePicker()
-        val materialDatePicker = materialDateBuilder.build()
-        materialDateBuilder.setTitleText("Select Date")
-        materialDatePicker.show(supportFragmentManager, "MATERIAL_DATE_PICKER")
-        materialDatePicker.addOnPositiveButtonClickListener {
-            etDatePicker.setText(materialDatePicker.headerText)
-        }
-    }
-
-    fun sendExpenseRequest(view: View) {
+    fun sendExpenseRequest() {
         val expenseObject = Expense(
             student_id = CsiAuthWrapper.getStudentId(this),
             associated_event = selectedEvent.eventId,

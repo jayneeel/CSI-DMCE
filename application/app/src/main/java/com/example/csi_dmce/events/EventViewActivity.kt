@@ -9,6 +9,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.util.Linkify
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -97,7 +98,11 @@ class EventViewActivity: AppCompatActivity() {
         tvEventDay.text = Helpers.eventDayFormat.format(eventDateTime).toString()
 
         tvEventDescription = findViewById(R.id.text_view_event_description)
+
+        //linkify
         tvEventDescription.text = eventObject.description
+        Linkify.addLinks(tvEventDescription, Linkify.WEB_URLS)
+
 
         ivEventPoster = findViewById(R.id.image_view_event_poster)
 
@@ -156,18 +161,19 @@ class EventViewActivity: AppCompatActivity() {
             btnEventDelete = findViewById(R.id.button_event_delete)
             btnEventDelete.visibility = View.VISIBLE
             btnEventDelete.setOnClickListener {
-                val dialog = Dialog(this, R.style.Theme_CSIDMCE)
+                val dialog = BottomSheetDialog(this)
                 dialog.setContentView(R.layout.component_event_delete_popup)
+                dialog.setCancelable(true)
 
                 val etDeleteEventName = dialog.findViewById<EditText>(R.id.edit_text_event_delete_name)
-                etDeleteEventName.setHint(eventObject.title)
+                etDeleteEventName?.setHint(eventObject.title)
 
                 val tvDeleteEventTitle = dialog.findViewById<TextView>(R.id.text_view_event_delete_title)
-                tvDeleteEventTitle.setText(eventObject.title)
+                tvDeleteEventTitle?.setText(eventObject.title)
 
                 val btnDeletePositive = dialog.findViewById<Button>(R.id.button_export_positive)
-                btnDeletePositive.setOnClickListener {
-                    if (etDeleteEventName.text.toString() != eventObject.title) {
+                btnDeletePositive?.setOnClickListener {
+                    if (etDeleteEventName?.text.toString() != eventObject.title) {
                         Toast.makeText(this, "Please enter the event's title", Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
                     }
@@ -181,11 +187,10 @@ class EventViewActivity: AppCompatActivity() {
                 }
 
                 val btnDeleteNegative = dialog.findViewById<Button>(R.id.button_export_negative)
-                btnDeleteNegative.setOnClickListener {
+                btnDeleteNegative?.setOnClickListener {
                     dialog.dismiss()
                 }
 
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 dialog.show()
             }
 

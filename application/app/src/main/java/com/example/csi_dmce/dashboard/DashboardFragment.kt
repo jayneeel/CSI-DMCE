@@ -1,7 +1,11 @@
 package com.example.csi_dmce.dashboard
 
+import android.R.attr.width
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,10 +34,7 @@ import com.example.csi_dmce.utils.Helpers
 import com.example.csi_dmce.utils.ZenQuote
 import com.example.csi_dmce.utils.ZenQuoteService
 import com.google.firebase.firestore.*
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.runBlocking
-import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,10 +78,28 @@ class DashboardFragment : Fragment() {
             "User"
         }
 
+        //
+        val announcments=view.findViewById<TextView>(R.id.announcment)
+        announcments.isSelected=true
+//        val paint=announcments.paint
+//        val width=paint.measureText(announcments.text.toString())
+//
+//        announcments.paint.shader = LinearGradient(
+//            0f, 0f, width, announcments.getTextSize(), intArrayOf(
+//                Color.parseColor("#F97C3C"),
+//                Color.parseColor("#FDB54E"),
+//                Color.parseColor("#64B678"),
+//                Color.parseColor("#478AEA"),
+//                Color.parseColor("#8446CC")
+//            ), null, Shader.TileMode.REPEAT
+//        )
+
+
+
         tvDashWelcome = view.findViewById(R.id.text_view_dashboard_welcome)
         tvDashWelcome.setText("Welcome ${studentName}")
 
-        eventRecycler.layoutManager= LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, true)
+        eventRecycler.layoutManager= LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
         eventRecycler.setHasFixedSize(true)
         eventArrayList = arrayListOf()
 
