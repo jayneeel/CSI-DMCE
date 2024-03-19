@@ -24,10 +24,13 @@ import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.events.EventListActivity
+import com.example.csi_dmce.notifications.MyFirebaseMessagingService
 import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csiappdashboard.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.runBlocking
 
 
@@ -40,6 +43,9 @@ class DashMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbars))
+
+        Firebase.messaging.subscribeToTopic("all_users")
+        MyFirebaseMessagingService.sendFCMMessage()
 
         studentObject = runBlocking {
             StudentWrapper.getStudent(CsiAuthWrapper.getStudentId(applicationContext))!!

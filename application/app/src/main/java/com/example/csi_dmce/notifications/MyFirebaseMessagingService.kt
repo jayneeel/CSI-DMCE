@@ -66,15 +66,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         fun sendFCMMessage() {
             GlobalScope.launch(Dispatchers.IO) {
                 val fcmEndpoint = "https://fcm.googleapis.com/v1/projects/csi-dmce-c6f11/messages:send"
-                ///val serverKey = "YOUR_SERVER_KEY"
-
+                //val serverKey = "YOUR_SERVER_KEY"
                 val url = URL(fcmEndpoint)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
-                connection.setRequestProperty("Authorization", "Bearer 5cd215ce2ac6f6cab4e63d8e1b05cf8d0329de35")
+                connection.setRequestProperty("Authorization", "Bearer ya29.a0Ad52N39bHuBaZULyOv1VN7z-kfP6qb_Wu10cszsKLx0ISrQv9iRnoSQDd34_Ew7GcZS4Nr3n84nRyVG1U9oifQXOoLCh1qgXo0zxi9iwZYeZLmMGVBLokdSeNAVtE5EIGl7OgFjqUuFAaO9IrEN9-7oPvf3ZTr12jn15aCgYKAWISARESFQHGX2MiG8PhTy0DmW6RZycGLmefKg0171")
                 connection.setRequestProperty("Content-Type", "application/json")
                 Log.d(TAG, "sendFCMMessage: **********************************")
-
                 // Construct JSON payload for FCM message
                 val jsonPayload = """
             {
@@ -101,14 +99,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     Log.d(TAG, "sendFCMMessage: SUCSESSFULL")
                 } else {
                     // Handle error
-                    Log.d(TAG, "sendFCMMessage: UNSUCSESSFULL")
-
+                    Log.d(TAG, "sendFCMMessage: UNSUCSESSFULL"+responseCode.toString())
                 }
             }
         }
-
         private const val TAG = "MyFirebaseMsgService"
     }
-
-
 }
