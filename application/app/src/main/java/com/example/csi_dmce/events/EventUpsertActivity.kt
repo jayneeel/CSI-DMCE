@@ -21,6 +21,7 @@ import com.example.csi_dmce.R
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.utils.Helpers
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
@@ -48,6 +49,13 @@ class EventUpsertActivity: AppCompatActivity() {
     private lateinit var etEventPrerequisites: EditText
     private lateinit var ivEventPoster: ImageView
 
+    private lateinit var tiEventTitle :TextInputLayout
+    private lateinit var tiEventDescription :TextInputLayout
+    private lateinit var tiEventDateTime :TextInputLayout
+    private lateinit var tiEventSpeaker :TextInputLayout
+    private lateinit var tiEventVenue :TextInputLayout
+    private lateinit var tiEventPrerequisites :TextInputLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_upsert)
@@ -61,12 +69,25 @@ class EventUpsertActivity: AppCompatActivity() {
         val isAddIntent: Boolean = intent.getBooleanExtra("is_add_intent", false)
 
         etEventTitle = findViewById(R.id.edit_text_event_upsert_name)
+        tiEventTitle=findViewById(R.id.namecon)
+
         etEventDescription = findViewById(R.id.edit_text_event_upsert_description)
+        tiEventDescription=findViewById(R.id.desccon)
+
         etEventDateTime = findViewById(R.id.edit_text_event_upsert_datetime)
+        tiEventDateTime=findViewById(R.id.datetimecon)
+
         etEventSpeaker = findViewById(R.id.edit_text_event_upsert_speaker)
+        tiEventSpeaker=findViewById(R.id.speakercon2)
+
         etEventVenue = findViewById(R.id.edit_text_event_upsert_venue)
+        tiEventVenue=findViewById(R.id.venuecon)
+
         etEventPrerequisites = findViewById(R.id.edit_text_event_upsert_prerequisites)
+        tiEventPrerequisites =findViewById(R.id.prequisitecon)
+
         ivEventPoster = findViewById(R.id.image_view_event_poster)
+
 
         etEventDateTime.setOnClickListener {
             val cal = Calendar.getInstance()
@@ -131,16 +152,6 @@ class EventUpsertActivity: AppCompatActivity() {
                 .into(ivEventPoster)
         }
 
-        upsertButton.setOnClickListener {
-            if (isAddIntent) {
-                runBlocking { addCsiEvent() }
-            } else {
-                // Hopefully an update event
-                oldEventObject?.let {
-                    runBlocking { updateCsiEvent(it) }
-                }
-            }
-        }
 
         ivEventPoster.setOnClickListener {
             val intent = Intent()
@@ -148,6 +159,134 @@ class EventUpsertActivity: AppCompatActivity() {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, REQUEST_CODE_IMAGE_UPSERT)
         }
+
+        titlee()
+        desc()
+        datetime()
+        speaker()
+        vemue()
+        preq()
+
+        upsertButton.setOnClickListener {
+            if (validation()){
+            if (isAddIntent) {
+                runBlocking { addCsiEvent() }
+            } else {
+                // Hopefully an update event
+                oldEventObject?.let {
+                    runBlocking { updateCsiEvent(it) }
+                }
+            }}
+        }
+
+    }
+
+    private fun preq() {
+        etEventPrerequisites.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiEventPrerequisites.helperText=validatepreq()
+            }
+        }
+    }
+
+    private fun validatepreq(): String? {
+        if (etEventPrerequisites.text.toString().isEmpty()){
+            return "Enter Prerequisites"
+        }
+        else return null
+    }
+
+    private fun vemue() {
+        etEventVenue.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiEventVenue.helperText=validatevenue()
+            }
+        }
+    }
+
+    private fun validatevenue(): String? {
+        if (etEventVenue.text.toString().isEmpty()){
+            return "Enter Venue"
+        }
+        else return null
+    }
+
+    private fun speaker() {
+        etEventSpeaker.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiEventSpeaker.helperText=validatespeaker()
+            }
+        }
+    }
+
+    private fun validatespeaker(): String? {
+        if (etEventSpeaker.text.toString().isEmpty()){
+            return "Enter Speaker Name"
+        }
+        else return null
+    }
+
+    private fun datetime() {
+        etEventDateTime.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiEventDateTime.helperText=validatedate()
+            }
+        }
+    }
+
+    private fun validatedate(): String? {
+        if (etEventDateTime.text.toString().isEmpty()){
+            return "Enter Date and Time"
+        }
+        else return null
+    }
+
+    private fun desc() {
+        etEventDescription.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiEventDescription.helperText=validatedesc()
+            }
+        }
+    }
+
+    private fun validatedesc(): String? {
+        if (etEventDescription.text.toString().isEmpty()){
+            return "Enter Description for the event"
+        }
+        else return null
+    }
+
+    private fun titlee() {
+        etEventTitle.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                tiEventTitle.helperText=validatetitle()
+            }
+        }
+    }
+
+    private fun validatetitle(): String? {
+        if (etEventTitle.text.toString().isEmpty()){
+            return "Enter Event Title"
+        }
+        else return null
+    }
+
+    private fun validation(): Boolean {
+        tiEventTitle.helperText=validatetitle()
+        tiEventPrerequisites.helperText=validatepreq()
+        tiEventVenue.helperText=validatevenue()
+        tiEventSpeaker.helperText=validatespeaker()
+        tiEventDateTime.helperText=validatedate()
+        tiEventDescription.helperText=validatedesc()
+
+        val a= tiEventPrerequisites.helperText==null
+        val b= tiEventVenue.helperText==null
+        val c= tiEventSpeaker.helperText==null
+        val d= tiEventDateTime.helperText==null
+        val e=tiEventDescription.helperText==null
+        val f= tiEventTitle.helperText==null
+
+        return a && b && c&& d && e && f
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

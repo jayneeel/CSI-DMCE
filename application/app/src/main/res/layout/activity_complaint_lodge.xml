@@ -26,29 +26,33 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato"
                     android:text="Lodge A Complaint"
+                    android:layout_marginTop="20dp"
                     android:textColor="@color/black"
-                    android:textSize="30dp"
-                    android:fontFamily="@font/lato"/>
+                    android:textSize="30dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_complaint_subject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="30dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:hint="Complaint Subject"
                     app:boxCornerRadiusBottomEnd="8dp"
+                    app:helperTextTextColor="@color/red"
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxCornerRadiusBottomStart="8dp"
                     app:boxCornerRadiusTopEnd="8dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_text_complaint_subject"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_complaint_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -56,12 +60,16 @@
                     android:hint="Complaint Description"
                     app:boxCornerRadiusBottomEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
+                    app:helperTextTextColor="@color/red"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="100"
                     app:boxCornerRadiusBottomStart="8dp"
                     app:boxCornerRadiusTopEnd="8dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_text_complaint_description"
                         android:inputType="textMultiLine"
-                        android:lines="10"
+                        android:lines="4"
+                        android:maxLength="100"
                         android:gravity="start"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
