@@ -45,8 +45,6 @@ class DashMainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbars))
 
         Firebase.messaging.subscribeToTopic("all_users")
-
-
         MyFirebaseMessagingService.sendFCMMessage()
 
         studentObject = runBlocking {
