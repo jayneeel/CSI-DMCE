@@ -2,6 +2,7 @@ package com.example.csi_dmce.dashboard
 
 import android.R.attr.width
 import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Color
 import android.graphics.LinearGradient
@@ -33,6 +34,7 @@ import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
 import com.example.csi_dmce.utils.ZenQuote
 import com.example.csi_dmce.utils.ZenQuoteService
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -42,9 +44,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
 
-
 class DashboardFragment : Fragment() {
     private lateinit var quoteOfTheDay: TextView
+    private lateinit var announcments: TextView
 
     lateinit var eventRecycler : RecyclerView
     lateinit var toolbar: Toolbar
@@ -78,9 +80,26 @@ class DashboardFragment : Fragment() {
             "User"
         }
 
-        //
-        val announcments=view.findViewById<TextView>(R.id.announcment)
+        //Firestore to acces annnouncments
+        announcments=view.findViewById(R.id.announcment)
         announcments.isSelected=true
+        val data=Firebase.firestore
+        data.collection("announcment").document("ANNOUNCMENT")
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    announcments.text=document.data!!.get("1").toString()
+                    Log.d(TAG, "DocumentSnapshot data: ${document.data!!.get("1")}")
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
+
+
+
 //        val paint=announcments.paint
 //        val width=paint.measureText(announcments.text.toString())
 //

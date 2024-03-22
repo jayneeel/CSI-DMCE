@@ -24,6 +24,7 @@ import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.events.EventListActivity
+import com.example.csi_dmce.notifications.Announcments
 import com.example.csi_dmce.notifications.MyFirebaseMessagingService
 import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csiappdashboard.ProfileFragment
@@ -44,8 +45,15 @@ class DashMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbars))
 
-        Firebase.messaging.subscribeToTopic("all_users")
-        MyFirebaseMessagingService.sendFCMMessage()
+        if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()){
+            Firebase.messaging.subscribeToTopic("admin")
+            Firebase.messaging.subscribeToTopic("all")
+        }
+        else {
+            Firebase.messaging.subscribeToTopic("all")
+            Firebase.messaging.unsubscribeFromTopic("admin")
+        }
+
 
         studentObject = runBlocking {
             StudentWrapper.getStudent(CsiAuthWrapper.getStudentId(applicationContext))!!
@@ -95,7 +103,6 @@ class DashMainActivity : AppCompatActivity() {
             }
         )
 
-
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
         drawerLayout.addDrawerListener(toggle)
@@ -122,11 +129,10 @@ class DashMainActivity : AppCompatActivity() {
                         val cIntent = Intent(this, CsvGeneration::class.java)
                         startActivity(cIntent)
                     }
-                    R.id.nav_item_admin_logout ->  {
-                        CsiAuthWrapper.deleteAuthToken(applicationContext)
-                        val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                        finishAffinity()
-                        startActivity(intent)
+                    R.id.nav_item_admin_announcments ->  {
+                        val cIntent = Intent(this, Announcments::class.java)
+                        startActivity(cIntent)
+
                     }
                 }
                 true
@@ -150,12 +156,6 @@ class DashMainActivity : AppCompatActivity() {
                             cIntent.putExtra("student_name", studentObject.name)
                             cIntent.putExtra("avatar_extension", studentObject.avatar_extension)
                             startActivity(cIntent)
-                        }
-                        R.id.nav_logout ->  {
-                            CsiAuthWrapper.deleteAuthToken(applicationContext)
-                            val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
                         }
                     }
                     true
@@ -205,6 +205,7 @@ class DashMainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         val exitDialog = AlertDialog.Builder(this)
         //code to handle back button press
         exitDialog.setTitle("Alert")

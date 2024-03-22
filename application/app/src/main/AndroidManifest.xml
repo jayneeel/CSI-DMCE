@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSIDMCE"
         tools:targetApi="31">
+        <activity
+            android:name=".notifications.Announcments"
+            android:exported="false" />
         <activity
             android:name=".profile.edit_profile"
             android:exported="false">
@@ -72,9 +75,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".ui.WelcomeActivity"/>
-        <activity android:name=".auth.OTPVerificationActivity"/>
-        <activity android:name=".auth.forgotpassword.ForgotPasswordActivity"/>
+        <activity android:name=".ui.WelcomeActivity" />
+        <activity android:name=".auth.OTPVerificationActivity" />
+        <activity android:name=".auth.forgotpassword.ForgotPasswordActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -88,34 +91,33 @@
         </activity>
         <activity android:name=".auth.RegistrationActivity" />
         <activity android:name=".auth.SetPasswordActivity" />
-        <activity android:name=".events.EventListActivity"/>
-        <activity android:name=".events.EventUpsertActivity"/>
-        <activity android:name=".events.EventQRGenerationActivity"/>
-        <activity android:name="com.example.csi_admin.AdminHomepage"/>
-        <activity android:name="com.example.csi_admin.EventsDataActivity"/>
-        <activity android:name="com.example.csi_admin.user.UserDataActivity"/>
-        <activity android:name="com.example.csi_admin.user.UserListActivity"/>
-        <activity android:name="com.example.csi_admin.complaint.ComplaintLodge"/>
-        <activity android:name="com.example.csi_admin.complaint.ComplaintsActivity"/>
-        <activity android:name="com.example.csi_admin.expense.ApprovalExpenseActivity"/>
-        <activity android:name="com.example.csi_admin.expense.ExpenseApproval"/>
-        <activity android:name="com.example.csi_admin.expense.ExpenseRequest"/>
-        <activity android:name="com.example.csi_dmce.attendance.CsvGeneration"/>
-        <activity android:name=".attendance.AttendanceActivity"/>
-        <activity android:name=".attendance.AttendanceActivity$CaptureAct"/>
-        <activity android:name=".profile.Profile"/>
-        <activity android:name=".attendance.AdminQrViewActivity"/>
-        <activity android:name=".dashboard.DashMainActivity"/>
-        <activity android:name=".onboarding.OnboardingMain"/>
+        <activity android:name=".events.EventListActivity" />
+        <activity android:name=".events.EventUpsertActivity" />
+        <activity android:name=".events.EventQRGenerationActivity" />
+        <activity android:name="com.example.csi_admin.AdminHomepage" />
+        <activity android:name="com.example.csi_admin.EventsDataActivity" />
+        <activity android:name="com.example.csi_admin.user.UserDataActivity" />
+        <activity android:name="com.example.csi_admin.user.UserListActivity" />
+        <activity android:name="com.example.csi_admin.complaint.ComplaintLodge" />
+        <activity android:name="com.example.csi_admin.complaint.ComplaintsActivity" />
+        <activity android:name="com.example.csi_admin.expense.ApprovalExpenseActivity" />
+        <activity android:name="com.example.csi_admin.expense.ExpenseApproval" />
+        <activity android:name="com.example.csi_admin.expense.ExpenseRequest" />
+        <activity android:name=".attendance.CsvGeneration" />
+        <activity android:name=".attendance.AttendanceActivity" />
+        <activity android:name=".attendance.AttendanceActivity$CaptureAct" />
+        <activity android:name=".profile.Profile" />
+        <activity android:name=".attendance.AdminQrViewActivity" />
+        <activity android:name=".dashboard.DashMainActivity" />
+        <activity android:name=".onboarding.OnboardingMain" />
 
-
-        <service android:name=".notifications.MyFirebaseMessagingService"
+        <service
+            android:name=".notifications.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
 
         <meta-data
             android:name="preloaded_fonts"
