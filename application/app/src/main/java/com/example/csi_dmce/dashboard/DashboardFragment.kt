@@ -1,6 +1,5 @@
 package com.example.csi_dmce.dashboard
 
-import android.R.attr.width
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -13,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toolbar
@@ -41,6 +41,11 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ListResult
+import com.google.firebase.storage.StorageReference
+import org.jetbrains.annotations.NotNull
 
 
 class DashboardFragment : Fragment() {
@@ -52,7 +57,8 @@ class DashboardFragment : Fragment() {
     private lateinit var myAdapter: EventAdapter
     lateinit var imageSlider: ImageSlider
     private lateinit var db : FirebaseFirestore
-    val imageList = ArrayList<SlideModel>()
+    var imageList2: ArrayList<String>? = null
+
 
     private lateinit var studentObject: Student
 
@@ -64,6 +70,7 @@ class DashboardFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val imageList = ArrayList<SlideModel>()
         eventRecycler = view.findViewById(R.id.recyclerview)
 
         quoteOfTheDay = view.findViewById(R.id.text_view_quote_of_the_day)
@@ -108,24 +115,55 @@ class DashboardFragment : Fragment() {
         EventChangerListener()
 
         imageSlider = view.findViewById(R.id.imageSlider)
-        imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F1.jpg?alt=media&token=1b98937c-cf2c-4011-882a-c7985bb759fd", title = "Ideobition"))
+        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+        val image_refrance: StorageReference = storageReference.child("gallery")
+
+        //val hashMap: HashMap<String, String> = HashMap()
+        image_refrance.listAll().addOnSuccessListener(OnSuccessListener<ListResult> { listResult ->
+            for (file in listResult.items) {
+                file.getDownloadUrl()
+                    .addOnSuccessListener { uri -> // adding the url in the arraylist
+                        var title = file.name.toString()
+                        var url = uri.toString()
+                        //hashMap.put(bb, uri.toString())
+                        //println(hashMap)
+                        imageList.sortBy { it.title }
+                        imageList.add(SlideModel(url, title = title))
+                        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+                        imageSlider.setItemClickListener(object: ItemClickListener {
+                            override fun onItemSelected(position: Int) {
+                                val dialog = Dialog(imageSlider.context)
+                                dialog.setContentView(R.layout.component_image_scale_popup)
+                                val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
+                                var delete = dialog.findViewById<Button>(R.id.button2)
+                                Glide.with(ivFullScale.context)
+                                    .setDefaultRequestOptions(RequestOptions())
+                                    .load(imageList.get(position).imageUrl)
+                                    .into(ivFullScale)
+
+                                dialog.show()
+                                dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+                                delete.setOnClickListener{
+                                    imageList.removeAt(position)
+                                }
+                            }
+
+                        })
+                        //Log.d("TAG", "onCreateView: url "+imageList2)
+                        Log.d("TAG", "onCreateView: "+title+"="+url)
+                        Log.d("TAG", "onCreateView: list2 "+imageList)
+                    }
+            }
+            Log.d("TAG", "onCreateView: list3 "+imageList)
+        })
+
+
+
+        /*imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F1.jpg?alt=media&token=1b98937c-cf2c-4011-882a-c7985bb759fd", title = "Ideobition"))
         imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F2.jpg?alt=media&token=2839c283-0eb6-4543-8ca5-6a8a188dbe02", title = "Time Travel"))
         imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F3.jpg?alt=media&token=7fe23dd0-7fb4-4c7a-8682-8b715ecfcb7c", title = "CSI"))
-        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-        imageSlider.setItemClickListener(object: ItemClickListener {
-            override fun onItemSelected(position: Int) {
-                val dialog = Dialog(imageSlider.context)
-                dialog.setContentView(R.layout.component_image_scale_popup)
-                val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
-                Glide.with(ivFullScale.context)
-                    .setDefaultRequestOptions(RequestOptions())
-                    .load(imageList.get(position).imageUrl)
-                    .into(ivFullScale)
+        Log.d("TAG", "onCreateView: "+imageList)*/
 
-                dialog.show()
-                dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
-            }
-        })
 
         setRandomQuote(view.context)
 

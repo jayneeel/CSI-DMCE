@@ -19,6 +19,7 @@ import com.example.csi_admin.expense.ApprovalExpenseActivity
 import com.example.csi_admin.expense.ExpenseRequest
 import com.example.csi_admin.user.UserListActivity
 import com.example.csi_dmce.R
+import com.example.csi_dmce.images.ChooseImages
 import com.example.csi_dmce.attendance.CsvGeneration
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
@@ -44,7 +45,7 @@ class DashMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbars))
 
-        Firebase.messaging.subscribeToTopic("all_users")
+        Firebase.messaging.subscribeToTopic("all")
         MyFirebaseMessagingService.sendFCMMessage()
 
         studentObject = runBlocking {
@@ -122,11 +123,9 @@ class DashMainActivity : AppCompatActivity() {
                         val cIntent = Intent(this, CsvGeneration::class.java)
                         startActivity(cIntent)
                     }
-                    R.id.nav_item_admin_logout ->  {
-                        CsiAuthWrapper.deleteAuthToken(applicationContext)
-                        val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                        finishAffinity()
-                        startActivity(intent)
+                    R.id.nav_item_admin_images ->  {
+                        val cIntent = Intent(this, ChooseImages::class.java)
+                        startActivity(cIntent)
                     }
                 }
                 true
