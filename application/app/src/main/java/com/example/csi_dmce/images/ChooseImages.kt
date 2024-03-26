@@ -9,8 +9,11 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.csi_dmce.R
 import com.google.android.gms.tasks.OnSuccessListener
@@ -29,6 +32,7 @@ class ChooseImages : AppCompatActivity() {
     lateinit var image_view: ImageView
     lateinit var title: TextInputEditText
     var fileUri: Uri? = null
+//    val selectedImageUris: MutableList<Uri> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +49,7 @@ class ChooseImages : AppCompatActivity() {
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(
-                Intent.createChooser(intent, "Choose Image to Upload"), 0
+                Intent.createChooser(intent, "Choose Images to Upload"), 0
             )
         }
 
@@ -60,11 +64,12 @@ class ChooseImages : AppCompatActivity() {
             }
         }
 
-//        retrieve_img.setOnClickListener {
-//            val intent = Intent(applicationContext, ShowAllImagesFromStorage::class.java)
-//            startActivity(intent)
-//            //retrive_image()
-//        }
+        //Show All Images Function
+        retrieve_img.setOnClickListener {
+            val intent = Intent(applicationContext, ShowAllImagesFromStorage::class.java)
+            startActivity(intent)
+            //retrive_image()
+        }
 
     }
 
@@ -81,6 +86,7 @@ class ChooseImages : AppCompatActivity() {
             }
         }
     }
+
 
     fun uploadImage() {
         if (fileUri != null) {
@@ -102,47 +108,64 @@ class ChooseImages : AppCompatActivity() {
             }
         }
     }
-
-    fun retrive_image() {
-        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
-        val image_refrance: StorageReference = storageReference.child("gallery")
-
-        val hashMap: HashMap<String, String> = HashMap()
-        image_refrance.listAll().addOnSuccessListener(OnSuccessListener<ListResult> { listResult ->
-            for (file in listResult.items) {
-                file.getDownloadUrl()
-                    .addOnSuccessListener { uri -> // adding the url in the arraylist
-                       var bb = file.name.toString()
-                        hashMap.put(bb, uri.toString())
-                        println(hashMap)
-                        // imagelist.add(uri.toString())
-                        Log.e("Itemvalue", bb+uri.toString())
-                    }.addOnSuccessListener {
-                        //recyclerView.setAdapter(adapter)
-                        //progressBar.setVisibility(View.GONE)
-                    }
-            }
-        })
-
-        val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Retriving Image...")
-        progressDialog.setMessage("Processing...")
-        progressDialog.show()
-
-        image_refrance.downloadUrl.addOnSuccessListener { uri: Uri ->
-
-            Glide.with(this@ChooseImages)
-                .load(uri)
-                .into(image_view)
-
-            progressDialog.dismiss()
-            Toast.makeText(this,"Image Retrived Successfull",Toast.LENGTH_LONG).show()
-        }
-            .addOnFailureListener { exception ->
-                progressDialog.dismiss()
-                Toast.makeText(this,"Image Retrived Failed: "+exception.message,Toast.LENGTH_LONG).show()
-
-            }
-    }
-
 }
+
+//    private fun displayImage(imageUri: Uri) {
+//        try {
+//            Log.d("ChooseImages", "Displaying image: $imageUri")
+//            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+//            image_view.setImageBitmap(bitmap)
+//        } catch (e: Exception) {
+//            Log.e("Exception", "Error: $e")
+//        }
+//    }
+
+
+
+
+
+
+
+//    fun retrive_image() {
+//        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+//        val image_refrance: StorageReference = storageReference.child("gallery")
+//
+//        val hashMap: HashMap<String, String> = HashMap()
+//        image_refrance.listAll().addOnSuccessListener(OnSuccessListener<ListResult> { listResult ->
+//            for (file in listResult.items) {
+//                file.getDownloadUrl()
+//                    .addOnSuccessListener { uri -> // adding the url in the arraylist
+//                       var bb = file.name.toString()
+//                        hashMap.put(bb, uri.toString())
+//                        println(hashMap)
+//                        // imagelist.add(uri.toString())
+//                        Log.e("Itemvalue", bb+uri.toString())
+//                    }.addOnSuccessListener {
+//                        //recyclerView.setAdapter(adapter)
+//                        //progressBar.setVisibility(View.GONE)
+//                    }
+//            }
+//        })
+//
+//        val progressDialog = ProgressDialog(this)
+//        progressDialog.setTitle("Retriving Image...")
+//        progressDialog.setMessage("Processing...")
+//        progressDialog.show()
+//
+//        image_refrance.downloadUrl.addOnSuccessListener { uri: Uri ->
+//
+//            Glide.with(this@ChooseImages)
+//                .load(uri)
+//                .into(image_view)
+//
+//            progressDialog.dismiss()
+//            Toast.makeText(this,"Image Retrived Successfull",Toast.LENGTH_LONG).show()
+//        }
+//            .addOnFailureListener { exception ->
+//                progressDialog.dismiss()
+//                Toast.makeText(this,"Image Retrived Failed: "+exception.message,Toast.LENGTH_LONG).show()
+//
+//            }
+//    }
+//
+

@@ -99,7 +99,7 @@
         <activity android:name=".images.ShowAllImagesFromStorage"/>
         <activity android:name="com.example.csi_admin.EventsDataActivity" />
         <activity android:name="com.example.csi_admin.user.UserDataActivity" />
-        <activity android:name="com.example.csi_admin.user.UserListActivity" />
+        <activity android:name=".user.UserListActivity" />
         <activity android:name="com.example.csi_admin.complaint.ComplaintLodge" />
         <activity android:name="com.example.csi_admin.complaint.ComplaintsActivity" />
         <activity android:name="com.example.csi_admin.expense.ApprovalExpenseActivity" />

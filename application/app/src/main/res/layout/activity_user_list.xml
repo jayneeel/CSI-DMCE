@@ -16,24 +16,22 @@
         android:weightSum="10">
 
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="0dp"
-        android:layout_weight="9"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:hint="Search Users..."
-        android:drawableLeft="@drawable/ic_round_search_24"
-        android:drawableTint="#6D6D6D"
-        android:fontFamily="@font/lato"
-        android:background="@drawable/search_style"/>
+        <SearchView
+            android:id="@+id/searchUsers"
+            android:layout_width="310dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search Users" />
 
-    <at.markushi.ui.CircleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cb_color="#0D1542"
-        android:src="@drawable/settings"
-        android:padding="15dp"
-        android:layout_weight="1"/>
+        <at.markushi.ui.CircleButton
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:src="@drawable/settings"
+            app:cb_color="#0D1542" />
 
     </LinearLayout>
 

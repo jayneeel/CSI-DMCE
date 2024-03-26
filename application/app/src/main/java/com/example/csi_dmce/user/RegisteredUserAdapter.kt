@@ -1,4 +1,4 @@
-package com.example.csi_admin.user
+package com.example.csi_dmce.user
 
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +28,7 @@ class RegisteredUserAdapter(private val registeredUsersList : ArrayList<Student>
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val user : Student = registeredUsersList[position]
+        holder.student_id.text=user.student_id
         holder.student_dept.text = user.department
         holder.student_name.text = user.name
 

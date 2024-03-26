@@ -1,10 +1,8 @@
 package com.example.csi_dmce.dashboard
 
+import ImageAdapter
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,7 +43,8 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
-import org.jetbrains.annotations.NotNull
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class DashboardFragment : Fragment() {
@@ -55,6 +54,7 @@ class DashboardFragment : Fragment() {
     lateinit var toolbar: Toolbar
     private lateinit var eventArrayList : ArrayList<Event>
     private lateinit var myAdapter: EventAdapter
+    private lateinit var iAdapter: ImageAdapter
     lateinit var imageSlider: ImageSlider
     private lateinit var db : FirebaseFirestore
     var imageList2: ArrayList<String>? = null
@@ -70,7 +70,10 @@ class DashboardFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val imageList = ArrayList<SlideModel>()
+        var imageList = ArrayList<SlideModel>()
+        val sharedPreferences = requireActivity().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
+
+
         eventRecycler = view.findViewById(R.id.recyclerview)
 
         quoteOfTheDay = view.findViewById(R.id.text_view_quote_of_the_day)
@@ -123,31 +126,47 @@ class DashboardFragment : Fragment() {
             for (file in listResult.items) {
                 file.getDownloadUrl()
                     .addOnSuccessListener { uri -> // adding the url in the arraylist
+                        val dialog = Dialog(imageSlider.context)
                         var title = file.name.toString()
                         var url = uri.toString()
                         //hashMap.put(bb, uri.toString())
                         //println(hashMap)
-                        imageList.sortBy { it.title }
                         imageList.add(SlideModel(url, title = title))
+                        imageList.sortBy { it.title }
                         imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
                         imageSlider.setItemClickListener(object: ItemClickListener {
                             override fun onItemSelected(position: Int) {
-                                val dialog = Dialog(imageSlider.context)
+
                                 dialog.setContentView(R.layout.component_image_scale_popup)
                                 val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
-                                var delete = dialog.findViewById<Button>(R.id.button2)
+                                var delete = dialog.findViewById<Button>(R.id.btn_delete)
                                 Glide.with(ivFullScale.context)
                                     .setDefaultRequestOptions(RequestOptions())
                                     .load(imageList.get(position).imageUrl)
                                     .into(ivFullScale)
 
-                                dialog.show()
-                                dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
                                 delete.setOnClickListener{
                                     imageList.removeAt(position)
-                                }
-                            }
+                                    imageList.sortBy { it.title }
+                                    imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+                                    dialog.dismiss()
 
+                                    val editor = sharedPreferences.edit()
+                                    editor.putString("imageList", Gson().toJson(imageList))
+                                    editor.apply()
+
+                                    // Retrieve the imageList from SharedPreferences when the app starts
+                                    val savedImageListString = sharedPreferences.getString("imageList", null)
+                                    if (savedImageListString != null) {
+                                        val type = object : TypeToken<ArrayList<SlideModel>>() {}.type
+                                        imageList = Gson().fromJson(savedImageListString, type)
+                                    }
+                                    imageList.sortBy { it.title }
+                                    imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+                                }
+                                dialog.show()
+                                dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+                            }
                         })
                         //Log.d("TAG", "onCreateView: url "+imageList2)
                         Log.d("TAG", "onCreateView: "+title+"="+url)

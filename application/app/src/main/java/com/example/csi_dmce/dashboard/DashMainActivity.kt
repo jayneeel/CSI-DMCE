@@ -17,7 +17,7 @@ import com.example.csi_admin.complaint.ComplaintLodge
 import com.example.csi_admin.complaint.ComplaintsActivity
 import com.example.csi_admin.expense.ApprovalExpenseActivity
 import com.example.csi_admin.expense.ExpenseRequest
-import com.example.csi_admin.user.UserListActivity
+import com.example.csi_dmce.user.UserListActivity
 import com.example.csi_dmce.R
 import com.example.csi_dmce.images.ChooseImages
 import com.example.csi_dmce.attendance.CsvGeneration
