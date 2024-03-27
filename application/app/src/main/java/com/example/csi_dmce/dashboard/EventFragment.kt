@@ -21,7 +21,14 @@ import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
 import com.example.csi_dmce.events.EventUpsertActivity
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class EventFragment : Fragment() {
@@ -34,6 +41,8 @@ class EventFragment : Fragment() {
     private val REQUEST_CODE_LOOP_TO_LIST: Int = 100
 
     private lateinit var btnEventAdd: FloatingActionButton
+    private lateinit var shimmerContainer: ShimmerFrameLayout
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,14 +77,34 @@ class EventFragment : Fragment() {
             btnEventAdd.hide()
         }
 
-        val events: List<Event> = runBlocking { EventWrapper.getEvents() }
+        shimmerContainer = view.findViewById(R.id.shimmer_container)
+        recyclerView = view.findViewById(R.id.recycler_view_events_list)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_events_list)
-        val layoutManager = LinearLayoutManager(view.context)
-        recyclerView.layoutManager = layoutManager
+//        shimmerContainer.setShimmer(
+//            Shimmer.AlphaHighlightBuilder() // You can customize the shimmer effect here
+//                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+//                .setAutoStart(true)
+//                .setBaseAlpha(0.2f)
+//                .setHighlightAlpha(0.9f)
+//                .setDuration(5000) // Adjust the duration of the shimmer animation
+//                .build()
+//        )
 
-        val adapter = com.example.csi_dmce.EventAdapter(events)
-        recyclerView.adapter = adapter
+        shimmerContainer.startShimmer()
+        GlobalScope.launch(Dispatchers.Main) {
+//            delay(5000)
+            val events: List<Event> = EventWrapper.getEvents()
+
+            // Stop shimmer effect when data is loaded
+            shimmerContainer.stopShimmer()
+            shimmerContainer.visibility = View.GONE
+
+            // Show RecyclerView with actual data
+            recyclerView.visibility = View.VISIBLE
+            recyclerView.layoutManager = LinearLayoutManager(view.context)
+            recyclerView.adapter = com.example.csi_dmce.EventAdapter(events)
+        }
+
 
         return view
     }
