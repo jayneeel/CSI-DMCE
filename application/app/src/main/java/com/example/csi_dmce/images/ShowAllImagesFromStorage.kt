@@ -1,6 +1,6 @@
 package com.example.csi_dmce.images
 
-import ImageAdapter
+import ImageAdapterString
 import com.example.csi_dmce.R
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +19,7 @@ class ShowAllImagesFromStorage : AppCompatActivity() {
     var recyclerView: RecyclerView? = null
     var root: StorageReference? = null
     var progressBar: ProgressBar? = null
-    var adapter: ImageAdapter? = null
+    var adapter: ImageAdapterString? = null
 //    val toolbar: Toolbar = findViewById(R.id.toolbar)
 //    val delete: MenuItem = findViewById(R.id.action_delete)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class ShowAllImagesFromStorage : AppCompatActivity() {
         setContentView(R.layout.activity_showallimages)
         imagelist = ArrayList()
         recyclerView = findViewById(R.id.recyclerview)
-        adapter = ImageAdapter(imagelist!!, this)
+        adapter = ImageAdapterString(imagelist!!, this)
         recyclerView!!.setLayoutManager(LinearLayoutManager(this))
         progressBar = findViewById(R.id.progress)
         progressBar!!.visibility = View.VISIBLE

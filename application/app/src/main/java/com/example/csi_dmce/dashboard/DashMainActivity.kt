@@ -25,6 +25,7 @@ import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.events.EventListActivity
+import com.example.csi_dmce.notifications.Announcments
 import com.example.csi_dmce.notifications.MyFirebaseMessagingService
 import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csiappdashboard.ProfileFragment
@@ -45,8 +46,15 @@ class DashMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbars))
 
-        Firebase.messaging.subscribeToTopic("all")
-        MyFirebaseMessagingService.sendFCMMessage()
+        if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()){
+            Firebase.messaging.subscribeToTopic("admin")
+            Firebase.messaging.subscribeToTopic("all")
+        }
+        else {
+            Firebase.messaging.subscribeToTopic("all")
+            Firebase.messaging.unsubscribeFromTopic("admin")
+        }
+
 
         studentObject = runBlocking {
             StudentWrapper.getStudent(CsiAuthWrapper.getStudentId(applicationContext))!!
@@ -95,7 +103,6 @@ class DashMainActivity : AppCompatActivity() {
                 "CSI Member"
             }
         )
-
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
@@ -150,12 +157,6 @@ class DashMainActivity : AppCompatActivity() {
                             cIntent.putExtra("avatar_extension", studentObject.avatar_extension)
                             startActivity(cIntent)
                         }
-                        R.id.nav_logout ->  {
-                            CsiAuthWrapper.deleteAuthToken(applicationContext)
-                            val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
-                        }
                     }
                     true
                 }
@@ -204,6 +205,7 @@ class DashMainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         val exitDialog = AlertDialog.Builder(this)
         //code to handle back button press
         exitDialog.setTitle("Alert")

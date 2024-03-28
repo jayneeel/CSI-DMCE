@@ -1,7 +1,9 @@
 package com.example.csi_dmce.database
 
+import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
+import com.example.csi_dmce.notifications.MyFirebaseMessagingService
 import com.example.csi_dmce.utils.Helpers
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
@@ -57,11 +59,23 @@ class EventWrapper {
                 storageRef.child("${event.eventId}/poster.${fileExtension}")
                     .putFile(imageUri)
                     .await()
-            }
 
+
+                val a=event.title
+                val b=event.description
+                storageRef.child(event.eventId!!).child("poster.$fileExtension").downloadUrl.addOnSuccessListener{
+                    val c=it.toString()
+                    Log.d(ContentValues.TAG, "addEvent:"+c)
+
+                    //sending notification
+                    MyFirebaseMessagingService.sendFCMMessage(a,b,c,"all")
+
+                }
+            }
             val eventDocumentRef = eventsCollectionRef.document(event.eventId!!)
             return eventDocumentRef.set(event).await()
         }
+
 
         /**
          * Read an event from the database.
