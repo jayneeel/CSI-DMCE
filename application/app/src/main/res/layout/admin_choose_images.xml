@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,47 +7,180 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/csi_primary_accent"
+        app:title="Upload Images"
+        app:titleTextColor="@android:color/white" />
+
+    <ScrollView
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical">
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_margin="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/enter_title"
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_margin="8dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:scaleType="centerInside" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="enter title" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp">
 
-        <Button
-            android:id="@+id/choose_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose Image" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/enter_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Title"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/upload_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload Image" />
+            <LinearLayout
+                android:layout_width="379dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/retrieve_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show All Images" />
+                <ImageButton
+                    android:id="@+id/choose_image"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/icons8_choose" />
 
-    </LinearLayout>
-</ScrollView>
+                <ImageButton
+                    android:id="@+id/upload_image"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:padding="8dp"
+                    android:src="@drawable/icons8_upload" />
+
+                <ImageButton
+                    android:id="@+id/retrieve_image"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:padding="8dp"
+                    android:src="@drawable/icons8_gallery" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
+
+
+
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".MainActivity">-->
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="@color/csi_primary_accent"-->
+<!--        app:title="Upload Images"-->
+<!--        app:titleTextColor="@android:color/white" />-->
+
+<!--    <ScrollView-->
+<!--        android:layout_below="@id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical"-->
+<!--            android:padding="16dp">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/image_view"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:scaleType="centerCrop" />-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:boxCornerRadiusTopStart="8dp"-->
+<!--                app:boxCornerRadiusTopEnd="8dp">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/enter_title"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Enter Title"/>-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginTop="16dp">-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/choose_image"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Choose Image"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:textColor="@android:color/white" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/upload_image"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Upload Image"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:layout_marginStart="8dp" />-->
+<!--            </LinearLayout>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/retrieve_image"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Show All Images"-->
+<!--                android:padding="8dp"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:layout_marginTop="16dp" />-->
+
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
+<!--</RelativeLayout>-->

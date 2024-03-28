@@ -15,6 +15,7 @@
         android:roundIcon="@drawable/csi_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.CSIDMCE"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
         <activity
             android:name=".images.ImageAdapter"

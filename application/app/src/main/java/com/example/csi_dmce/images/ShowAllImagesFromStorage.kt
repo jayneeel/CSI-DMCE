@@ -20,15 +20,19 @@ class ShowAllImagesFromStorage : AppCompatActivity() {
     var root: StorageReference? = null
     var progressBar: ProgressBar? = null
     var adapter: ImageAdapter? = null
+//    val toolbar: Toolbar = findViewById(R.id.toolbar)
+//    val delete: MenuItem = findViewById(R.id.action_delete)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_showallimages)
         imagelist = ArrayList()
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+        recyclerView = findViewById(R.id.recyclerview)
         adapter = ImageAdapter(imagelist!!, this)
         recyclerView!!.setLayoutManager(LinearLayoutManager(this))
         progressBar = findViewById(R.id.progress)
         progressBar!!.visibility = View.VISIBLE
+
+
         val storageReference: StorageReference = FirebaseStorage.getInstance().reference
         val image_refrance: StorageReference = storageReference.child("gallery")
 

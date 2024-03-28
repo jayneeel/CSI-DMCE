@@ -7,7 +7,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import androidx.appcompat.widget.AppCompatImageButton
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -18,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.csi_dmce.R
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
@@ -26,9 +29,9 @@ import kotlin.collections.HashMap
 
 class ChooseImages : AppCompatActivity() {
 
-    lateinit var choose_img: Button
-    lateinit var upload_img: Button
-    lateinit var retrieve_img: Button
+    lateinit var choose_img: ImageButton
+    lateinit var upload_img: ImageButton
+    lateinit var retrieve_img: ImageButton
     lateinit var image_view: ImageView
     lateinit var title: TextInputEditText
     var fileUri: Uri? = null
@@ -97,11 +100,45 @@ class ChooseImages : AppCompatActivity() {
 
             val ref: StorageReference = FirebaseStorage.getInstance().getReference()
                 .child("gallery").child(title.text.toString())
-            ref.putFile(fileUri!!).addOnSuccessListener {
-                progressDialog.dismiss()
-                Toast.makeText(applicationContext, "File Uploaded Successfully", Toast.LENGTH_LONG)
-                    .show()
-            }.addOnFailureListener {
+            ref.putFile(fileUri!!).addOnSuccessListener { uploadTask ->
+                // Get the download URL from the storage task
+                uploadTask.storage.downloadUrl.addOnSuccessListener { uri ->
+                    val imageUrl = uri.toString()
+
+                    // Add image data to Firestore
+                    val db = FirebaseFirestore.getInstance()
+                    val imageInfo = HashMap<String, Any>()
+                    imageInfo["title"] = title.text.toString()
+                    imageInfo["imageUrl"] = imageUrl
+
+                    // Add the image data to Firestore
+                    db.collection("images").add(imageInfo)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
+                            progressDialog.dismiss()
+                            Toast.makeText(
+                                applicationContext,
+                                "File Uploaded Successfully",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }.addOnFailureListener { e ->
+                        Log.w("TAG", "Error adding document", e)
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            applicationContext,
+                            "File Upload Failed...",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                }.addOnFailureListener { e ->
+                    Log.d("TAG", "Error getting download URL", e)
+                    progressDialog.dismiss()
+                    Toast.makeText(applicationContext, "File Upload Failed...", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }.addOnFailureListener { e ->
                 progressDialog.dismiss()
                 Toast.makeText(applicationContext, "File Upload Failed...", Toast.LENGTH_LONG)
                     .show()

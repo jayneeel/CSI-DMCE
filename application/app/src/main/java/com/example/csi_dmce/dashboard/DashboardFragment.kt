@@ -57,8 +57,8 @@ class DashboardFragment : Fragment() {
     private lateinit var iAdapter: ImageAdapter
     lateinit var imageSlider: ImageSlider
     private lateinit var db : FirebaseFirestore
-    var imageList2: ArrayList<String>? = null
-
+    val FireStore = FirebaseFirestore.getInstance()
+    val imagesCollectionRef = FireStore.collection("images")
 
     private lateinit var studentObject: Student
 
@@ -118,63 +118,28 @@ class DashboardFragment : Fragment() {
         EventChangerListener()
 
         imageSlider = view.findViewById(R.id.imageSlider)
-        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
-        val image_refrance: StorageReference = storageReference.child("gallery")
+        imagesCollectionRef.get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                // Retrieve the URL of each image from the Firestore document
+                val imageUrl = document.getString("imageUrl")
+                val title = document.getString("title") ?: "Untitled"
 
-        //val hashMap: HashMap<String, String> = HashMap()
-        image_refrance.listAll().addOnSuccessListener(OnSuccessListener<ListResult> { listResult ->
-            for (file in listResult.items) {
-                file.getDownloadUrl()
-                    .addOnSuccessListener { uri -> // adding the url in the arraylist
-                        val dialog = Dialog(imageSlider.context)
-                        var title = file.name.toString()
-                        var url = uri.toString()
-                        //hashMap.put(bb, uri.toString())
-                        //println(hashMap)
-                        imageList.add(SlideModel(url, title = title))
-                        imageList.sortBy { it.title }
-                        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-                        imageSlider.setItemClickListener(object: ItemClickListener {
-                            override fun onItemSelected(position: Int) {
-
-                                dialog.setContentView(R.layout.component_image_scale_popup)
-                                val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
-                                var delete = dialog.findViewById<Button>(R.id.btn_delete)
-                                Glide.with(ivFullScale.context)
-                                    .setDefaultRequestOptions(RequestOptions())
-                                    .load(imageList.get(position).imageUrl)
-                                    .into(ivFullScale)
-
-                                delete.setOnClickListener{
-                                    imageList.removeAt(position)
-                                    imageList.sortBy { it.title }
-                                    imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-                                    dialog.dismiss()
-
-                                    val editor = sharedPreferences.edit()
-                                    editor.putString("imageList", Gson().toJson(imageList))
-                                    editor.apply()
-
-                                    // Retrieve the imageList from SharedPreferences when the app starts
-                                    val savedImageListString = sharedPreferences.getString("imageList", null)
-                                    if (savedImageListString != null) {
-                                        val type = object : TypeToken<ArrayList<SlideModel>>() {}.type
-                                        imageList = Gson().fromJson(savedImageListString, type)
-                                    }
-                                    imageList.sortBy { it.title }
-                                    imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-                                }
-                                dialog.show()
-                                dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
-                            }
-                        })
-                        //Log.d("TAG", "onCreateView: url "+imageList2)
-                        Log.d("TAG", "onCreateView: "+title+"="+url)
-                        Log.d("TAG", "onCreateView: list2 "+imageList)
-                    }
+                // Add the image to your imageList
+                imageUrl?.let {
+                    imageList.add(SlideModel(it, title = title))
+                }
             }
-            Log.d("TAG", "onCreateView: list3 "+imageList)
-        })
+
+            // Sort the imageList by title
+            imageList.sortBy { it.title }
+
+            // Set the imageList to your imageSlider
+            imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+        }
+            .addOnFailureListener { exception ->
+            // Handle any errors that occur while fetching images from Firestore
+            Log.e("Firestore", "Error getting images", exception)
+        }
 
 
 
