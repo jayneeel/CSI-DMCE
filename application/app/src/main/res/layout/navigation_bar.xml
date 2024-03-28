@@ -4,30 +4,19 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbars"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="40dp"
-        app:cardElevation="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="10dp">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbars"
-            android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
-            android:theme="@style/ToolbarColoredBackArrow"
-            android:layout_height="60dp"
-            app:navigationIcon="@drawable/ic_round_menu_24"
-            app:titleMarginStart="10dp"
-            app:title="CSI-DMCE"
-            android:foregroundTint="@color/white"
-            app:titleTextColor="@color/white"
-            android:background="@drawable/toolbar"
-            app:navigationContentDescription="Drawer"
-            android:minHeight="?attr/actionBarSize"/>
-
-    </com.google.android.material.card.MaterialCardView>
-
+        android:layout_alignParentTop="true"
+        android:theme="@style/ToolbarColoredBackArrow"
+        android:layout_height="60dp"
+        app:navigationIcon="@drawable/ic_round_menu_24"
+        app:titleMarginStart="10dp"
+        app:title="CSI-DMCE"
+        android:foregroundTint="@color/white"
+        app:titleTextColor="@color/white"
+        android:background="@drawable/toolbar"
+        app:navigationContentDescription="Drawer"
+        android:minHeight="?attr/actionBarSize"/>
 
 </RelativeLayout>
