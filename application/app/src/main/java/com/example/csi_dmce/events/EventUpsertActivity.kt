@@ -4,30 +4,23 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.csi_dmce.R
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
+import com.example.csi_dmce.notifications.MyFirebaseMessagingService
 import com.example.csi_dmce.utils.Helpers
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.tasks.await
-import java.io.ByteArrayOutputStream
 import java.util.*
 
 class EventUpsertActivity: AppCompatActivity() {
@@ -69,22 +62,22 @@ class EventUpsertActivity: AppCompatActivity() {
         val isAddIntent: Boolean = intent.getBooleanExtra("is_add_intent", false)
 
         etEventTitle = findViewById(R.id.edit_text_event_upsert_name)
-        tiEventTitle=findViewById(R.id.namecon)
+        tiEventTitle = findViewById(R.id.namecon)
 
         etEventDescription = findViewById(R.id.edit_text_event_upsert_description)
-        tiEventDescription=findViewById(R.id.desccon)
+        tiEventDescription = findViewById(R.id.desccon)
 
         etEventDateTime = findViewById(R.id.edit_text_event_upsert_datetime)
-        tiEventDateTime=findViewById(R.id.datetimecon)
+        tiEventDateTime = findViewById(R.id.datetimecon)
 
         etEventSpeaker = findViewById(R.id.edit_text_event_upsert_speaker)
-        tiEventSpeaker=findViewById(R.id.speakercon2)
+        tiEventSpeaker = findViewById(R.id.speakercon2)
 
         etEventVenue = findViewById(R.id.edit_text_event_upsert_venue)
-        tiEventVenue=findViewById(R.id.venuecon)
+        tiEventVenue = findViewById(R.id.venuecon)
 
         etEventPrerequisites = findViewById(R.id.edit_text_event_upsert_prerequisites)
-        tiEventPrerequisites =findViewById(R.id.prequisitecon)
+        tiEventPrerequisites = findViewById(R.id.prequisitecon)
 
         ivEventPoster = findViewById(R.id.image_view_event_poster)
 
@@ -130,27 +123,33 @@ class EventUpsertActivity: AppCompatActivity() {
 
         upsertButton = findViewById(R.id.button_event_upsert)
         upsertButton.text = if (isAddIntent) "Add" else "Update"
-        if (!isAddIntent) {
-            oldEventObject = Gson()
-                .fromJson(intent.getStringExtra("update_event"), Event::class.java)
+            if (!isAddIntent) {
+                oldEventObject = Gson()
+                    .fromJson(intent.getStringExtra("update_event"), Event::class.java)
 
-            etEventTitle.setText(oldEventObject.title)
-            etEventDescription.setText(oldEventObject.description)
-            etEventDateTime.setText(
-                Helpers.eventUpsertDateTimeFormat.format(
-                    Helpers.generateDateFromUnixTimestamp(oldEventObject.datetime!!)
+                etEventTitle.setText(oldEventObject.title)
+                etEventDescription.setText(oldEventObject.description)
+                etEventDateTime.setText(
+                    Helpers.eventUpsertDateTimeFormat.format(
+                        Helpers.generateDateFromUnixTimestamp(oldEventObject.datetime!!)
+                    )
                 )
-            )
-            etEventSpeaker.setText(oldEventObject.speaker)
-            etEventVenue.setText(oldEventObject.venue)
-            etEventPrerequisites.setText(oldEventObject.prerequisites)
+                etEventSpeaker.setText(oldEventObject.speaker)
+                etEventVenue.setText(oldEventObject.venue)
+                etEventPrerequisites.setText(oldEventObject.prerequisites)
 
-            val eventPosterUrl = runBlocking { EventWrapper.getPosterUrl(oldEventObject.eventId!!, oldEventObject.poster_extension.toString()) }
-            Glide.with(this)
-                .setDefaultRequestOptions(RequestOptions())
-                .load(eventPosterUrl)
-                .into(ivEventPoster)
-        }
+                val eventPosterUrl = runBlocking {
+                    EventWrapper.getPosterUrl(
+                        oldEventObject.eventId!!,
+                        oldEventObject.poster_extension.toString()
+                    )
+                }
+                Glide.with(this)
+                    .setDefaultRequestOptions(RequestOptions())
+                    .load(eventPosterUrl)
+                    .into(ivEventPoster)
+            }
+
 
 
         ivEventPoster.setOnClickListener {

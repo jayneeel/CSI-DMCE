@@ -22,10 +22,5 @@
         android:iconTint="#0D1542"
         android:title="Lodge a complaint"/>
 
-    <item
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_exit"
-        android:iconTint="#0D1542"
-        android:title="Logout" />
 
 </menu>
