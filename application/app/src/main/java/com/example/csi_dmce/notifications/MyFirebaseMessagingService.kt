@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import com.example.csi_dmce.R
 import com.example.csi_dmce.dashboard.DashMainActivity
 import com.example.csi_dmce.notifications.messaging.OAuthTokenGetter.getOAuthToken
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -32,6 +33,7 @@ import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.Arrays
+import kotlin.math.log
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -132,6 +134,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 val fileName = "csi-dmce-c6f11-5cd215ce2ac6.json"
                 val file = File(fileName)
                 println("Absolute path: ${file.absolutePath}")
+                var token=""
+
+                FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                    token=it.result.toString()
+                    Log.d(TAG, "sendFCMMessage token : "+token)
+                }
+
 
                 val a=getOAuthToken()
                 Log.d(TAG, "fcmTOKEN: "+a)
@@ -141,7 +150,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 val url = URL(fcmEndpoint)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
-                connection.setRequestProperty("Authorization", "Bearer ya29.a0Ad52N3812b3EOo4F7n1r_TyiHjSOiAr-TGjg3E7ILlyYhoaWydiriIdAUqnbDYQefqc5EUWHx1BfWqepqAPteol38X3RJ0t7Ve9JmRachwQZzs52kirWsaHFL7x-4nIrkZaGFiQ-LwbhcpKgktp2kFwS6FvzMOtQhQRMaCgYKAX0SARASFQHGX2MiJ8UkDI-auTmooIh2_SojXA0171")
+                connection.setRequestProperty("Authorization", "Bearer ya29.a0Ad52N3-mXjahIRPrNbypy4XtIMB9gjS7XJBDM9FEv_ItXLdrw82iEWGCblcrz12_QW8kkmG_lRnG3W557QB5iO1ecoKZzxh94s3NroNVUwNHdcJfXn65TsaZhQQLK3I4hJpbH9B4_bJ25VCcbmLKdWQtArIsO6b_FlJIaCgYKAScSARASFQHGX2Mi_VEHeqdI1GpmnJpzTvuxyw0171")
                 connection.setRequestProperty("Content-Type", "application/json")
                 Log.d(TAG, "sendFCMMessage: **********************************")
 

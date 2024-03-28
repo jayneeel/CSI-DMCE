@@ -26,6 +26,7 @@ import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.events.EventListActivity
 import com.example.csi_dmce.notifications.Announcments
 import com.example.csi_dmce.notifications.MyFirebaseMessagingService
+import com.example.csi_dmce.ui.Aboutus
 import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csiappdashboard.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -69,9 +70,7 @@ class DashMainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, WelcomeActivity::class.java)
             finishAffinity()
             startActivity(intent)
-
         }
-
         if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()) {
             navView.menu.clear()
             navView.inflateMenu(R.menu.admin_side_nav)
@@ -89,7 +88,6 @@ class DashMainActivity : AppCompatActivity() {
                     .into(navHeaderImage)
             }
         }
-
 
         val navHeaderName: TextView = navHeaderView.findViewById(R.id.nav_header_name)
         navHeaderName.setText(studentObject.name?: "User")
@@ -134,6 +132,11 @@ class DashMainActivity : AppCompatActivity() {
                         startActivity(cIntent)
 
                     }
+
+                    R.id.aboutus -> {
+                        val cIntent = Intent(this, Aboutus::class.java)
+                        startActivity(cIntent)
+                    }
                 }
                 true
             }
@@ -155,6 +158,11 @@ class DashMainActivity : AppCompatActivity() {
                             cIntent.putExtra("student_id", studentObject.student_id)
                             cIntent.putExtra("student_name", studentObject.name)
                             cIntent.putExtra("avatar_extension", studentObject.avatar_extension)
+                            startActivity(cIntent)
+                        }
+
+                        R.id.aboutus -> {
+                            val cIntent = Intent(this, Aboutus::class.java)
                             startActivity(cIntent)
                         }
                     }
@@ -205,7 +213,6 @@ class DashMainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         val exitDialog = AlertDialog.Builder(this)
         //code to handle back button press
         exitDialog.setTitle("Alert")

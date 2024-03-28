@@ -30,6 +30,7 @@ class RegisteredUserAdapter(private val registeredUsersList : ArrayList<Student>
         val user : Student = registeredUsersList[position]
         holder.student_dept.text = user.department
         holder.student_name.text = user.name
+        holder.student_id.text=user.student_id
 
         runBlocking {
             StudentWrapper.getStudentAvatarUrl(user.student_id!!, user.avatar_extension!!){

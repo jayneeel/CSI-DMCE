@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="16dp"
+tools:context=".ui.Aboutus">
+
+<ImageView
+    android:id="@+id/image_logo"
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    android:layout_centerHorizontal="true"
+    android:src="@drawable/csi_logo"
+    android:layout_marginTop="32dp"
+    android:contentDescription="CSI" />
+
+<TextView
+    android:id="@+id/text_app_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/image_logo"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="16dp"
+    android:text="@string/app_name"
+    android:textColor="@color/black"
+    android:textSize="18sp"
+    android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/text_version"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/text_app_name"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="8dp"
+    android:text="1.0"
+    android:textColor="@color/black"
+    android:textSize="14sp" />
+
+<TextView
+    android:id="@+id/text_description"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/text_version"
+    android:layout_marginTop="32dp"
+    android:text="The Computer Society of India is one of the largest and most professionally managed associations of IT professionals in India. Its chapters in colleges aim to foster interest and expertise in the field of computing among students. "
+    android:textColor="@color/black"
+    android:textSize="16sp" />
+
+<!-- Social Media Links -->
+<LinearLayout
+    android:id="@+id/layout_social_media"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/text_description"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_marginTop="32dp">
+
+    <ImageView
+        android:id="@+id/image_instagram"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/instagram_logo_icon"
+        android:contentDescription="Instagram"
+        android:onClick="openInstagram"
+        android:layout_marginEnd="16dp"/>
+
+    <ImageView
+        android:id="@+id/image_facebook"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/linkedin_logo_icon"
+        android:contentDescription="Linkedin"
+        android:clickable="true"
+        android:onClick="openLinkedIn"
+        android:layout_marginEnd="16dp"
+        android:focusable="true" />
+
+    <ImageView
+        android:id="@+id/gmail"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:onClick="sendmail"
+        android:src="@drawable/gmail_google_icon"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Website"/>
+
+
+    <ImageView
+        android:id="@+id/image_internet"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:onClick="openwebsite"
+        android:src="@drawable/internet_icon"
+        android:contentDescription="Website"/>
+
+
+
+    <!-- Add more social media icons as needed -->
+
+</LinearLayout>
+
+</RelativeLayout>

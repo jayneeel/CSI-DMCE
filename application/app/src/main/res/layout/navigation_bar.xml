@@ -15,7 +15,7 @@
         app:title="CSI-DMCE"
         android:foregroundTint="@color/white"
         app:titleTextColor="@color/white"
-        android:background="#133AB7"
+        android:background="@drawable/toolbar"
         app:navigationContentDescription="Drawer"
         android:minHeight="?attr/actionBarSize"/>
 
