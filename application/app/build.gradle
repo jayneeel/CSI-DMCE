@@ -138,5 +138,9 @@ dependencies {
     implementation 'com.google.auth:google-auth-library-oauth2-http:1.19.0'
 
 
+    //For shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+
 }
 apply plugin: 'com.google.gms.google-services'
