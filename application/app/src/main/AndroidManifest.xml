@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSIDMCE"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.Aboutus"
+            android:exported="false" />
         <activity
             android:name=".notifications.Announcments"
             android:exported="false" />
@@ -108,7 +112,8 @@
         <activity android:name=".attendance.AttendanceActivity$CaptureAct" />
         <activity android:name=".profile.Profile" />
         <activity android:name=".attendance.AdminQrViewActivity" />
-        <activity android:name=".dashboard.DashMainActivity" />
+        <activity android:name=".dashboard.DashMainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".onboarding.OnboardingMain" />
 
         <service

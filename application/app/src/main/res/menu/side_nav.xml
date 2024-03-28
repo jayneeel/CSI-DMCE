@@ -22,5 +22,11 @@
         android:iconTint="#0D1542"
         android:title="Lodge a complaint"/>
 
+    <item
+        android:id="@+id/aboutus"
+        android:icon="@drawable/baseline_emoji_people_24"
+        android:iconTint="#0D1542"
+        android:title="About us"/>
+
 
 </menu>

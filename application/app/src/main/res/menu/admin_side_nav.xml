@@ -31,4 +31,11 @@
         android:icon="@drawable/ic_baseline_email_24"
         android:iconTint="@color/csi_primary_accent"
         android:title="Announcments"/>
+
+    <item
+        android:id="@+id/aboutus"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        android:iconTint="#0D1542"
+        android:title="About us"/>
+
 </menu>

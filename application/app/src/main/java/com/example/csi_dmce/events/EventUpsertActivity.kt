@@ -1,5 +1,6 @@
 package com.example.csi_dmce.events
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -49,6 +50,7 @@ class EventUpsertActivity: AppCompatActivity() {
     private lateinit var tiEventVenue :TextInputLayout
     private lateinit var tiEventPrerequisites :TextInputLayout
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_upsert)
