@@ -20,6 +20,12 @@
             android:name=".events.EventInfo"
             android:exported="false" />
         <activity
+            android:name=".ui.Aboutus"
+            android:exported="false" />
+        <activity
+            android:name=".notifications.Announcments"
+            android:exported="false" />
+        <activity
             android:name=".profile.edit_profile"
             android:exported="false">
             <meta-data
@@ -108,7 +114,7 @@
         <activity android:name=".attendance.AttendanceActivity$CaptureAct" />
         <activity android:name=".profile.Profile" />
         <activity android:name=".attendance.AdminQrViewActivity" />
-        <activity android:name=".dashboard.DashMainActivity" />
+        <activity android:name=".dashboard.DashMainActivity" android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".onboarding.OnboardingMain" />
 
         <service
