@@ -20,6 +20,7 @@ import com.example.csi_admin.expense.ExpenseRequest
 import com.example.csi_admin.user.UserListActivity
 import com.example.csi_dmce.Announcments.Announcments
 import com.example.csi_dmce.R
+import com.example.csi_dmce.agenda.CreateAgendaActivity
 import com.example.csi_dmce.attendance.CsvGeneration
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
@@ -137,6 +138,11 @@ class DashMainActivity : AppCompatActivity() {
                     }
                     R.id.aboutus -> {
                         val cIntent = Intent(this, Aboutus::class.java)
+                        startActivity(cIntent)
+                    }
+
+                    R.id.agendas -> {
+                        val cIntent = Intent(this, CreateAgendaActivity::class.java)
                         startActivity(cIntent)
                     }
                 }
