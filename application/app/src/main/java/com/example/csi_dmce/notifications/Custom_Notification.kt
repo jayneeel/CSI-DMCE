@@ -8,20 +8,15 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.csi_dmce.R
 import com.example.csi_dmce.dashboard.DashMainActivity
-import com.example.csi_dmce.dashboard.DashboardFragment
-import com.example.csi_dmce.ui.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
-class Announcments : AppCompatActivity() {
+class Custom_Notification : AppCompatActivity() {
     private lateinit var ettitle : TextInputEditText
     private lateinit var tititle: TextInputLayout
 
@@ -42,7 +37,7 @@ class Announcments : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_announcments)
+        setContentView(R.layout.activity_custom_notifications)
 
         ettitle = findViewById(R.id.notification_title_edit)
         etdesc = findViewById(R.id.notification_description_edit)

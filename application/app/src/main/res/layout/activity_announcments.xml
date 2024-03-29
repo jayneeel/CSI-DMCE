@@ -4,56 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:padding="20dp"
-    android:backgroundTint="@color/white"
     android:layout_height="match_parent"
-    tools:context=".notifications.Announcments"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Announcments.Announcments">
 
-
-    <TextView
-        android:id="@+id/textView1555"
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:lineSpacingExtra="10sp"
-        android:text="ANNOUNCMENTS"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FB0000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:typeface="monospace" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/announcments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:paddingBottom="10dp"
-        app:helperTextTextColor="@color/red">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/announments_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter announcments" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:layout_margin="5dp"
-        android:id="@+id/button4"
-        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Surface"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/csi_blue"
-        android:elevation="30dp"
-        android:text="SUBMIT ANNOUNCMENTS"
-        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/textView15"
@@ -62,20 +16,19 @@
         android:fontFamily="monospace"
         android:layout_marginTop="20dp"
         android:lineSpacingExtra="10sp"
-        android:text="CUSTOM NOTIFICATION"
-        android:textAlignment="center"
+        android:text="ANNOUNCMENTS"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FB0000"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="monospace"
         app:autoSizeTextType="uniform" />
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/notification_title"
-            android:layout_width="match_parent"
-            app:helperTextTextColor="@color/red"
-            android:layout_height="wrap_content">
+        android:id="@+id/notification_title"
+        android:layout_width="match_parent"
+        app:helperTextTextColor="@color/red"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/notification_title_edit"
@@ -83,61 +36,47 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:hint="Notification Title" />
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/notification_description"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/notification_description"
+        android:layout_width="match_parent"
+        app:helperTextTextColor="@color/red"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/notification_description_edit"
             android:layout_width="match_parent"
-            app:helperTextTextColor="@color/red"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/notification_description_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="Notification Description" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/notification_image"
-            android:layout_width="match_parent"
-            app:helperTextTextColor="@color/red"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/notification_image_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="Notification image url" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/autoviewcon2"
-
-            style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            app:helperTextTextColor="@color/red"
-
-            app:dropDownBackgroundTint="@color/white"
-            android:background="@color/white"
-            android:dropDownSelector="@color/white"
-
             android:layout_height="wrap_content"
-            android:hint="Enter Notification receiver"
-            app:boxBackgroundMode="filled"
-            app:helperTextEnabled="true">
+            android:layout_margin="5dp"
+            android:hint="Notification Description" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:dropDownSelector="@color/white"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/autoviewcon2"
+
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        app:helperTextTextColor="@color/red"
+
+        app:dropDownBackgroundTint="@color/white"
+        android:background="@color/white"
+        android:dropDownSelector="@color/white"
+
+        android:layout_height="wrap_content"
+        android:hint="Enter Notification receiver"
+        app:boxBackgroundMode="filled"
+        app:helperTextEnabled="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:dropDownSelector="@color/white"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button3"
@@ -145,9 +84,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:backgroundTint="@color/csi_blue"
+        android:backgroundTint="@color/csi_fg_text"
         android:elevation="20dp"
-        android:text="SEND NOTIFICATION"
+        android:text="PUBLISH ANNOUNCMENTS"
         android:textColor="@color/white" />
 
 </LinearLayout>
