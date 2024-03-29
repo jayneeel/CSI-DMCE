@@ -64,7 +64,7 @@
         android:dropDownSelector="@color/white"
 
         android:layout_height="wrap_content"
-        android:hint="Enter Notification receiver"
+        android:hint="Enter Announcment receiver"
         app:boxBackgroundMode="filled"
         app:helperTextEnabled="true">
 

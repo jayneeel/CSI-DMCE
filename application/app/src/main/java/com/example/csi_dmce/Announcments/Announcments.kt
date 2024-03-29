@@ -66,21 +66,27 @@ class Announcments : AppCompatActivity() {
                     receiver = "all"
                 }
 
+                val time=System.currentTimeMillis().toString()
                 val announcemnt = ettitle.text.toString()
                 val db = Firebase.firestore
-                val map = hashMapOf("1" to announcemnt)
-                db.collection("announcment").document("ANNOUNCMENT")
+                val map = hashMapOf("title" to title)
+                map.put("desc",desc)
+                map.put("receiver",receiver)
+                map.put("time",time)
+                db.collection("announcment").document("ANNOUNCMENT"+time)
                     .set(map).addOnSuccessListener {
                         Log.d(ContentValues.TAG, "DocumentSnapshot added ")
                     }
                     .addOnFailureListener { e ->
                         Log.w(ContentValues.TAG, "Error adding document", e)
                     }
+
+
                 MyFirebaseMessagingService.sendFCMMessage(
                     announcemnt,
-                    "STAY TUNED",
+                    desc,
                     "https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/announcment%20image%2Fannounce.jpg?alt=media&token=d29cf72d-59cc-457e-a2f1-e602af750639",
-                    "all"
+                    receiver
                 )
 
                 Toast.makeText(this, "Announcment sent successfully!!", Toast.LENGTH_SHORT).show()

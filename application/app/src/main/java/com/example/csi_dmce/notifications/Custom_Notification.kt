@@ -70,7 +70,7 @@ class Custom_Notification : AppCompatActivity() {
             val announcemnt = etannounce.text.toString()
             val db = Firebase.firestore
             val map = hashMapOf("1" to announcemnt)
-            db.collection("announcment").document("ANNOUNCMENT")
+            db.collection("banner").document("banner")
                 .set(map).addOnSuccessListener {
                     Log.d(TAG, "DocumentSnapshot added ")
                 }
@@ -84,7 +84,7 @@ class Custom_Notification : AppCompatActivity() {
                 "all"
             )
 
-                Toast.makeText(this, "Announcment sent successfully!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Bannner changed successfully!!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(applicationContext, DashMainActivity::class.java)
                 startActivity(intent)
 
