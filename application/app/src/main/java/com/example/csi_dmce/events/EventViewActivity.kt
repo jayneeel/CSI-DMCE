@@ -58,6 +58,7 @@ class EventViewActivity: AppCompatActivity() {
     private lateinit var favDbInstance: FavoriteDatabase
 
     private lateinit var btnFavorite: ImageButton
+    private lateinit var btnEventInfo : ImageButton
 
     /**
      * 1. When the activity starts, pop up the card.
@@ -150,6 +151,18 @@ class EventViewActivity: AppCompatActivity() {
         }
 
         if (CsiAuthWrapper.getRoleFromToken(applicationContext).isAdmin()) {
+
+
+            //intent passing for Event registrants information
+            btnEventInfo = findViewById(R.id.button_event_info)
+            btnEventInfo.visibility = View.VISIBLE
+            btnEventInfo.setOnClickListener {
+                val intent = Intent(this, EventInfo::class.java)
+                intent.putExtra("event_title", tvEventTitle.text.toString())
+                startActivity(intent)
+            }
+
+
             btnEventUpdate = findViewById(R.id.button_event_update)
             btnEventUpdate.visibility = View.VISIBLE
             btnEventUpdate.setOnClickListener {
@@ -249,6 +262,7 @@ class EventViewActivity: AppCompatActivity() {
                 dialog.show()
             }
         }
+
 
         var isFavorite: Boolean = favDbInstance
             .favoriteDao()
