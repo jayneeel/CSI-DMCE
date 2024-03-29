@@ -1,37 +1,94 @@
 package com.example.csi_dmce.notifications
+
+import com.google.auth.oauth2.GoogleCredentials
+
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import java.net.URL
 import com.example.csi_dmce.R
 import com.example.csi_dmce.dashboard.DashMainActivity
+import com.example.csi_dmce.notifications.messaging.OAuthTokenGetter.getOAuthToken
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.DelicateCoroutinesApi
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
+import java.util.Arrays
+import kotlin.math.log
+
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+
+    private val MESSAGING_SCOPE: String? = "https://www.googleapis.com/auth/firebase.messaging"
+    @Throws(IOException::class)
+//    fun getAccessToken(): String {
+//        applicationContext.assets.open("csi-dmce-c6f11-5cd215ce2ac6.json").apply {
+//            val inputStream=this
+//            val googleCredentials = GoogleCredentials.
+//            fromStream(FileInputStream(inputStream))
+//                .createScoped(Arrays.asList(MESSAGING_SCOPE))
+//            googleCredentials.refresh()
+//            return googleCredentials.getAccessToken().tokenValue
+//        }
+//
+//    }
+
+
+        private fun imageloader(c: String): Bitmap? {
+        val `in`: InputStream
+        try {
+            val url = URL(c)
+            val connection =
+                url.openConnection() as HttpURLConnection
+            connection.setDoInput(true)
+            connection.connect()
+            `in` = connection.inputStream
+            return BitmapFactory.decodeStream(`in`)
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+
+
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // TODO(developer): Handle FCM messages here.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message data payload: \${remoteMessage.data}")
             // Show the notification
             val notificationBody = remoteMessage.getNotification()!!.body
             val notificationTitle = remoteMessage.getNotification()!!.title
-            sendNotification(notificationTitle, notificationBody)
+            val notificationimage = remoteMessage.getNotification()!!.imageUrl
+            val intent = remoteMessage.getNotification()!!.clickAction
+            sendNotification(notificationTitle, notificationBody,notificationimage)
         }
     }
 
-    private fun sendNotification(title: String?, body: String?) {
+
+    @SuppressLint("ResourceAsColor")
+      private  fun sendNotification(title: String?, body: String?, notificationimage: Uri?) {
         val intent = Intent(this, DashMainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
@@ -39,21 +96,27 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             PendingIntent.FLAG_IMMUTABLE
         )
         val channelId = "fcm_default_channel"
+        Log.d(TAG, "sendNotification: $notificationimage")
+        Log.d(TAG, "fcmTOKEN " )
+
+        val bitmap=imageloader(notificationimage.toString())
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_csi_logo)
+            .setColor(R.color.csi_blue)
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Channel human readable title",
+                "CSI_NOTIFICATIONS",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(channel)
@@ -61,30 +124,50 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
 
+
+
     companion object {
         @OptIn(DelicateCoroutinesApi::class)
-        fun sendFCMMessage() {
+        fun sendFCMMessage(title: String?, desc: String?, image: String,receiver: String) {
             GlobalScope.launch(Dispatchers.IO) {
+
+                val fileName = "csi-dmce-c6f11-5cd215ce2ac6.json"
+                val file = File(fileName)
+                println("Absolute path: ${file.absolutePath}")
+                var token=""
+
+                FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                    token=it.result.toString()
+                    Log.d(TAG, "sendFCMMessage token : "+token)
+                }
+
+
+                val a=getOAuthToken()
+                Log.d(TAG, "fcmTOKEN: "+a)
+                Log.d(TAG, "sendFCMMessage: "+image)
+
                 val fcmEndpoint = "https://fcm.googleapis.com/v1/projects/csi-dmce-c6f11/messages:send"
-                //val serverKey = "YOUR_SERVER_KEY"
                 val url = URL(fcmEndpoint)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
-                connection.setRequestProperty("Authorization", "Bearer ya29.a0Ad52N39bHuBaZULyOv1VN7z-kfP6qb_Wu10cszsKLx0ISrQv9iRnoSQDd34_Ew7GcZS4Nr3n84nRyVG1U9oifQXOoLCh1qgXo0zxi9iwZYeZLmMGVBLokdSeNAVtE5EIGl7OgFjqUuFAaO9IrEN9-7oPvf3ZTr12jn15aCgYKAWISARESFQHGX2MiG8PhTy0DmW6RZycGLmefKg0171")
+                connection.setRequestProperty("Authorization", "Bearer ya29.a0Ad52N3-mXjahIRPrNbypy4XtIMB9gjS7XJBDM9FEv_ItXLdrw82iEWGCblcrz12_QW8kkmG_lRnG3W557QB5iO1ecoKZzxh94s3NroNVUwNHdcJfXn65TsaZhQQLK3I4hJpbH9B4_bJ25VCcbmLKdWQtArIsO6b_FlJIaCgYKAScSARASFQHGX2Mi_VEHeqdI1GpmnJpzTvuxyw0171")
                 connection.setRequestProperty("Content-Type", "application/json")
                 Log.d(TAG, "sendFCMMessage: **********************************")
+
                 // Construct JSON payload for FCM message
                 val jsonPayload = """
             {
                 "message": {
-                    "topic": "all_users",
+                    "topic": "$receiver",
                     "notification": {
-                        "title": "Your Title",
-                        "body": "Your Message"
+                        "title": "$title",
+                        "body": "$desc",
+                        "image": "$image" 
                     }
                 }
             }
         """.trimIndent()
+
 
                 // Send JSON payload
                 val outputStreamWriter = OutputStreamWriter(connection.outputStream)
@@ -96,7 +179,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 val responseCode = connection.responseCode
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Message sent successfully
-                    Log.d(TAG, "sendFCMMessage: SUCSESSFULL")
+                    Log.d(TAG, "sendFCMMessage: SUCSESSFULL"+responseCode.toString())
                 } else {
                     // Handle error
                     Log.d(TAG, "sendFCMMessage: UNSUCSESSFULL"+responseCode.toString())

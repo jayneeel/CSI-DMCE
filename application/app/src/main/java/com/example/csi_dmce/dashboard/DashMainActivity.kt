@@ -24,7 +24,9 @@ import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.events.EventListActivity
+import com.example.csi_dmce.notifications.Announcments
 import com.example.csi_dmce.notifications.MyFirebaseMessagingService
+import com.example.csi_dmce.ui.Aboutus
 import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csiappdashboard.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -44,8 +46,15 @@ class DashMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbars))
 
-        Firebase.messaging.subscribeToTopic("all_users")
-        MyFirebaseMessagingService.sendFCMMessage()
+        if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()){
+            Firebase.messaging.subscribeToTopic("admin")
+            Firebase.messaging.subscribeToTopic("all")
+        }
+        else {
+            Firebase.messaging.subscribeToTopic("all")
+            Firebase.messaging.unsubscribeFromTopic("admin")
+        }
+
 
         studentObject = runBlocking {
             StudentWrapper.getStudent(CsiAuthWrapper.getStudentId(applicationContext))!!
@@ -61,9 +70,7 @@ class DashMainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, WelcomeActivity::class.java)
             finishAffinity()
             startActivity(intent)
-
         }
-
         if (CsiAuthWrapper.getRoleFromToken(this).isAdmin()) {
             navView.menu.clear()
             navView.inflateMenu(R.menu.admin_side_nav)
@@ -82,7 +89,6 @@ class DashMainActivity : AppCompatActivity() {
             }
         }
 
-
         val navHeaderName: TextView = navHeaderView.findViewById(R.id.nav_header_name)
         navHeaderName.setText(studentObject.name?: "User")
 
@@ -94,7 +100,6 @@ class DashMainActivity : AppCompatActivity() {
                 "CSI Member"
             }
         )
-
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
@@ -122,11 +127,15 @@ class DashMainActivity : AppCompatActivity() {
                         val cIntent = Intent(this, CsvGeneration::class.java)
                         startActivity(cIntent)
                     }
-                    R.id.nav_item_admin_logout ->  {
-                        CsiAuthWrapper.deleteAuthToken(applicationContext)
-                        val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                        finishAffinity()
-                        startActivity(intent)
+                    R.id.nav_item_admin_announcments ->  {
+                        val cIntent = Intent(this, Announcments::class.java)
+                        startActivity(cIntent)
+
+                    }
+
+                    R.id.aboutus -> {
+                        val cIntent = Intent(this, Aboutus::class.java)
+                        startActivity(cIntent)
                     }
                 }
                 true
@@ -151,11 +160,10 @@ class DashMainActivity : AppCompatActivity() {
                             cIntent.putExtra("avatar_extension", studentObject.avatar_extension)
                             startActivity(cIntent)
                         }
-                        R.id.nav_logout ->  {
-                            CsiAuthWrapper.deleteAuthToken(applicationContext)
-                            val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                            finishAffinity()
-                            startActivity(intent)
+
+                        R.id.aboutus -> {
+                            val cIntent = Intent(this, Aboutus::class.java)
+                            startActivity(cIntent)
                         }
                     }
                     true
