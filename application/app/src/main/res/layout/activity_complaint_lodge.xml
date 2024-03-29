@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"
-                    android:text="Lodge A Complaint"
+                    android:text="Lodge A Feedback"
                     android:layout_marginTop="20dp"
                     android:textColor="@color/black"
                     android:textSize="30dp" />
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:hint="Complaint Subject"
+                    android:hint="Feedback Subject"
                     app:boxCornerRadiusBottomEnd="8dp"
                     app:helperTextTextColor="@color/red"
                     app:boxCornerRadiusTopStart="8dp"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:hint="Complaint Description"
+                    android:hint="Feedback Description"
                     app:boxCornerRadiusBottomEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
                     app:helperTextTextColor="@color/red"
@@ -108,7 +108,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Previous complaints"
+                    android:text="Previous feedbacks"
                     android:textColor="@color/black"
                     android:textSize="30dp"
                     android:fontFamily="@font/lato"/>
