@@ -84,7 +84,7 @@ class DashboardFragment : Fragment() {
         announcments=view.findViewById(R.id.announcment)
         announcments.isSelected=true
         val data=Firebase.firestore
-        data.collection("announcment").document("ANNOUNCMENT")
+        data.collection("banner").document("banner")
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {

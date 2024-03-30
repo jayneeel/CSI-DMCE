@@ -27,10 +27,22 @@
         android:title="Export Sheets"/>
 
     <item
-        android:id="@+id/nav_item_admin_announcments"
+        android:id="@+id/nav_item_admin_notificaitons"
         android:icon="@drawable/ic_baseline_email_24"
         android:iconTint="@color/csi_primary_accent"
+        android:title="Custom Notifications"/>
+
+    <item
+        android:id="@+id/nav_item_admin_announcments"
+        android:icon="@drawable/alert"
+        android:iconTint="@color/csi_primary_accent"
         android:title="Announcments"/>
+
+    <item
+        android:id="@+id/agendas"
+        android:icon="@drawable/agenda_icon"
+        android:iconTint="#0D1542"
+        android:title="Agenda"/>
 
     <item
         android:id="@+id/aboutus"
@@ -38,10 +50,6 @@
         android:iconTint="#0D1542"
         android:title="About us"/>
 
-    <item
-        android:id="@+id/agendas"
-        android:icon="@drawable/agenda_icon"
-        android:iconTint="#0D1542"
-        android:title="Agenda"/>
+
 
 </menu>
