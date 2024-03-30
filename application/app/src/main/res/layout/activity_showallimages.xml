@@ -10,13 +10,13 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
             app:title="Images"
-            app:titleTextColor="@color/white"
-            app:menu="@menu/delete"/>
+            app:titleTextColor="@color/white"/>
+<!--            app:menu="@menu/delete"/>-->
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -34,5 +34,15 @@
         android:id="@+id/progress"
         android:layout_gravity="center"
         android:indeterminate="true"/>
+
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="@color/csi_primary_accent"
+        android:backgroundTint="@color/csi_primary_accent"
+        android:src="@drawable/icons8_delete" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

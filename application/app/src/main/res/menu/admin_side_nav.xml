@@ -38,4 +38,10 @@
         android:iconTint="#0D1542"
         android:title="About us"/>
 
+    <item
+        android:id="@+id/agendas"
+        android:icon="@drawable/agenda_icon"
+        android:iconTint="#0D1542"
+        android:title="Agenda"/>
+
 </menu>
