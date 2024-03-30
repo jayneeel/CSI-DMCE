@@ -39,15 +39,17 @@
         android:title="Announcments"/>
 
     <item
+        android:id="@+id/agendas"
+        android:icon="@drawable/agenda_icon"
+        android:iconTint="#0D1542"
+        android:title="Agenda"/>
+
+    <item
         android:id="@+id/aboutus"
         android:icon="@drawable/ic_baseline_menu_book_24"
         android:iconTint="#0D1542"
         android:title="About us"/>
 
-    <item
-        android:id="@+id/agendas"
-        android:icon="@drawable/agenda_icon"
-        android:iconTint="#0D1542"
-        android:title="Agenda"/>
+
 
 </menu>

@@ -44,5 +44,8 @@
     <string name="loremipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra iaculis sapien vitae imperdiet. Quisque quis risus nunc. Cras consequat consectetur dui, sit amet pulvinar dui condimentum et.</string>
     <string name="zenquotes_daily_quote_url">https://zenquotes.io/</string>
     <string name="default_quote">Nothing will change if you change nothing</string>
+    <string name="title_activity_agenda">Agenda</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
 

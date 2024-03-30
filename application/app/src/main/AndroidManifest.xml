@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CSIDMCE"
         tools:targetApi="31">
         <activity
+            android:name=".agenda.AgendaActivity"
+            android:exported="false" />
+        <activity
             android:name=".Announcments.Announcments"
             android:exported="false" />
         <activity

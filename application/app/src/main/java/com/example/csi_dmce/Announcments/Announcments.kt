@@ -15,10 +15,12 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.csi_dmce.R
 import com.example.csi_dmce.dashboard.DashMainActivity
 import com.example.csi_dmce.notifications.MyFirebaseMessagingService
+import com.example.csi_dmce.utils.Helpers
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import java.util.Date
 
 class Announcments : AppCompatActivity() {
 
@@ -66,7 +68,7 @@ class Announcments : AppCompatActivity() {
                     receiver = "all"
                 }
 
-                val time=System.currentTimeMillis().toString()
+                val time= Helpers.generateUnixTimestampFromDate(Date()).toString()
                 val announcemnt = ettitle.text.toString()
                 val db = Firebase.firestore
                 val map = hashMapOf("title" to title)
