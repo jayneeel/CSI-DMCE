@@ -1,4 +1,3 @@
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.csi_dmce.R
 
-class ImageAdapter(context1: ArrayList<String>, private val context: Context) :
+class ImageAdapter :
     RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     private var imageList: ArrayList<SlideModel> = ArrayList()
@@ -36,7 +35,7 @@ class ImageAdapter(context1: ArrayList<String>, private val context: Context) :
         var imageView: ImageView
 
         init {
-            imageView = itemView.findViewById<ImageView>(R.id.item)
+            imageView = itemView.findViewById(R.id.item)
         }
     }
 }

@@ -8,7 +8,9 @@
     tools:context=".MainActivity">
 
 
+
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,25 +18,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbarLayout"
-        android:layout_above="@id/bNav"
         android:id="@+id/frameL"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bNav"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/csi_primary_accent"
-        app:itemTextColor="@color/white"
+        android:background="@drawable/bottomnav"
+        android:layout_height="65dp"
         app:menu="@menu/b_nav"
+        app:elevation="20dp"
+        android:elevation="20dp"
+        app:itemIconSize="25dp"
         app:itemIconTint="@color/bottom_nav_csi_background_item"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-        app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
-        app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
+        app:itemTextColor="@color/bottom_nav_csi_background_item"
+        app:labelVisibilityMode="selected"
         android:layout_alignParentBottom="true"/>
-
         <include
             android:id="@+id/toolbarLayout"
             layout="@layout/navigation_bar"/>
+
     </RelativeLayout>
 
 

@@ -4,6 +4,7 @@ import ImageAdapterString
 import com.example.csi_dmce.R
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,7 @@ class ShowAllImagesFromStorage : AppCompatActivity() {
     var progressBar: ProgressBar? = null
     var adapter: ImageAdapterString? = null
 //    val toolbar: Toolbar = findViewById(R.id.toolbar)
-//    val delete: MenuItem = findViewById(R.id.action_delete)
+    val delete: MenuItem = findViewById(R.id.action_delete)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_showallimages)
