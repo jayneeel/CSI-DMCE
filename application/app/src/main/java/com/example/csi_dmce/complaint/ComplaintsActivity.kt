@@ -1,9 +1,10 @@
-package com.example.csi_admin.complaint
+package com.example.csi_dmce.complaint
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.csi_admin.complaint.ComplaintAdapter
 import com.example.csi_dmce.R
 import com.example.csi_dmce.database.Complaint
 import com.example.csi_dmce.database.ComplaintWrapper

@@ -117,8 +117,8 @@
         <activity android:name="com.example.csi_admin.EventsDataActivity" />
         <activity android:name="com.example.csi_admin.user.UserDataActivity" />
         <activity android:name="com.example.csi_admin.user.UserListActivity" />
-        <activity android:name="com.example.csi_admin.complaint.ComplaintLodge" />
-        <activity android:name="com.example.csi_admin.complaint.ComplaintsActivity" />
+        <activity android:name=".complaint.ComplaintLodge" />
+        <activity android:name=".complaint.ComplaintsActivity" />
         <activity android:name="com.example.csi_admin.expense.ApprovalExpenseActivity" />
         <activity android:name="com.example.csi_admin.expense.ExpenseApproval" />
         <activity android:name="com.example.csi_admin.expense.ExpenseRequest" />

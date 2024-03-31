@@ -1,25 +1,18 @@
-package com.example.csi_admin.complaint
+package com.example.csi_dmce.complaint
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
-import com.example.csi_dmce.complaint.PreviousComplaintAdapter
 import com.example.csi_dmce.database.Complaint
 import com.example.csi_dmce.database.ComplaintWrapper
 import com.example.csi_dmce.utils.Helpers
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
 import java.util.Date
 
