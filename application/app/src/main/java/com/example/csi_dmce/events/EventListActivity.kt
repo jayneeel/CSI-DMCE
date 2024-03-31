@@ -17,6 +17,7 @@ import com.example.csi_dmce.auth.CSIRole
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Event
 import com.example.csi_dmce.database.EventWrapper
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.runBlocking
 
@@ -27,6 +28,7 @@ class EventListActivity: AppCompatActivity() {
     private val REQUEST_CODE_LOOP_TO_LIST: Int = 100
 
     private lateinit var btnEventAdd: FloatingActionButton
+    private lateinit var shimmerContainer: ShimmerFrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,13 +51,19 @@ class EventListActivity: AppCompatActivity() {
 
         var events: List<Event> = runBlocking { EventWrapper.getEvents() }
 
+        shimmerContainer = findViewById(R.id.shimmer_container)
+        shimmerContainer.startShimmer()
         if (intent.getBooleanExtra("filter_favorites", false)) {
             events = filterFavorites(events)
             if (events.isEmpty()) {
                 findViewById<TextView>(R.id.text_view_no_favorites)
                     .visibility = View.VISIBLE
             }
+            shimmerContainer.stopShimmer()
+            shimmerContainer.visibility = View.GONE
         }
+
+
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_events_list)
         val layoutManager = LinearLayoutManager(this)

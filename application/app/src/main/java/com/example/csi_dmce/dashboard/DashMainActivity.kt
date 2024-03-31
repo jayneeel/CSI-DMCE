@@ -13,8 +13,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.csi_admin.complaint.ComplaintLodge
-import com.example.csi_admin.complaint.ComplaintsActivity
+import com.example.csi_dmce.complaint.ComplaintLodge
+import com.example.csi_dmce.complaint.ComplaintsActivity
 import com.example.csi_admin.expense.ApprovalExpenseActivity
 import com.example.csi_admin.expense.ExpenseRequest
 import com.example.csi_admin.user.UserListActivity
@@ -237,8 +237,7 @@ class DashMainActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         exitDialog.show()
-        // super.onBackPressed() // Call to the superclass method if needed
-
+        super.onBackPressed() // Call to the superclass method
     }
 
 }

@@ -7,47 +7,31 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.csi_dmce.R
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-lateinit var  Myadapter: tabsadapter
 class AgendaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agenda)
 
-        val  add=findViewById<ImageView>(R.id.imageView14)
+        val add = findViewById<ImageView>(R.id.imageView14)
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val viewPager = findViewById<ViewPager2>(R.id.viewp)
 
-        var tabl=findViewById<TabLayout>(R.id.tabLayout)
-        var viewp=findViewById<ViewPager2>(R.id.viewp)
-        Myadapter = tabsadapter(supportFragmentManager,lifecycle)
-        viewp.adapter= Myadapter
+        val tabsAdapter = TabsAdapter(this)
+        viewPager.adapter = tabsAdapter
 
-        tabl.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab != null) {
-                    viewp.currentItem=tab.position
-                }
-
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Pending"
+                1 -> "Done"
+                else -> null
             }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-        })
-
-        viewp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                tabl.selectTab(tabl.getTabAt(position))
-            }
-        })
+        }.attach()
 
         add.setOnClickListener {
-            val cIntent = Intent(this, CreateAgendaActivity::class.java)
-            startActivity(cIntent)
+            val intent = Intent(this, CreateAgendaActivity::class.java)
+            startActivity(intent)
         }
-
-
     }
 }

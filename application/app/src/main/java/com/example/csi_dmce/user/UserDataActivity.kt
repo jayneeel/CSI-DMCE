@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.cardview.widget.CardView
 import com.example.csi_dmce.R
-import com.example.csi_admin.complaint.ComplaintLodge
-import com.example.csi_admin.complaint.ComplaintsActivity
+import com.example.csi_dmce.complaint.ComplaintLodge
+import com.example.csi_dmce.complaint.ComplaintsActivity
 import com.example.csi_admin.expense.ApprovalExpenseActivity
 import com.example.csi_admin.expense.ExpenseRequest
 import com.example.csi_dmce.attendance.CsvGeneration
