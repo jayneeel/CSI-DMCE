@@ -72,7 +72,7 @@ class Announcments : AppCompatActivity() {
                 val announcemnt = ettitle.text.toString()
                 val db = Firebase.firestore
                 val map = hashMapOf("title" to title)
-                map.put("desc",desc)
+                map.put("description",desc)
                 map.put("receiver",receiver)
                 map.put("time",time)
                 db.collection("announcment").document("ANNOUNCMENT"+time)

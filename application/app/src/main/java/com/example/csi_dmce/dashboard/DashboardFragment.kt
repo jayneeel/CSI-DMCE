@@ -1,12 +1,8 @@
 package com.example.csi_dmce.dashboard
 
-import android.R.attr.width
 import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,6 +22,8 @@ import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.csi_dmce.Announcments.AnnouncmentsWrapper
+import com.example.csi_dmce.Announcments.announcments_adapter
 import com.example.csi_dmce.R
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Event
@@ -35,7 +33,12 @@ import com.example.csi_dmce.utils.Helpers
 import com.example.csi_dmce.utils.ZenQuote
 import com.example.csi_dmce.utils.ZenQuoteService
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,12 +51,17 @@ class DashboardFragment : Fragment() {
     private lateinit var quoteOfTheDay: TextView
     private lateinit var announcments: TextView
 
-    lateinit var eventRecycler : RecyclerView
+    lateinit var eventRecycler: RecyclerView
+    lateinit var announcmentsRecycler: RecyclerView
     lateinit var toolbar: Toolbar
-    private lateinit var eventArrayList : ArrayList<Event>
+    private lateinit var eventArrayList: ArrayList<Event>
+    private lateinit var announcmentsArrayList: ArrayList<AnnouncmentsWrapper>
+    private lateinit var announcmentsArrayListadmin: ArrayList<AnnouncmentsWrapper>
+
     private lateinit var myAdapter: EventAdapter
+    private lateinit var myAdapter2: announcments_adapter
     lateinit var imageSlider: ImageSlider
-    private lateinit var db : FirebaseFirestore
+    private lateinit var db: FirebaseFirestore
     val imageList = ArrayList<SlideModel>()
 
     private lateinit var studentObject: Student
@@ -65,8 +73,10 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val view : View = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_dashboard, container, false)
         eventRecycler = view.findViewById(R.id.recyclerview)
+        announcmentsRecycler = view.findViewById(R.id.recyclerviewannouncments)
+
 
         quoteOfTheDay = view.findViewById(R.id.text_view_quote_of_the_day)
 
@@ -75,20 +85,20 @@ class DashboardFragment : Fragment() {
         }
 
         val studentName = if (studentObject.name != null) {
-           studentObject.name!!.split(" ")[0]
+            studentObject.name!!.split(" ")[0]
         } else {
             "User"
         }
 
-        //Firestore to acces annnouncments
-        announcments=view.findViewById(R.id.announcment)
-        announcments.isSelected=true
-        val data=Firebase.firestore
+        //Firestore to acces banner
+        announcments = view.findViewById(R.id.announcment)
+        announcments.isSelected = true
+        val data = Firebase.firestore
         data.collection("banner").document("banner")
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    announcments.text=document.data!!.get("1").toString()
+                    announcments.text = document.data!!.get("1").toString()
                     Log.d(TAG, "DocumentSnapshot data: ${document.data!!.get("1")}")
                 } else {
                     Log.d(TAG, "No such document")
@@ -97,7 +107,6 @@ class DashboardFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
             }
-
 
 
 //        val paint=announcments.paint
@@ -113,12 +122,22 @@ class DashboardFragment : Fragment() {
 //            ), null, Shader.TileMode.REPEAT
 //        )
 
-
-
         tvDashWelcome = view.findViewById(R.id.text_view_dashboard_welcome)
-        tvDashWelcome.setText("Welcome ${studentName}")
+        tvDashWelcome.text = "Welcome ${studentName}"
 
-        eventRecycler.layoutManager= LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+        //announcments recylerview initialization
+        announcmentsRecycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+        announcmentsRecycler.setHasFixedSize(true)
+        announcmentsArrayList = arrayListOf()
+        announcmentsArrayListadmin = arrayListOf()
+
+        myAdapter2 = announcments_adapter(announcmentsArrayList)
+        announcmentsRecycler.adapter = myAdapter2
+        Announcmentlistner()
+
+
+        //eventrecylerview intialization
+        eventRecycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
         eventRecycler.setHasFixedSize(true)
         eventArrayList = arrayListOf()
 
@@ -127,11 +146,26 @@ class DashboardFragment : Fragment() {
         EventChangerListener()
 
         imageSlider = view.findViewById(R.id.imageSlider)
-        imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F1.jpg?alt=media&token=1b98937c-cf2c-4011-882a-c7985bb759fd", title = "Ideobition"))
-        imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F2.jpg?alt=media&token=2839c283-0eb6-4543-8ca5-6a8a188dbe02", title = "Time Travel"))
-        imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F3.jpg?alt=media&token=7fe23dd0-7fb4-4c7a-8682-8b715ecfcb7c", title = "CSI"))
+        imageList.add(
+            SlideModel(
+                "https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F1.jpg?alt=media&token=1b98937c-cf2c-4011-882a-c7985bb759fd",
+                title = "Ideobition"
+            )
+        )
+        imageList.add(
+            SlideModel(
+                "https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F2.jpg?alt=media&token=2839c283-0eb6-4543-8ca5-6a8a188dbe02",
+                title = "Time Travel"
+            )
+        )
+        imageList.add(
+            SlideModel(
+                "https://firebasestorage.googleapis.com/v0/b/csi-dmce-c6f11.appspot.com/o/gallery%2F3.jpg?alt=media&token=7fe23dd0-7fb4-4c7a-8682-8b715ecfcb7c",
+                title = "CSI"
+            )
+        )
         imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-        imageSlider.setItemClickListener(object: ItemClickListener {
+        imageSlider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
                 val dialog = Dialog(imageSlider.context)
                 dialog.setContentView(R.layout.component_image_scale_popup)
@@ -149,6 +183,37 @@ class DashboardFragment : Fragment() {
         setRandomQuote(view.context)
 
         return view
+    }
+
+    private fun Announcmentlistner() {
+        db = FirebaseFirestore.getInstance()
+        db.collection("announcment").addSnapshotListener(object : EventListener<QuerySnapshot> {
+            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                if (error != null) {
+                    Log.e("Firestore Error", error.message.toString())
+                    return
+                }
+                for (dc: DocumentChange in value?.documentChanges!!) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
+
+                        Log.d(TAG, "onEvent: " + dc.document.data.get("receiver"))
+
+                        if (dc.document.data.get("receiver") == "all") {
+                            announcmentsArrayList.add(dc.document.toObject(AnnouncmentsWrapper::class.java))
+                        } else {
+                            announcmentsArrayListadmin.add(dc.document.toObject(AnnouncmentsWrapper::class.java))
+                        }
+                        if (CsiAuthWrapper.getRoleFromToken(requireContext()).isAdmin()) {
+                            announcmentsArrayList.addAll(announcmentsArrayListadmin)
+                        }
+
+
+                    }
+                }
+                myAdapter2.notifyDataSetChanged()
+            }
+
+        })
     }
 
     private fun setRandomQuote(ctx: Context) {
@@ -212,12 +277,12 @@ class DashboardFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
         db.collection("events").addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                if (error !=null){
-                    Log.e("Firestore Error",error.message.toString())
+                if (error != null) {
+                    Log.e("Firestore Error", error.message.toString())
                     return
                 }
-                for ( dc: DocumentChange in value?.documentChanges!!){
-                    if (dc.type == DocumentChange.Type.ADDED){
+                for (dc: DocumentChange in value?.documentChanges!!) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
                         eventArrayList.add(dc.document.toObject(Event::class.java))
                     }
                 }

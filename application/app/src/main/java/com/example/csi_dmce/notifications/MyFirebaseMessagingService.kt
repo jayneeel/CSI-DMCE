@@ -16,41 +16,25 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.csi_dmce.R
 import com.example.csi_dmce.dashboard.DashMainActivity
-import com.example.csi_dmce.notifications.messaging.OAuthTokenGetter.getOAuthToken
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileInputStream
+import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.Arrays
-import kotlin.math.log
+import java.nio.charset.StandardCharsets
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val MESSAGING_SCOPE: String? = "https://www.googleapis.com/auth/firebase.messaging"
     @Throws(IOException::class)
-//    fun getAccessToken(): String {
-//        applicationContext.assets.open("csi-dmce-c6f11-5cd215ce2ac6.json").apply {
-//            val inputStream=this
-//            val googleCredentials = GoogleCredentials.
-//            fromStream(FileInputStream(inputStream))
-//                .createScoped(Arrays.asList(MESSAGING_SCOPE))
-//            googleCredentials.refresh()
-//            return googleCredentials.getAccessToken().tokenValue
-//        }
-//
-//    }
 
 
         private fun imageloader(c: String): Bitmap? {
@@ -89,6 +73,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     @SuppressLint("ResourceAsColor")
       private  fun sendNotification(title: String?, body: String?, notificationimage: Uri?) {
+
+          //NOTIFICATION BUILDER WHICH SHOWS THE NOTIFICATION IN THE NOTIFCATIONS SECTION
         val intent = Intent(this, DashMainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
@@ -97,7 +83,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         )
         val channelId = "fcm_default_channel"
         Log.d(TAG, "sendNotification: $notificationimage")
-        Log.d(TAG, "fcmTOKEN " )
 
         val bitmap=imageloader(notificationimage.toString())
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -131,28 +116,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         fun sendFCMMessage(title: String?, desc: String?, image: String,receiver: String) {
             GlobalScope.launch(Dispatchers.IO) {
 
-                val fileName = "csi-dmce-c6f11-5cd215ce2ac6.json"
-                val file = File(fileName)
-                println("Absolute path: ${file.absolutePath}")
-                var token=""
+                //API CALL API USED: FCM HTTP API V1
+                var token= getAccessToken()
+                Log.d(TAG, "sendFCMMessage: tokenitis  "+token)
 
-                FirebaseMessaging.getInstance().token.addOnCompleteListener {
-                    token=it.result.toString()
-                    Log.d(TAG, "sendFCMMessage token : "+token)
-                }
-
-
-                val a=getOAuthToken()
-                Log.d(TAG, "fcmTOKEN: "+a)
                 Log.d(TAG, "sendFCMMessage: "+image)
 
                 val fcmEndpoint = "https://fcm.googleapis.com/v1/projects/csi-dmce-c6f11/messages:send"
                 val url = URL(fcmEndpoint)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
-                connection.setRequestProperty("Authorization", "Bearer ya29.a0Ad52N3-mXjahIRPrNbypy4XtIMB9gjS7XJBDM9FEv_ItXLdrw82iEWGCblcrz12_QW8kkmG_lRnG3W557QB5iO1ecoKZzxh94s3NroNVUwNHdcJfXn65TsaZhQQLK3I4hJpbH9B4_bJ25VCcbmLKdWQtArIsO6b_FlJIaCgYKAScSARASFQHGX2Mi_VEHeqdI1GpmnJpzTvuxyw0171")
+                connection.setRequestProperty("Authorization", "Bearer $token")
                 connection.setRequestProperty("Content-Type", "application/json")
-                Log.d(TAG, "sendFCMMessage: **********************************")
 
                 // Construct JSON payload for FCM message
                 val jsonPayload = """
@@ -183,9 +158,40 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 } else {
                     // Handle error
                     Log.d(TAG, "sendFCMMessage: UNSUCSESSFULL"+responseCode.toString())
+                    //401-AUTH ERROR
                 }
             }
         }
+
+
+        //Accessing token from firebase messsaging for authentication (cloud messaging)
+        private fun getAccessToken(): String? {
+
+        try {
+        val json="""
+            {
+             
+            } 
+        """.trimIndent()
+
+            val inputStream=ByteArrayInputStream(json.toByteArray(StandardCharsets.UTF_8))
+
+            val MESSAGING_SCOPE = "https://www.googleapis.com/auth/firebase.messaging"
+            val googleCredentials = GoogleCredentials.
+            fromStream(inputStream).createScoped(listOf(MESSAGING_SCOPE))
+            
+            googleCredentials.refresh()
+            val token=googleCredentials.getAccessToken().tokenValue
+            Log.d(TAG, "getAccessToken: $token")
+            return googleCredentials.getAccessToken().tokenValue
+
+
+        }catch (e: Exception){
+            Log.d(TAG, "getAccessToken: FAILED")
+            return null
+        }
+        }
+
         private const val TAG = "MyFirebaseMsgService"
     }
 }
