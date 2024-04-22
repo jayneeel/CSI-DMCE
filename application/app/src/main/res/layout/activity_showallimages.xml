@@ -35,14 +35,4 @@
         android:layout_gravity="center"
         android:indeterminate="true"/>
 
-    <ImageButton
-        android:id="@+id/deleteButton"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:background="@color/csi_primary_accent"
-        android:backgroundTint="@color/csi_primary_accent"
-        android:src="@drawable/icons8_delete" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

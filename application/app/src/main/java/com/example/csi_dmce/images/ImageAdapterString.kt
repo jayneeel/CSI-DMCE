@@ -1,18 +1,20 @@
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.csi_dmce.R
+import com.example.csi_dmce.images.Photo
+import com.google.firebase.storage.ktx.storage
 
-class ImageAdapterString(private val imageList: ArrayList<String>, private val context: Context) :
+class ImageAdapterString(private val imageList: ArrayList<Photo>, private val context: Context) :
     RecyclerView.Adapter<ImageAdapterString.ViewHolder>() {
 
     private val selectedItems = HashSet<Int>()
-
-
     // Method to remove an item from the imageList
     fun removeItem(position: Int) {
         imageList.removeAt(position)
@@ -25,9 +27,28 @@ class ImageAdapterString(private val imageList: ArrayList<String>, private val c
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var images = imageList.get(position)
         // loading the images from the position
-        Glide.with(holder.itemView.context).load(imageList[position]).into(holder.imageView)
-        holder.itemView.isSelected = selectedItems.contains(position)
+        Glide.with(holder.itemView.context).load(images.url).into(holder.imageView)
+//        if (selectedItems.contains(position)) {
+//            holder.itemView.setBackgroundResource(R.color.blue)
+//        } else {
+//            holder.itemView.setBackgroundResource(android.R.color.transparent)
+//        }
+        var deleteButton = holder.itemView.findViewById<ImageView>(R.id.deleteButton)
+        var myRef = com.google.firebase.ktx.Firebase.storage.reference.child("gallery").child(images.title)
+        deleteButton.setOnClickListener {
+            myRef.delete().addOnSuccessListener {
+                Log.e(
+                    "Delete ",
+                    "vachla FIREBASE"
+                )
+                Toast.makeText(context, "Image Deleted Successfully", Toast.LENGTH_SHORT).show()
+                removeItem(position)
+            }
+        }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -40,8 +61,10 @@ class ImageAdapterString(private val imageList: ArrayList<String>, private val c
         init {
             imageView = itemView.findViewById<ImageView>(R.id.item)
             // Set a click listener to handle item removal
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                toggleSelection(adapterPosition)
+            itemView.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    toggleSelection(adapterPosition)
+                }
             }
         }
 
@@ -57,5 +80,10 @@ class ImageAdapterString(private val imageList: ArrayList<String>, private val c
 
     fun getSelectedItems(): Set<Int> {
         return selectedItems
+    }
+
+    fun clearSelection() {
+        selectedItems.clear()
+        notifyDataSetChanged()
     }
 }

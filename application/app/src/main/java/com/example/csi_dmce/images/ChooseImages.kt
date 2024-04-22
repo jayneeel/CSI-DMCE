@@ -110,8 +110,6 @@ class ChooseImages : AppCompatActivity() {
                     val imageInfo = HashMap<String, Any>()
                     imageInfo["title"] = title.text.toString()
                     imageInfo["imageUrl"] = imageUrl
-
-                    // Add the image data to Firestore
                     db.collection("images").add(imageInfo)
                         .addOnSuccessListener { documentReference ->
                             Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")

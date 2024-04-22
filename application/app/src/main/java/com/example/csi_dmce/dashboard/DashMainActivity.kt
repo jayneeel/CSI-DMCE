@@ -18,16 +18,16 @@ import com.example.csi_admin.complaint.ComplaintsActivity
 import com.example.csi_admin.expense.ApprovalExpenseActivity
 import com.example.csi_admin.expense.ExpenseRequest
 import com.example.csi_dmce.user.UserListActivity
+import com.example.csi_dmce.Announcments.Announcments
 import com.example.csi_dmce.R
 import com.example.csi_dmce.images.ChooseImages
-import com.example.csi_dmce.agenda.CreateAgendaActivity
+import com.example.csi_dmce.agenda.AgendaActivity
 import com.example.csi_dmce.attendance.CsvGeneration
 import com.example.csi_dmce.auth.CsiAuthWrapper
 import com.example.csi_dmce.database.Student
 import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.events.EventListActivity
-import com.example.csi_dmce.notifications.Announcments
-import com.example.csi_dmce.notifications.MyFirebaseMessagingService
+import com.example.csi_dmce.notifications.Custom_Notification
 import com.example.csi_dmce.ui.Aboutus
 import com.example.csi_dmce.ui.WelcomeActivity
 import com.example.csiappdashboard.ProfileFragment
@@ -129,8 +129,17 @@ class DashMainActivity : AppCompatActivity() {
                         val cIntent = Intent(this, CsvGeneration::class.java)
                         startActivity(cIntent)
                     }
+                    R.id.nav_item_admin_notificaitons ->  {
+                        val cIntent = Intent(this, Custom_Notification::class.java)
+                        startActivity(cIntent)
+                    }
                     R.id.nav_item_admin_images ->  {
                         val cIntent = Intent(this, ChooseImages::class.java)
+                        startActivity(cIntent)
+                    }
+
+                    R.id.agendas -> {
+                        val cIntent = Intent(this, AgendaActivity::class.java)
                         startActivity(cIntent)
                     }
 
@@ -139,10 +148,6 @@ class DashMainActivity : AppCompatActivity() {
                         startActivity(cIntent)
                     }
 
-                    R.id.agendas -> {
-                        val cIntent = Intent(this, CreateAgendaActivity::class.java)
-                        startActivity(cIntent)
-                    }
                 }
                 true
             }

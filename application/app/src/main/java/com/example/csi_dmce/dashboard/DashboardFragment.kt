@@ -9,12 +9,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toolbar
+import androidx.appcompat.widget.ListPopupWindow.MATCH_PARENT
+import androidx.appcompat.widget.ListPopupWindow.WRAP_CONTENT
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,8 +32,11 @@ import com.example.csi_dmce.database.StudentWrapper
 import com.example.csi_dmce.utils.Helpers
 import com.example.csi_dmce.utils.ZenQuote
 import com.example.csi_dmce.utils.ZenQuoteService
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ListResult
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,12 +44,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ListResult
-import com.google.firebase.storage.StorageReference
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+
 
 class DashboardFragment : Fragment() {
     private lateinit var quoteOfTheDay: TextView
@@ -58,9 +56,6 @@ class DashboardFragment : Fragment() {
     private lateinit var myAdapter: EventAdapter
     private lateinit var iAdapter: ImageAdapter
     lateinit var imageSlider: ImageSlider
-    private lateinit var db : FirebaseFirestore
-    val FireStore = FirebaseFirestore.getInstance()
-    val imagesCollectionRef = FireStore.collection("images")
 
     private lateinit var studentObject: Student
 
@@ -73,6 +68,7 @@ class DashboardFragment : Fragment() {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_dashboard, container, false)
         var imageList = ArrayList<SlideModel>()
+        val storage = FirebaseStorage.getInstance().reference.child("gallery")
         val sharedPreferences = requireActivity().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
 
 
@@ -94,7 +90,7 @@ class DashboardFragment : Fragment() {
         announcments=view.findViewById(R.id.announcment)
         announcments.isSelected=true
         val data=Firebase.firestore
-        data.collection("announcment").document("ANNOUNCMENT")
+        data.collection("banner").document("banner")
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
@@ -134,31 +130,66 @@ class DashboardFragment : Fragment() {
 
         myAdapter = EventAdapter(eventArrayList)
         eventRecycler.adapter = myAdapter
-        EventChangerListener()
+//        EventChangerListener()
 
         imageSlider = view.findViewById(R.id.imageSlider)
-        imagesCollectionRef.get().addOnSuccessListener { documents ->
-            for (document in documents) {
-                // Retrieve the URL of each image from the Firestore document
-                val imageUrl = document.getString("imageUrl")
-                val title = document.getString("title") ?: "Untitled"
+        //val hashMap: HashMap<String, String> = HashMap()
+        storage.listAll().addOnSuccessListener(OnSuccessListener<ListResult> { listResult ->
+            for (file in listResult.items) {
+                file.getDownloadUrl()
+                    .addOnSuccessListener { uri -> // adding the url in the arraylist
+                        var title = file.name.toString()
+                        var url = uri.toString()
+                        //hashMap.put(bb, uri.toString())
+                        //println(hashMap)
+                        imageList.sortBy { it.title }
+                        imageList.add(SlideModel(url, title = title))
+                        imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+                        imageSlider.setItemClickListener(object: ItemClickListener {
+                            override fun onItemSelected(position: Int) {
+                                val dialog = Dialog(imageSlider.context)
+                                dialog.setContentView(R.layout.component_image_scale_popup)
+                                val ivFullScale = dialog.findViewById<ImageView>(R.id.image_view_fullscale)
+                                Glide.with(ivFullScale.context)
+                                    .setDefaultRequestOptions(RequestOptions())
+                                    .load(imageList.get(position).imageUrl)
+                                    .into(ivFullScale)
 
-                // Add the image to your imageList
-                imageUrl?.let {
-                    imageList.add(SlideModel(it, title = title))
-                }
+                                dialog.show()
+                                dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+                            }
+
+                        })
+                        //Log.d("TAG", "onCreateView: url "+imageList2)
+                        Log.d("TAG", "onCreateView: "+title+"="+url)
+                        Log.d("TAG", "onCreateView: list2 "+imageList)
+                    }
             }
+            Log.d("TAG", "onCreateView: list3 "+imageList)
+        })
 
-            // Sort the imageList by title
-            imageList.sortBy { it.title }
-
-            // Set the imageList to your imageSlider
-            imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-        }
-            .addOnFailureListener { exception ->
-            // Handle any errors that occur while fetching images from Firestore
-            Log.e("Firestore", "Error getting images", exception)
-        }
+//        storage.get().addOnSuccessListener { documents ->
+//            for (document in documents) {
+//                // Retrieve the URL of each image from the Firestore document
+//                val imageUrl = document.getString("imageUrl")
+//                val title = document.getString("title") ?: "Untitled"
+//
+//                // Add the image to your imageList
+//                imageUrl?.let {
+//                    imageList.add(SlideModel(it, title = title))
+//                }
+//            }
+//
+//            // Sort the imageList by title
+//            imageList.sortBy { it.title }
+//
+//            // Set the imageList to your imageSlider
+//            imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+//        }
+//            .addOnFailureListener { exception ->
+//            // Handle any errors that occur while fetching images from Firestore
+//            Log.e("Firestore", "Error getting images", exception)
+//        }
 
 
 
@@ -230,22 +261,22 @@ class DashboardFragment : Fragment() {
         })
     }
 
-    private fun EventChangerListener() {
-        db = FirebaseFirestore.getInstance()
-        db.collection("events").addSnapshotListener(object : EventListener<QuerySnapshot> {
-            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                if (error !=null){
-                    Log.e("Firestore Error",error.message.toString())
-                    return
-                }
-                for ( dc: DocumentChange in value?.documentChanges!!){
-                    if (dc.type == DocumentChange.Type.ADDED){
-                        eventArrayList.add(dc.document.toObject(Event::class.java))
-                    }
-                }
-                myAdapter.notifyDataSetChanged()
-            }
-
-        })
-    }
+//    private fun EventChangerListener() {
+//        db = FirebaseFirestore.getInstance()
+//        db.collection("events").addSnapshotListener(object : EventListener<QuerySnapshot> {
+//            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+//                if (error !=null){
+//                    Log.e("Firestore Error",error.message.toString())
+//                    return
+//                }
+//                for ( dc: DocumentChange in value?.documentChanges!!){
+//                    if (dc.type == DocumentChange.Type.ADDED){
+//                        eventArrayList.add(dc.document.toObject(Event::class.java))
+//                    }
+//                }
+//                myAdapter.notifyDataSetChanged()
+//            }
+//
+//        })
+//    }
 }

@@ -33,15 +33,29 @@
         android:title="Upload Images"/>
 
     <item
-        android:id="@+id/aboutus"
-        android:icon="@drawable/ic_baseline_menu_book_24"
-        android:iconTint="#0D1542"
-        android:title="About us"/>
+        android:id="@+id/nav_item_admin_notificaitons"
+        android:icon="@drawable/ic_baseline_email_24"
+        android:iconTint="@color/csi_primary_accent"
+        android:title="Custom Notifications"/>
+
+    <item
+        android:id="@+id/nav_item_admin_announcments"
+        android:icon="@drawable/alert"
+        android:iconTint="@color/csi_primary_accent"
+        android:title="Announcments"/>
 
     <item
         android:id="@+id/agendas"
         android:icon="@drawable/agenda_icon"
         android:iconTint="#0D1542"
         android:title="Agenda"/>
+
+    <item
+        android:id="@+id/aboutus"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        android:iconTint="#0D1542"
+        android:title="About us"/>
+
+
 
 </menu>

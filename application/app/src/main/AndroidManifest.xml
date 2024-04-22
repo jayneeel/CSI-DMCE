@@ -22,13 +22,22 @@
             android:name=".images.ImageAdapter"
             android:exported="false" />
         <activity
+            android:name=".agenda.AgendaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Announcments.Announcments"
+            android:exported="false" />
+        <activity
+            android:name=".Announcments.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".agenda.CreateAgendaActivity"
             android:exported="false" />
         <activity
             android:name=".ui.Aboutus"
             android:exported="false" />
         <activity
-            android:name=".notifications.Announcments"
+            android:name=".notifications.Custom_Notification"
             android:exported="false" />
         <activity
             android:name=".profile.edit_profile"
